@@ -18,3 +18,5 @@ client.on('message', message => {
     message.reply("Test completado");
   }
 });
+
+client.login(token);
