@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 // Establish token
-const token = 'MzE3NDIxMTMzMTMxNjc3Njk2.DA4GfA.BAejp5Prm2I7_6_6ilZumIfJWzY';
+const token = 'MzE3NDIxMTMzMTMxNjc3Njk2.DA4cng.u4j9D0jeCgVf5y3G9M4xF3YQqyg';
 
 client.on('ready', () => {
   console.log('Bot starts doing his thing...');
@@ -14,9 +14,11 @@ client.on('ready', () => {
 // Listeners para mensajes
 client.on('message', message => {
   // Listener para walker
-  if (message.author.username === 'Shoorema#3786') {
+  /*if (message.author.username === 'Shoorema#3786') {
     message.reply("Test completado");
   }
+  */
+  message.reply("Test completado");
 });
 
 client.login(token);
