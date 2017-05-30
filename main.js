@@ -71,6 +71,6 @@ client.on('guildMemberRemove', member => {
     member.guild.defaultChannel.send('Le echaremos de menos. O no.')
     // WIP--------------
   }
-})
+}) 
 
 client.login(token);
