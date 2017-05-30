@@ -1,21 +1,23 @@
 // Import the discord.js module
 const Discord = require('discord.js');
 
-// Create an instance of a Discord client
+// Instancia de cliente Discord
 const client = new Discord.Client();
 
-// Establish token
+// Token para la conexion y asociacion al bot
 const token = 'MzE3NDIxMTMzMTMxNjc3Njk2.DA4cng.u4j9D0jeCgVf5y3G9M4xF3YQqyg';
 
-const regexSupp = /support/
-const regexDuplicates = /repetido/
-const regexRein = /rein/
-const regexPing = /ping/
+// Declaro constantes para las regex de interpretación de mensajes
+// La i final implica case insensitiveness
+const regexSupp = /(support)|(supp)/i
+const regexDuplicates = /repetid[oa]/i
+const regexRein = /rein/i
+const regexPing = /(ping)|(lag)/i
+const regexSaludos = /(Hola a todos)|(gente)|(buenas)|(señores)/i
 
-
+//Cuando el bot hace sus cosas pasa esto:
 client.on('ready', () => {
-  console.log('Bot starts doing his thing...');
-
+  console.log("Doing some gud' ol' barrel rolls...");
 });
 
 // Listeners para mensajes
@@ -24,19 +26,51 @@ client.on('message', message => {
   if (message.author.username === 'DarkWalker') {
     message.reply("¡¡¡¡¡¡¡¡¡FELIZ CUMPLEAÑOS WALKER!!!1!UNO!");
   }
-  if (regexSupp.test(message.content)) {
+  // Respuesta a la palabra support
+  if (regexSupp.test(message.content) && message.author.username != 'EstrellaZorro') {
     message.channel.send('PROTEGED AL SUPPORT JODER')
   }
+  // Respuesta a la queja de repetidas
   if (regexDuplicates.test(message.content)) {
     message.channel.send('OOPS, ALL DUPLICATES!')
   }
+  // Respuesta a reinhartd
   if (regexRein.test(message.content)) {
     message.channel.send('RECTANGLE')
   }
+  // Respuesta a queja de ping
   if (regexPing.test(message.content)) {
     message.channel.send('CONEXIÓN DE MIERDA')
   }
-
+  // Respuesta a un saludo al servidor
+  if (regexSaludos.test(message.content)) {
+    message.reply('HOLA MAMÁ')
+  }
+  // Respuesta a halpmepls
+  if (message.content === '!halpmepls'){
+    message.channel.send('ESTE TÍO DICE QUE NECESITA AYUDA PUTO PRINGAO\'. SEGURO QUE ES UN LELPLAYER. EH TÍOS, QUE NECESITA AYUDA. PERO MIRA QUÉ PRINGAO\'...')
+  }
 });
+
+// Listener para cuando se viene alguien nuevo
+client.on('guildMemberAdd', member => {
+  // El mensaje se manda al canal por defecto (boop)
+  member.guild.defaultChannel.send(`Bienvenido a nuestro servidor, ${member}.\nEs un lugar bonito y lleno de personas amables.\nQuédate si no maineas ni Bastion, ni Yasuo ni Symetra.\nSi necesitas ayuda escribe '!halpmepls'`);
+})
+
+// Listener para cuando alguien se pira o lo echamos (Aunque eso es poco probable)
+client.on('guildMemberRemove', member => {
+  // El mensaje se manda al canal por defecto (boop)
+  member.guild.defaultChannel.send(`Nuestro querido miembro, ${member}, se ha ido para siempre.\nSe ruega una oración por su alma y la asistencia a la conducción`);
+  if(member.roles.length > 0){
+    member.guild.defaultChannel.send('Sus roles eran:')
+    // WIP--------------
+    for(var x in member.roles){
+      member.guild.defaultChannel.send(member.roles[x][role].name)
+    }
+    member.guild.defaultChannel.send('Le echaremos de menos. O no.')
+    // WIP--------------
+  }
+})
 
 client.login(token);
