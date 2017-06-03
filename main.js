@@ -14,6 +14,7 @@ const regexDuplicates = /repetid[oa]/i
 const regexRein = /rein/i
 const regexPing = /(ping)|(lag)/i
 const regexSaludos = /(Hola a todos)|(gente)|(buenas)|(señores)/i
+const regexCarga = /(carga)|(punto)|(payload)|(proteg)/i
 
 //Cuando el bot hace sus cosas pasa esto:
 client.on('ready', () => {
@@ -46,9 +47,14 @@ client.on('message', message => {
   if (regexSaludos.test(message.content)) {
     message.reply('HOLA MAMÁ')
   }
+  // Respuesta a aza y las cargas TODO TODO TODO TODO TODO TODO TODO TODO
+  if (regexCarga.test(message.content)){//&& message.author == null) //TODO TODO TODO
+    message.reply('QUE TOQUES LA PUTA CARGA AZA JODER')
+
+  }
   // Respuesta a halpmepls
   if (message.content === '!halpmepls'){
-    message.channel.send('ESTE TÍO DICE QUE NECESITA AYUDA PUTO PRINGAO\'. SEGURO QUE ES UN LELPLAYER. EH TÍOS, QUE NECESITA AYUDA. PERO MIRA QUÉ PRINGAO\'...')
+    message.channel.send('ESTE TÍO DICE QUE NECESITA AYUDA PUTO PRINGAO\'. \nSEGURO QUE ES UN LELPLAYER. \nEH TÍOS, QUE NECESITA AYUDA!!!!1!uno!. PERO MIRA QUÉ PRINGAO\'...')
   }
 });
 
@@ -64,13 +70,13 @@ client.on('guildMemberRemove', member => {
   member.guild.defaultChannel.send(`Nuestro querido miembro, ${member}, se ha ido para siempre.\nSe ruega una oración por su alma y la asistencia a la conducción`);
   if(member.roles.length > 0){
     member.guild.defaultChannel.send('Sus roles eran:')
-    // WIP--------------
+    // WIP--------------  TODO TODO
     for(var x in member.roles){
       member.guild.defaultChannel.send(member.roles[x][role].name)
     }
     member.guild.defaultChannel.send('Le echaremos de menos. O no.')
-    // WIP--------------
+    // WIP--------------  TODO TODO
   }
-}) 
+})
 
 client.login(token);
