@@ -54,7 +54,7 @@ client.on('message', message => {
     message.reply('HOLA MAMÁ')
   }
   // Respuesta a aza y las cargas TODO TODO TODO TODO TODO TODO TODO TODO
-  if (regexCarga.test(message.content) && message.author == 'blackjack15926811')){// //TODO TODO TODO
+  if (regexCarga.test(message.content) && message.author == 'blackjack15926811'){// //TODO TODO TODO
     message.reply('QUE TOQUES LA PUTA CARGA AZA JODER')
 
   }
