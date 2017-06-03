@@ -27,7 +27,7 @@ const server = http.createServer((req, res) => {
 setInterval(function() {
     http.get("http://eszobot.herokuapp.com");
     console.log("Sent keepalive request");
-}, 600000); // every 5 minutes (300000)
+}, 200000); // every 5 minutes (300000)
 
 //Cuando el bot hace sus cosas pasa esto:
 client.on('ready', () => {
