@@ -17,6 +17,13 @@ const regexSaludos = /(Hola a todos)|(gente)|(buenas)|(señores)/i
 const regexCarga = /(carga)|(punto)|(payload)|(proteg)/i
 
 var http = require("http");
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Get response\n');
+}).listen(process.env.PORT || 5000)
+
 setInterval(function() {
     http.get("http://eszobot.herokuapp.com");
     console.log("Sent keepalive request");
