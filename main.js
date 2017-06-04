@@ -62,11 +62,11 @@ client.on('message', message => {
     message.reply('HOLA MAMÁ')
   }
   // Respuesta a aza y las cargas
-  if (regexCarga.test(message.content) && message.author == 'blackjack15926811'){
+  if (regexCarga.test(message.content) && message.author.username == 'blackjack15926811'){
     message.reply('QUE TOQUES LA PUTA CARGA AZA JODER')
   }
   // Respuesta a peplo y las orisas
-  if (regexPeplo.test(message.content) && message.author == 'Peplo'){
+  if (regexPeplo.test(message.content) && message.author.username == 'Peplo'){
     message.reply('PE... PE... PERO ORISA, PEPLO!')
   }
   // Respuesta a halpmepls
