@@ -15,6 +15,7 @@ const regexRein = /rein/i
 const regexPing = /(ping)|(lag)/i
 const regexSaludos = /(Hola a todos)|(gente)|(buenas)|(señores)/i
 const regexCarga = /(carga)|(punto)|(payload)|(proteg)/i
+const regexPeplo = /(pero)|(orisa)|(support)/i
 
 var http = require("http");
 
@@ -60,10 +61,13 @@ client.on('message', message => {
   if (regexSaludos.test(message.content)) {
     message.reply('HOLA MAMÁ')
   }
-  // Respuesta a aza y las cargas TODO TODO TODO TODO TODO TODO TODO TODO
-  if (regexCarga.test(message.content) && message.author == 'blackjack15926811'){// //TODO TODO TODO
+  // Respuesta a aza y las cargas
+  if (regexCarga.test(message.content) && message.author == 'blackjack15926811'){
     message.reply('QUE TOQUES LA PUTA CARGA AZA JODER')
-
+  }
+  // Respuesta a peplo y las orisas
+  if (regexPeplo.test(message.content) && message.author == 'Peplo'){
+    message.reply('PE... PE... PERO ORISA, PEPLO!')
   }
   // Respuesta a halpmepls
   if (message.content === '!halpmepls'){
