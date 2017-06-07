@@ -79,7 +79,7 @@ client.on('message', message => {
   if (regexAsco.test(message.content)){
     message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/321729711950528513/unknown.png'})
   }
-  if (regexRate.test(message.content){
+  if (regexRate.test(message.content)){
     message.channel.send('',{ file: 'http://i.imgur.com/TGGnTq1.jpg'})
   }
 });
