@@ -16,6 +16,7 @@ const regexPing = /(ping)|(lag)/i
 const regexSaludos = /(Hola a todos)|(gente)|(buenas)|(señores)/i
 const regexCarga = /(carga)|(punto)|(payload)|(proteg)/i
 const regexPeplo = /(pero)|(orisa)|(support)/i
+const regexAsco = /(asco)|(c[aá]ncer)|(sida)|(zanker)|(asquer)|(pharah?)|(yasuo)|(hanzo)/i
 
 var http = require("http");
 
@@ -72,6 +73,10 @@ client.on('message', message => {
   // Respuesta a halpmepls
   if (message.content === '!halpmepls'){
     message.channel.send('ESTE TÍO DICE QUE NECESITA AYUDA PUTO PRINGAO\'. \nSEGURO QUE ES UN LELPLAYER. \nEH TÍOS, QUE NECESITA AYUDA!!!!1!uno!. PERO MIRA QUÉ PRINGAO\'...')
+  }
+  // Respuesta al asco
+  if (regexAsco.test(message.content)){
+    message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/321729711950528513/unknown.png'})
   }
 });
 
