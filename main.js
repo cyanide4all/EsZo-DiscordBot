@@ -17,6 +17,7 @@ const regexSaludos = /(Hola a todos)|(gente)|(buenas)|(señores)/i
 const regexCarga = /(carga)|(punto)|(payload)|(proteg)/i
 const regexPeplo = /(pero)|(orisa)|(support)/i
 const regexAsco = /(asco)|(c[aá]ncer)|(sida)|(zanker)|(asquer)|(pharah?)|(yasuo)|(hanzo)/i
+const regexRate = /[0-9]+\/[0-9]+/
 
 var http = require("http");
 
@@ -77,6 +78,9 @@ client.on('message', message => {
   // Respuesta al asco
   if (regexAsco.test(message.content)){
     message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/321729711950528513/unknown.png'})
+  }
+  if (regexRate.test(message.content){
+    message.channel.send('',{ file: 'http://i.imgur.com/TGGnTq1.jpg'})
   }
 });
 
