@@ -47,7 +47,7 @@ client.on('message', message => {
   }
   // Respuesta a la queja de repetidas
   if (regexDuplicates.test(message.content)) {
-    message.channel.send('https://cdn.discordapp.com/attachments/268398719802540032/305840663516282880/C-DBN6mW0AEtgI4.png')
+    message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/305840663516282880/C-DBN6mW0AEtgI4.png'})
   }
   // Respuesta a reinhartd
   if (regexRein.test(message.content)) {
