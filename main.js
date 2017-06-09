@@ -39,48 +39,51 @@ client.on('ready', () => {
 
 // Listeners para mensajes
 client.on('message', message => {
-  // Listener para walker
-  if (message.author.username === 'DarkWalker') {
-    message.reply("¡¡¡¡¡¡¡¡¡FELIZ CUMPLEAÑOS WALKER!!!1!UNO!");
-  }
-  // Respuesta a la palabra support
-  if (regexSupp.test(message.content) && message.author.username != 'EstrellaZorro') {
-    message.channel.send('PROTEGED AL SUPPORT JODER')
-  }
-  // Respuesta a la queja de repetidas
-  if (regexDuplicates.test(message.content)) {
-    message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/305840663516282880/C-DBN6mW0AEtgI4.png'})
-  }
-  // Respuesta a reinhartd
-  if (regexRein.test(message.content)) {
-    message.channel.send('RECTANGLE')
-  }
-  // Respuesta a queja de ping
-  if (regexPing.test(message.content)) {
-    message.channel.send('CONEXIÓN DE MIERDA')
-  }
-  // Respuesta a un saludo al servidor
-  if (regexSaludos.test(message.content)) {
-    message.reply('HOLA MAMÁ')
-  }
-  // Respuesta a aza y las cargas
-  if (regexCarga.test(message.content) && message.author.username == 'blackjack15926811'){
-    message.reply('QUE TOQUES LA PUTA CARGA AZA JODER')
-  }
-  // Respuesta a peplo y las orisas
-  if (regexPeplo.test(message.content) && message.author.username == 'Peplo'){
-    message.reply('PE... PE... PERO ORISA, PEPLO!')
-  }
-  // Respuesta a halpmepls
-  if (message.content === '!halpmepls'){
-    message.channel.send('ESTE TÍO DICE QUE NECESITA AYUDA PUTO PRINGAO\'. \nSEGURO QUE ES UN LELPLAYER. \nEH TÍOS, QUE NECESITA AYUDA!!!!1!uno!. PERO MIRA QUÉ PRINGAO\'...')
-  }
-  // Respuesta al asco
-  if (regexAsco.test(message.content)){
-    message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/321729711950528513/unknown.png'})
-  }
-  if (regexRate.test(message.content)){
-    message.channel.send('',{ file: 'http://i.imgur.com/TGGnTq1.jpg'})
+  // Si el mensaje no lo escribe el bot
+  if( message.author.username != 'EstrellaZorro'){
+    // Listener para walker
+    if (message.author.username === 'DarkWalker') {
+      message.reply("¡¡¡¡¡¡¡¡¡FELIZ CUMPLEAÑOS WALKER!!!1!UNO!");
+    }
+    // Respuesta a la palabra support
+    if (regexSupp.test(message.content)) {
+      message.channel.send('PROTEGED AL SUPPORT JODER')
+    }
+    // Respuesta a la queja de repetidas
+    if (regexDuplicates.test(message.content)) {
+      message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/305840663516282880/C-DBN6mW0AEtgI4.png'})
+    }
+    // Respuesta a reinhartd
+    if (regexRein.test(message.content)) {
+      message.channel.send('RECTANGLE')
+    }
+    // Respuesta a queja de ping
+    if (regexPing.test(message.content)) {
+      message.channel.send('CONEXIÓN DE MIERDA')
+    }
+    // Respuesta a un saludo al servidor
+    if (regexSaludos.test(message.content)) {
+      message.reply('HOLA MAMÁ')
+    }
+    // Respuesta a aza y las cargas
+    if (regexCarga.test(message.content) && message.author.username == 'blackjack15926811'){
+      message.reply('QUE TOQUES LA PUTA CARGA AZA JODER')
+    }
+    // Respuesta a peplo y las orisas
+    if (regexPeplo.test(message.content) && message.author.username == 'Peplo'){
+      message.reply('PE... PE... PERO ORISA, PEPLO!')
+    }
+    // Respuesta a halpmepls
+    if (message.content === '!halpmepls'){
+      message.channel.send('ESTE TÍO DICE QUE NECESITA AYUDA PUTO PRINGAO\'. \nSEGURO QUE ES UN LELPLAYER. \nEH TÍOS, QUE NECESITA AYUDA!!!!1!uno!. PERO MIRA QUÉ PRINGAO\'...')
+    }
+    // Respuesta al asco
+    if (regexAsco.test(message.content)){
+      message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/321729711950528513/unknown.png'})
+    }
+    if (regexRate.test(message.content)){
+      message.channel.send('',{ file: 'http://i.imgur.com/TGGnTq1.jpg'})
+    }
   }
 });
 
