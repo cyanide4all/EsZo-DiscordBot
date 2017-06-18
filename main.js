@@ -24,6 +24,8 @@ const regexKek = /kek/i
 const regexPuton = /(que gracioso)|(hahaha)|(puto tonto)/i  
 const regexChancla = /(chancla)|(chancla mortal)|(chancla mortal nid jilin)/i
 const regexNegrito = /(felipe)|(negritoriko)/i
+const regexBamboo = /(bambú)|(bambu)|(bamboo)/i
+
 
 var http = require("http");
 
@@ -91,11 +93,14 @@ client.on('message', message => {
       message.channel.send('',{ file: 'http://i.imgur.com/TGGnTq1.jpg'})
     }
 	 // Respuestas a los saludos de Panda
-	 if (regexPansal1.test(message.content) && message.author.username == 'SrPanda'){
+	 if (regexPansal1.test(message.content) && message.author.username == 'Sr Panda'){
       message.reply('HOLA PAPÁ')
     }
-	if (regexPansal2.test(message.content) && message.author.username == 'SrPanda'){
+	if (regexPansal2.test(message.content) && message.author.username == 'Sr Panda'){
       message.reply('CON LAG, COMO MAMÁ')
+    }
+	if (regexBamboo.test(message.content) && message.author.username == 'Sr Panda'){
+      message.reply('DALES CON EL BAMBÚ, ACABA CON ELLOS PAPÁ')
     }
 	//Respuesta al KEK
 	if (regexKek.test(message.content) && message.author.username == 'Shoorema'){
