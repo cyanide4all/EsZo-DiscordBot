@@ -18,6 +18,12 @@ const regexCarga = /(carga)|(punto)|(payload)|(proteg)/i
 const regexPeplo = /(pero)|(orisa)|(support)/i
 const regexAsco = /(asco)|(c[aá]ncer)|(sida)|(zanker)|(asquer)|(pharah?)|(yasuo)|(hanzo)/i
 const regexRate = /[0-9]+\/[0-9]+/
+const regexPansal1 = /(hola)|(buenas)|(gente)/i
+const regexPansal2 = /(Que tal)/
+const regexKek = /kek/i
+const regexPuton = /(que gracioso)|(hahaha)|(puto tonto)/i  
+const regexChancla = /(chancla)|(chancla mortal)|(chancla mortal nid jilin)/i
+const regexNegrito = /(felipe)|(negritoriko)/i
 
 var http = require("http");
 
@@ -84,7 +90,32 @@ client.on('message', message => {
     if (regexRate.test(message.content)){
       message.channel.send('',{ file: 'http://i.imgur.com/TGGnTq1.jpg'})
     }
+	 // Respuestas a los saludos de Panda
+	 if (regexPansal1.test(message.content) && message.author.username == 'SrPanda'){
+      message.reply('HOLA PAPÁ')
+    }
+	if (regexPansal2.test(message.content) && message.author.username == 'SrPanda'){
+      message.reply('CON LAG, COMO MAMÁ')
+    }
+	//Respuesta al KEK
+	if (regexKek.test(message.content) && message.author.username == 'Shoorema'){
+      message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/319091887304605697/325810913686978561/kek.jpeg'})
+    }
+	// Puto tonto 
+	if (regexPuton.test(message.content)){
+      message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/322009184637812736/unknown.png'})
+    }
+	// Respuesta a Felipe
+	if (regexNegrito.test(message.content)) {
+      message.reply('El señor Negritoriko vende CHORIZO y SULFATO')
+    }
+	// Respuesta a la chancla
+	if (regexChancla.test(message.content)) {
+      message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/325618149032722432/IMG_20170617_144948.JPG'})
+    }
   }
+ 
+   
 });
 
 // Listener para cuando se viene alguien nuevo
