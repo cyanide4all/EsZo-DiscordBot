@@ -97,8 +97,8 @@ client.on('message', message => {
     if (regexRate.test(message.content)){
       message.channel.send('',{ file: 'http://i.imgur.com/TGGnTq1.jpg'})
     }
-	 // Respuestas a los saludos de Panda
-	 if (regexPansal1.test(message.content) && message.author.username == 'Sr Panda'){
+	// Respuestas a los saludos de Panda
+	if (regexPansal1.test(message.content) && message.author.username == 'Sr Panda'){
       message.reply('HOLA PAPÁ')
     }
 	if (regexPansal2.test(message.content) && message.author.username == 'Sr Panda'){
@@ -108,7 +108,7 @@ client.on('message', message => {
       message.reply('DALES CON EL BAMBÚ, ACABA CON ELLOS PAPÁ')
     }
 	//Respuesta al KEK
-	if (regexKek.test(message.content) && message.author.username == 'Shoorema'){
+	  if (regexKek.test(message.content) && message.author.username == 'Shoorema'){
       message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/319091887304605697/325810913686978561/kek.jpeg'})
     }
 	// Puto tonto
@@ -133,10 +133,9 @@ client.on('message', message => {
     message.reply('ES TIEMPO DE JIROS DE LOS CASUALS')
   })
 
-  message.checks(message.content.length > 20, (message)=>{
+  message.checks(message.content.length > 140, (message)=>{
     message.reply('muy largo; no leo')
   })
-
 
   }
 });
