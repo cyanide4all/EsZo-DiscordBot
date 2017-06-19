@@ -130,7 +130,7 @@ client.on('message', message => {
     message.reply(covfefify(message.content))
   })
 
-  message.matchs(/(jiros)/, (message) => {
+if (regexJiros.test(message.content)) {
     message.reply('ES TIEMPO DE JIROS DE LOS CASUALS')
   })
 
