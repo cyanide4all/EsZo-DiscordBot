@@ -98,40 +98,41 @@ client.on('message', message => {
     if (regexRate.test(message.content)){
       message.channel.send('',{ file: 'http://i.imgur.com/TGGnTq1.jpg'})
     }
-	// Respuestas a los saludos de Panda
-	if (regexPansal1.test(message.content) && message.author.username == 'Sr Panda'){
+    // Respuestas a los saludos de Panda
+    if (regexPansal1.test(message.content) && message.author.username == 'Sr Panda'){
       message.reply('HOLA PAPÁ')
     }
-	if (regexPansal2.test(message.content) && message.author.username == 'Sr Panda'){
+    if (regexPansal2.test(message.content) && message.author.username == 'Sr Panda'){
       message.reply('CON LAG, COMO MAMÁ')
     }
-	if (regexBamboo.test(message.content) && message.author.username == 'Sr Panda'){
+    if (regexBamboo.test(message.content) && message.author.username == 'Sr Panda'){
       message.reply('DALES CON EL BAMBÚ, ACABA CON ELLOS PAPÁ')
     }
-	//Respuesta al KEK
-	  if (regexKek.test(message.content) && message.author.username == 'Shoorema'){
+    //Respuesta al KEK
+    if (regexKek.test(message.content) && message.author.username == 'Shoorema'){
       message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/319091887304605697/325810913686978561/kek.jpeg'})
     }
-	// Puto tonto
-	if (regexPuton.test(message.content)){
+    // Puto tonto
+    if (regexPuton.test(message.content)){
       message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/322009184637812736/unknown.png'})
     }
-	// Respuesta a Felipe
-	if (regexNegrito.test(message.content)) {
+    // Respuesta a Felipe
+    if (regexNegrito.test(message.content)) {
       message.reply('El señor Negritoriko vende CHORIZO y SULFATO')
     }
-	// Respuesta a la chancla
-	if (regexChancla.test(message.content)) {
+    // Respuesta a la chancla
+    if (regexChancla.test(message.content)) {
       message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/325618149032722432/IMG_20170617_144948.JPG'})
     }
+    //Respuesta al jirous
+    if (regexJiros.test(message.content)) {
+      message.reply('ES TIEMPO DE JIROS DE LOS CASUALS')
+    }
+
 
   // nueva sintaxis proporcionada por el checker y el ApplyChecker
   message.command('/covfefe', (message) => {
     message.reply(covfefify(message.content))
-  })
-
-if (regexJiros.test(message.content)) {
-    message.reply('ES TIEMPO DE JIROS DE LOS CASUALS')
   })
 
   message.checks(message.content.length > 140, (message)=>{
