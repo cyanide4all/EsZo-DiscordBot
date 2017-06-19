@@ -1,5 +1,9 @@
 // Import the discord.js module
 const Discord = require('discord.js');
+// Import the checker functionality
+const ApplyChecker = require('./checker.js');
+// Import covfefify
+const covfefify = require('./covfefify.js');
 
 // Instancia de cliente Discord
 const client = new Discord.Client();
@@ -21,7 +25,7 @@ const regexRate = /[0-9]+\/[0-9]+/
 const regexPansal1 = /(hola)|(buenas)|(gente)/i
 const regexPansal2 = /(Que tal)/
 const regexKek = /kek/i
-const regexPuton = /(que gracioso)|(hahaha)|(puto tonto)/i  
+const regexPuton = /(que gracioso)|(hahaha)|(puto tonto)/i
 const regexChancla = /(chancla)|(chancla mortal)|(chancla mortal nid jilin)/i
 const regexNegrito = /(felipe)|(negritoriko)/i
 const regexBamboo = /(bambú)|(bambu)|(bamboo)/i
@@ -47,6 +51,7 @@ client.on('ready', () => {
 
 // Listeners para mensajes
 client.on('message', message => {
+  ApplyChecker(message)
   // Si el mensaje no lo escribe el bot
   if( message.author.username != 'EstrellaZorro'){
     // Listener para walker
@@ -106,7 +111,7 @@ client.on('message', message => {
 	if (regexKek.test(message.content) && message.author.username == 'Shoorema'){
       message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/319091887304605697/325810913686978561/kek.jpeg'})
     }
-	// Puto tonto 
+	// Puto tonto
 	if (regexPuton.test(message.content)){
       message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/322009184637812736/unknown.png'})
     }
@@ -118,9 +123,22 @@ client.on('message', message => {
 	if (regexChancla.test(message.content)) {
       message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/325618149032722432/IMG_20170617_144948.JPG'})
     }
+
+  // nueva sintaxis proporcionada por el checker y el ApplyChecker
+  message.command('/covfefe', (message) => {
+    message.reply(covfefify(message.content))
+  })
+
+  message.matchs(/(jiros)/, (message) => {
+    message.reply('ES TIEMPO DE JIROS DE LOS CASUALS')
+  })
+
+  message.checks(message.content.length > 20, (message)=>{
+    message.reply('muy largo; no leo')
+  })
+
+
   }
- 
-   
 });
 
 // Listener para cuando se viene alguien nuevo
