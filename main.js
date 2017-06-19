@@ -29,6 +29,7 @@ const regexPuton = /(que gracioso)|(hahaha)|(puto tonto)/i
 const regexChancla = /(chancla)|(chancla mortal) nid jilin/i
 const regexNegrito = /(felipe)|(negritoriko)/i
 const regexBamboo = /(bambú)|(bambu)|(bamboo)/i
+const regexJiros = /jiro+u*s+/
 
 
 var http = require("http");
