@@ -26,7 +26,7 @@ const regexPansal1 = /(hola)|(buenas)|(gente)/i
 const regexPansal2 = /(Que tal)/
 const regexKek = /kek/i
 const regexPuton = /(que gracioso)|(hahaha)|(puto tonto)/i
-const regexChancla = /(chancla)|(chancla mortal)|(chancla mortal nid jilin)/i
+const regexChancla = /(chancla)|(chancla mortal) nid jilin/i
 const regexNegrito = /(felipe)|(negritoriko)/i
 const regexBamboo = /(bambú)|(bambu)|(bamboo)/i
 
