@@ -110,7 +110,8 @@ client.on('message', message => {
     }
     //Respuesta al KEK
     if (regexKek.test(message.content) && message.author.username == 'Shoorema'){
-      message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/319091887304605697/325810913686978561/kek.jpeg'})
+      //Esto me lo cargo porque se hace pesao'
+      //message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/319091887304605697/325810913686978561/kek.jpeg'})
     }
     // Puto tonto
     if (regexPuton.test(message.content)){
