@@ -30,6 +30,7 @@ const regexChancla = /(chancla)|(chancla mortal) nid jilin/i
 const regexNegrito = /(felipe)|(negritoriko)/i
 const regexBamboo = /(bambú)|(bambu)|(bamboo)/i
 const regexJiros = /jiro+u*s+/i
+const regexCallMe = /(c[ao]ll)|(cell)|(selfon)|(avis)/i
 
 
 var http = require("http");
@@ -128,6 +129,9 @@ client.on('message', message => {
     //Respuesta al jirous
     if (regexJiros.test(message.content)) {
       message.reply('ES TIEMPO DE JIROS DE LOS CASUALS')
+    } 
+    if (regexCallMe.test(message.content)) {
+      message.reply('https://68.media.tumblr.com/f67ea264b93b8df0e558b61f019a2240/tumblr_o4rc1yh5ql1uulaizo1_500.gif')
     }
 
 
