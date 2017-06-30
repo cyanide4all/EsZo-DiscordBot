@@ -31,7 +31,7 @@ const regexNegrito = /(felipe)|(negritoriko)/i
 const regexBamboo = /(bambú)|(bambu)|(bamboo)/i
 const regexJiros = /jiro+u*s+/i
 const regexCallMe = /(c[ao]ll)|(cell)|(selfon)|(avis)/i
-const regexBoja = /(borj)|(Hagrov)/i
+const regexBorja = /(borj)|(Hagrov)/i
 
 
 var http = require("http");
