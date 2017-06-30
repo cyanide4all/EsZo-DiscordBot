@@ -31,6 +31,7 @@ const regexNegrito = /(felipe)|(negritoriko)/i
 const regexBamboo = /(bambú)|(bambu)|(bamboo)/i
 const regexJiros = /jiro+u*s+/i
 const regexCallMe = /(c[ao]ll)|(cell)|(selfon)|(avis)/i
+const regexBoja = /(borj)|(Hagrov)/i
 
 
 var http = require("http");
@@ -133,7 +134,10 @@ client.on('message', message => {
     if (regexCallMe.test(message.content)) {
       message.channel.send('https://68.media.tumblr.com/f67ea264b93b8df0e558b61f019a2240/tumblr_o4rc1yh5ql1uulaizo1_500.gif')
     }
-
+    if (regexChancla.test(message.content)) {
+      message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/330319777694220288/kek.jpg'})
+    }
+    
 
   // nueva sintaxis proporcionada por el checker y el ApplyChecker
   message.command('/covfefe', (message) => {
