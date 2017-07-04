@@ -172,8 +172,8 @@ client.on('guildMemberRemove', member => {
   }
 })
 
-  client.on('guildMemberSpeaking', member =>{
-    member.guild.defaultChannel.send('QUE TE CALLES, '+member.displayName)
-  })
+client.on('guildMemberSpeaking', member => {
+  member.guild.defaultChannel.send('QUE TE CALLES, '+ member.displayName)
+})
 
 client.login(token);
