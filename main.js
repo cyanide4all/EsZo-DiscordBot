@@ -85,6 +85,9 @@ client.on('message', message => {
     if (regexCarga.test(message.content) && message.author.username == 'blackjack15926811'){
       message.reply('QUE TOQUES LA PUTA CARGA AZA JODER')
     }
+    if (/hola bot/i.test(message.content)){
+        message.reply('HOLAS, PERO SOY UN BOT. DEBERÍAS HABLAR CON SERES HUMANOS')
+    }
     // Respuesta a peplo y las orisas
     if (regexPeplo.test(message.content) && message.author.username == 'Peplo'){
       message.reply('PE... PE... PERO ORISA, PEPLO!')
@@ -170,10 +173,6 @@ client.on('guildMemberRemove', member => {
     member.guild.defaultChannel.send('Le echaremos de menos. O no.')
     // WIP--------------  TODO TODO
   }
-})
-
-client.on('guildMemberSpeaking', member => {
-  member.guild.defaultChannel.send('QUE TE CALLES, '+ member.displayName)
 })
 
 client.login(token);
