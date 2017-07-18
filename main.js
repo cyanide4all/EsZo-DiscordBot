@@ -50,6 +50,11 @@ setInterval(function() {
 //Cuando el bot hace sus cosas pasa esto:
 client.on('ready', () => {
   console.log("Doing some gud' ol' barrel rolls...");
+  
+  //Conexion al canal de bots
+  let channel = client.channels.get('336838964004651008');
+  channel.join().then(connection => {
+  }).catch(console.log)
 });
 
 // Listeners para mensajes
