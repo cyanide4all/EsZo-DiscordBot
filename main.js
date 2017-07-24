@@ -50,10 +50,14 @@ setInterval(function() {
 //Cuando el bot hace sus cosas pasa esto:
 client.on('ready', () => {
   console.log("Doing some gud' ol' barrel rolls...");
-  
+
   //Conexion al canal de bots
   let channel = client.channels.get('336838964004651008');
   channel.join().then(connection => {
+    const dispatcher = connection.playArbitraryInput("audio.mp3")
+    dispatcher.on('end', () =>{
+      connection.playArbitraryInput("audio.mp3")
+    });
   }).catch(console.log)
 });
 
@@ -138,14 +142,14 @@ client.on('message', message => {
     //Respuesta al jirous
     if (regexJiros.test(message.content)) {
       message.reply('ES TIEMPO DE JIROS DE LOS CASUALS')
-    } 
+    }
     if (regexCallMe.test(message.content)) {
       message.channel.send('https://68.media.tumblr.com/f67ea264b93b8df0e558b61f019a2240/tumblr_o4rc1yh5ql1uulaizo1_500.gif')
     }
     if (regexBorja.test(message.content)) {
       message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/330319777694220288/kek.jpg'})
     }
-    
+
 
   // nueva sintaxis proporcionada por el checker y el ApplyChecker
   message.command('/covfefe', (message) => {
