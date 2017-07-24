@@ -4,7 +4,8 @@
   "description": "nope this time",
   "main": "main.js",
   "dependencies": {
-    "discord.js": "^11.1.0"
+    "discord.js": "^11.1.0",
+    "node-opus": "^0.2.6"
   },
   "devDependencies": {},
   "scripts": {
