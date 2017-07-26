@@ -54,9 +54,9 @@ client.on('ready', () => {
   //Conexion al canal de bots
   let channel = client.channels.get('336838964004651008');
   channel.join().then(connection => {
-    const dispatcher = connection.playArbitraryInput("https://clyp.it/cpx5jbmc")
+    const dispatcher = connection.playArbitraryInput("audio.mp3")
     dispatcher.on('end', () =>{
-      connection.playArbitraryInput("https://clyp.it/cpx5jbmc")
+      connection.playArbitraryInput("audio.mp3")
     });
   }).catch(console.log)
 });
