@@ -32,7 +32,7 @@ const regexBamboo = /(bambú)|(bambu)|(bamboo)/i
 const regexJiros = /jiro+u*s+/i
 const regexCallMe = /(c[ao]ll)|(cell)|(selfon)|(avis)/i
 const regexBorja = /(borj)|(Hagrov)/i
-
+const regexQuejaBot = /((c[aá]llate)|(que te calles)|(ktkys)|(puto)).*bot/i
 
 var http = require("http");
 
@@ -95,6 +95,9 @@ client.on('message', message => {
       message.reply('QUE TOQUES LA PUTA CARGA AZA JODER')
     }
     if (/hola bot/i.test(message.content)){
+        message.reply('HOLAS, PERO SOY UN BOT. DEBERÍAS HABLAR CON SERES HUMANOS')
+    }
+    if (regexQuejaBot.test(message.content)){
         message.reply('HOLAS, PERO SOY UN BOT. DEBERÍAS HABLAR CON SERES HUMANOS')
     }
     // Respuesta a peplo y las orisas
