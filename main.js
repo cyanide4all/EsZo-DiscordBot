@@ -98,7 +98,7 @@ client.on('message', message => {
         message.reply('HOLAS, PERO SOY UN BOT. DEBERÍAS HABLAR CON SERES HUMANOS')
     }
     if (regexQuejaBot.test(message.content)){
-        message.reply('HOLAS, PERO SOY UN BOT. DEBERÍAS HABLAR CON SERES HUMANOS')
+        message.reply('LO SIENTO LO HAGO SIN QUERER')
     }
     // Respuesta a peplo y las orisas
     if (regexPeplo.test(message.content) && message.author.username == 'Peplo'){
