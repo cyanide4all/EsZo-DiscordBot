@@ -58,7 +58,7 @@ client.on('message', message => {
   // Si el mensaje no lo escribe el bot
   if( message.author.username != 'EstrellaZorro'){
     // Listener para reproduccion
-    if ("!bling" == message.content)) {
+    if ("!bling" == message.content) {
       //Conexion al canal de bots
       let channel = client.channels.get('336838964004651008');
       channel.join().then(connection => {
