@@ -50,15 +50,6 @@ setInterval(function() {
 //Cuando el bot hace sus cosas pasa esto:
 client.on('ready', () => {
   console.log("Doing some gud' ol' barrel rolls...");
-
-  //Conexion al canal de bots
-  let channel = client.channels.get('336838964004651008');
-  channel.join().then(connection => {
-    const dispatcher = connection.playArbitraryInput("audio.mp3")
-    dispatcher.on('end', () =>{
-      connection.playArbitraryInput("audio.mp3")
-    });
-  }).catch(console.log)
 });
 
 // Listeners para mensajes
@@ -66,6 +57,17 @@ client.on('message', message => {
   ApplyChecker(message)
   // Si el mensaje no lo escribe el bot
   if( message.author.username != 'EstrellaZorro'){
+    // Listener para reproduccion
+    if ("!bling" == message.content)) {
+      //Conexion al canal de bots
+      let channel = client.channels.get('336838964004651008');
+      channel.join().then(connection => {
+        const dispatcher = connection.playArbitraryInput("audio.mp3")
+        dispatcher.on('end', () =>{
+          channel.leave();
+        });
+      }).catch(console.log)
+    }
     // Listener para walker
     if (message.author.username === 'DarkWalker') {
       message.reply("¡¡¡¡¡¡¡¡¡FELIZ CUMPLEAÑOS WALKER!!!1!UNO!");
