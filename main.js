@@ -59,8 +59,11 @@ client.on('message', message => {
   if( message.author.username != 'EstrellaZorro'){
     // Listener para reproduccion
     if ("!bling" == message.content) {
-      //Conexion al canal de bots
-      let channel = client.channels.get('336838964004651008');
+      //Conexion al canal del user o de bots en su defecto
+      let channel = message.member.voiceChannel
+      if(channel == null){
+        channel = client.channels.get('336838964004651008');
+      }
       channel.join().then(connection => {
         const dispatcher = connection.playArbitraryInput("audio.mp3")
         dispatcher.on('end', () =>{
