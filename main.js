@@ -77,7 +77,12 @@ client.on('ready', () => {
 client.on('message', message => {
   ApplyChecker(message)
   if(message.channel.id == 346796946393923584){
-    twitter.postTweet({'status': message.content + message.attachments.array()[0].url}, error, success);
+    var adjuntos = message.attachments.array()
+    var adjuntoUrl = ''
+    if(array.length > 0){
+      adjuntoUrl = adjuntos[0].url
+    }
+    twitter.postTweet({'status': message.content + adjuntoUrl}, error, success);
   }else{
     // Si el mensaje no lo escribe el bot
     if( message.author.username != 'EstrellaZorro'){
