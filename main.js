@@ -64,7 +64,7 @@ client.on('message', message => {
       channel.join().then(connection => {
         const dispatcher = connection.playArbitraryInput("audio.mp3")
         dispatcher.on('end', () =>{
-          channel.leave();
+          connection.channel.leave();
         });
       }).catch(console.log)
     }
