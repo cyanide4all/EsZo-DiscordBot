@@ -5,6 +5,27 @@ const ApplyChecker = require('./checker.js');
 // Import covfefify
 const covfefify = require('./covfefify.js');
 
+
+
+// Import twitter
+var Twitter = require('twitter-node-client').Twitter;
+//Callback functions para twitter
+var error = function (err, response, body) {
+  	console.log('ERROR [%s]', err);
+};
+var success = function (data) {
+    //Nada
+    //console.log('Data [%s]', data);
+};
+
+var twitter = new Twitter({
+  "consumerKey": "s6x1QoVOR2PKrn0HFsr4hKllt",
+  "consumerSecret": "qvfsAB0gE2sNzlVTw4ognp5kA9e1d4XXS9qZELkt2t913NpOSF",
+  "accessToken": "897807876684738560-gbyDorOQ4noTVDKKr9FvZoefbVvgfqS",
+  "accessTokenSecret": "1fK2ng8vQJPoJGDfsz3BfMHxoqsojKwqA4bRsNKEjFEj1",
+  "callBackUrl": "http://eszobot.herokuapp.com/"
+});
+
 // Instancia de cliente Discord
 const client = new Discord.Client();
 
@@ -55,120 +76,125 @@ client.on('ready', () => {
 // Listeners para mensajes
 client.on('message', message => {
   ApplyChecker(message)
-  // Si el mensaje no lo escribe el bot
-  if( message.author.username != 'EstrellaZorro'){
-    // Listener para reproduccion
-    if ("!bling" == message.content) {
-      //Conexion al canal del user o de bots en su defecto
-      let channel = message.member.voiceChannel
-      if(channel == null){
-        channel = client.channels.get('336838964004651008');
+  if(message.channel.id == 346796946393923584){
+    twitter.postTweet({'status': message.content}, error, success);
+  }else{
+    // Si el mensaje no lo escribe el bot
+    if( message.author.username != 'EstrellaZorro'){
+      // Listener para reproduccion
+      if ("!bling" == message.content) {
+        //Conexion al canal del user o de bots en su defecto
+        let channel = message.member.voiceChannel
+        if(channel == null){
+          channel = client.channels.get('336838964004651008');
+        }
+        channel.join().then(connection => {
+          const dispatcher = connection.playArbitraryInput("audio.mp3")
+          dispatcher.on('end', () =>{
+            connection.channel.leave();
+          });
+        }).catch(console.log)
       }
-      channel.join().then(connection => {
-        const dispatcher = connection.playArbitraryInput("audio.mp3")
-        dispatcher.on('end', () =>{
-          connection.channel.leave();
-        });
-      }).catch(console.log)
-    }
-    // Listener para walker
-    if (message.author.username === 'DarkWalker') {
-      message.reply("¡¡¡¡¡¡¡¡¡FELIZ CUMPLEAÑOS WALKER!!!1!UNO!");
-    }
-    // Respuesta a la palabra support
-    if (regexSupp.test(message.content)) {
-      message.channel.send('PROTEGED AL SUPPORT JODER')
-    }
-    // Respuesta a la queja de repetidas
-    if (regexDuplicates.test(message.content)) {
-      message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/305840663516282880/C-DBN6mW0AEtgI4.png'})
-    }
-    // Respuesta a reinhartd
-    if (regexRein.test(message.content)) {
-      message.channel.send('RECTANGLE')
-    }
-    // Respuesta a queja de ping
-    if (regexPing.test(message.content)) {
-      message.channel.send('CONEXIÓN DE MIERDA')
-    }
-    // Respuesta a un saludo al servidor
-    if (regexSaludos.test(message.content)) {
-      message.reply('HOLA MAMÁ')
-    }
-    // Respuesta a aza y las cargas
-    if (regexCarga.test(message.content) && message.author.username == 'blackjack15926811'){
-      message.reply('QUE TOQUES LA PUTA CARGA AZA JODER')
-    }
-    if (/hola bot/i.test(message.content)){
-        message.reply('HOLAS, PERO SOY UN BOT. DEBERÍAS HABLAR CON SERES HUMANOS')
-    }
-    if (regexQuejaBot.test(message.content)){
-        message.reply('LO SIENTO LO HAGO SIN QUERER')
-    }
-    // Respuesta a peplo y las orisas
-    if (regexPeplo.test(message.content) && message.author.username == 'Peplo'){
-      message.reply('PE... PE... PERO ORISA, PEPLO!')
-    }
-    // Respuesta a halpmepls
-    if (message.content === '!halpmepls'){
-      message.channel.send('ESTE TÍO DICE QUE NECESITA AYUDA PUTO PRINGAO\'. \nSEGURO QUE ES UN LELPLAYER. \nEH TÍOS, QUE NECESITA AYUDA!!!!1!uno!. PERO MIRA QUÉ PRINGAO\'...')
-    }
-    // Respuesta al asco
-    if (regexAsco.test(message.content)){
-      message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/321729711950528513/unknown.png'})
-    }
-    if (regexRate.test(message.content)){
-      message.channel.send('',{ file: 'http://i.imgur.com/TGGnTq1.jpg'})
-    }
-    // Respuestas a los saludos de Panda
-    if (regexPansal1.test(message.content) && message.author.username == 'Sr Panda'){
-      message.reply('HOLA PAPÁ')
-    }
-    if (regexPansal2.test(message.content) && message.author.username == 'Sr Panda'){
-      message.reply('CON LAG, COMO MAMÁ')
-    }
-    if (regexBamboo.test(message.content) && message.author.username == 'Sr Panda'){
-      message.reply('DALES CON EL BAMBÚ, ACABA CON ELLOS PAPÁ')
-    }
-    //Respuesta al KEK
-    if (regexKek.test(message.content) && message.author.username == 'Shoorema'){
-      //Esto me lo cargo porque se hace pesao'
-      //message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/319091887304605697/325810913686978561/kek.jpeg'})
-    }
-    // Puto tonto
-    if (regexPuton.test(message.content)){
-      message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/322009184637812736/unknown.png'})
-    }
-    // Respuesta a Felipe
-    if (regexNegrito.test(message.content)) {
-      message.reply('El señor Negritoriko vende CHORIZO y SULFATO')
-    }
-    // Respuesta a la chancla
-    if (regexChancla.test(message.content)) {
-      message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/325618149032722432/IMG_20170617_144948.JPG'})
-    }
-    //Respuesta al jirous
-    if (regexJiros.test(message.content)) {
-      message.reply('ES TIEMPO DE JIROS DE LOS CASUALS')
-    }
-    if (regexCallMe.test(message.content)) {
-      message.channel.send('https://68.media.tumblr.com/f67ea264b93b8df0e558b61f019a2240/tumblr_o4rc1yh5ql1uulaizo1_500.gif')
-    }
-    if (regexBorja.test(message.content)) {
-      message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/330319777694220288/kek.jpg'})
-    }
+      // Listener para walker
+      if (message.author.username === 'DarkWalker') {
+        message.reply("¡¡¡¡¡¡¡¡¡FELIZ CUMPLEAÑOS WALKER!!!1!UNO!");
+      }
+      // Respuesta a la palabra support
+      if (regexSupp.test(message.content)) {
+        message.channel.send('PROTEGED AL SUPPORT JODER')
+      }
+      // Respuesta a la queja de repetidas
+      if (regexDuplicates.test(message.content)) {
+        message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/305840663516282880/C-DBN6mW0AEtgI4.png'})
+      }
+      // Respuesta a reinhartd
+      if (regexRein.test(message.content)) {
+        message.channel.send('RECTANGLE')
+      }
+      // Respuesta a queja de ping
+      if (regexPing.test(message.content)) {
+        message.channel.send('CONEXIÓN DE MIERDA')
+      }
+      // Respuesta a un saludo al servidor
+      if (regexSaludos.test(message.content)) {
+        message.reply('HOLA MAMÁ')
+      }
+      // Respuesta a aza y las cargas
+      if (regexCarga.test(message.content) && message.author.username == 'blackjack15926811'){
+        message.reply('QUE TOQUES LA PUTA CARGA AZA JODER')
+      }
+      if (/hola bot/i.test(message.content)){
+          message.reply('HOLAS, PERO SOY UN BOT. DEBERÍAS HABLAR CON SERES HUMANOS')
+      }
+      if (regexQuejaBot.test(message.content)){
+          message.reply('LO SIENTO LO HAGO SIN QUERER')
+      }
+      // Respuesta a peplo y las orisas
+      if (regexPeplo.test(message.content) && message.author.username == 'Peplo'){
+        message.reply('PE... PE... PERO ORISA, PEPLO!')
+      }
+      // Respuesta a halpmepls
+      if (message.content === '!halpmepls'){
+        message.channel.send('ESTE TÍO DICE QUE NECESITA AYUDA PUTO PRINGAO\'. \nSEGURO QUE ES UN LELPLAYER. \nEH TÍOS, QUE NECESITA AYUDA!!!!1!uno!. PERO MIRA QUÉ PRINGAO\'...')
+      }
+      // Respuesta al asco
+      if (regexAsco.test(message.content)){
+        message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/321729711950528513/unknown.png'})
+      }
+      if (regexRate.test(message.content)){
+        message.channel.send('',{ file: 'http://i.imgur.com/TGGnTq1.jpg'})
+      }
+      // Respuestas a los saludos de Panda
+      if (regexPansal1.test(message.content) && message.author.username == 'Sr Panda'){
+        message.reply('HOLA PAPÁ')
+      }
+      if (regexPansal2.test(message.content) && message.author.username == 'Sr Panda'){
+        message.reply('CON LAG, COMO MAMÁ')
+      }
+      if (regexBamboo.test(message.content) && message.author.username == 'Sr Panda'){
+        message.reply('DALES CON EL BAMBÚ, ACABA CON ELLOS PAPÁ')
+      }
+      //Respuesta al KEK
+      if (regexKek.test(message.content) && message.author.username == 'Shoorema'){
+        //Esto me lo cargo porque se hace pesao'
+        //message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/319091887304605697/325810913686978561/kek.jpeg'})
+      }
+      // Puto tonto
+      if (regexPuton.test(message.content)){
+        message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/322009184637812736/unknown.png'})
+      }
+      // Respuesta a Felipe
+      if (regexNegrito.test(message.content)) {
+        message.reply('El señor Negritoriko vende CHORIZO y SULFATO')
+      }
+      // Respuesta a la chancla
+      if (regexChancla.test(message.content)) {
+        message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/325618149032722432/IMG_20170617_144948.JPG'})
+      }
+      //Respuesta al jirous
+      if (regexJiros.test(message.content)) {
+        message.reply('ES TIEMPO DE JIROS DE LOS CASUALS')
+      }
+      if (regexCallMe.test(message.content)) {
+        message.channel.send('https://68.media.tumblr.com/f67ea264b93b8df0e558b61f019a2240/tumblr_o4rc1yh5ql1uulaizo1_500.gif')
+      }
+      if (regexBorja.test(message.content)) {
+        message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/330319777694220288/kek.jpg'})
+      }
 
 
-  // nueva sintaxis proporcionada por el checker y el ApplyChecker
-  message.command('/covfefe', (message) => {
-    message.reply(covfefify(message.content))
-  })
+    // nueva sintaxis proporcionada por el checker y el ApplyChecker
+    message.command('/covfefe', (message) => {
+      message.reply(covfefify(message.content))
+    })
 
-  message.checks(message.content.length > 140, (message)=>{
-    message.reply('muy largo; no leo')
-  })
+    message.checks(message.content.length > 140, (message)=>{
+      message.reply('muy largo; no leo')
+    })
 
+    }
   }
+
 });
 
 // Listener para cuando se viene alguien nuevo

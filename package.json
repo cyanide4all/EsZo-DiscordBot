@@ -5,7 +5,8 @@
   "main": "main.js",
   "dependencies": {
     "discord.js": "^11.1.0",
-    "node-opus": "^0.2.6"
+    "node-opus": "^0.2.6",
+    "twitter-node-client": "0.0.6"
   },
   "devDependencies": {},
   "scripts": {
