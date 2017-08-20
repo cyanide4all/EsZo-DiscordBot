@@ -99,7 +99,21 @@ client.on('message', message => {
             connection.channel.leave();
           });
         }).catch(console.log)
-      }
+      } 
+      // Prueba !panda
+      if ("!panda" == message.content) {
+        //Conexion al canal del user o de bots en su defecto
+        let channel = message.member.voiceChannel
+        if(channel == null){
+          channel = client.channels.get('336838964004651008');
+        }
+        channel.join().then(connection => {
+          const dispatcher = connection.playArbitraryInput("panda.mp3")
+          dispatcher.on('end', () =>{
+            connection.channel.leave();
+          });
+        }).catch(console.log)
+      } //prueba !panda
       // Listener para walker
       if (message.author.username === 'DarkWalker') {
         message.reply("¡¡¡¡¡¡¡¡¡FELIZ CUMPLEAÑOS WALKER!!!1!UNO!");
