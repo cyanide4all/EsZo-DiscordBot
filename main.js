@@ -58,6 +58,7 @@ const regexQuejaBot = /((c[aá]llate)|(que te calles)|(ktkys)|(puto)).*bot/i
 
 //LOCAL PERSISTENCE
 var listeningAudioPetitions = true;
+var cumpleBolas = true;
 
 var http = require("http");
 
@@ -108,8 +109,16 @@ client.on('message', message => {
       }
 
       // Listener para walker
-      if (message.author.username === 'DarkWalker') {
+      if (cumpleBolas && message.author.username === 'DarkWalker') {
         message.reply("¡¡¡¡¡¡¡¡¡FELIZ CUMPLEAÑOS WALKER!!!1!UNO!");
+      }
+      if (message.content == '!cumple') {
+        cumpleBolas = !cumpleBolas;
+        if(cumpleBolas){
+          message.reply('Hoy es el cumple de walker!!!');
+        }else {
+          message.reply('Ya no es el cumple de walker...');
+        }
       }
       // Respuesta a la palabra support
       if (regexSupp.test(message.content)) {
