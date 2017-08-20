@@ -55,6 +55,7 @@ const regexJiros = /jiro+u*s+/i
 const regexCallMe = /(c[ao]ll)|(cell)|(selfon)|(avis)/i
 const regexBorja = /(borj)|(Hagrov)/i
 const regexQuejaBot = /((c[aá]llate)|(que te calles)|(ktkys)|(puto)).*bot/i
+const regexStaph = /(bot staph)|(para bot)/i
 
 //LOCAL PERSISTENCE
 var listeningAudioPetitions = true;
@@ -78,6 +79,15 @@ client.on('ready', () => {
   console.log("Doing some gud' ol' barrel rolls...");
 });
 
+//Desconecta del canal de voz si lo hay, luego ejecuta el callback
+var disconectVoiceThenExecute = function(callback){
+  var conexiones = client.voiceConnections.array();
+  if(conexiones.length > 0){
+    conexiones[0].channel.leave();
+  }
+  callback()
+}
+
 // Listeners para mensajes
 client.on('message', message => {
   ApplyChecker(message)
@@ -92,6 +102,24 @@ client.on('message', message => {
     // Si el mensaje no lo escribe el bot
     if( message.author.username != 'EstrellaZorro'){
       // Listener para reproduccion
+      if ("!bling" == message.content || "!panda" == message.content) {
+        disconectVoiceThenExecute(function(){
+          //Conexion al canal del user o de bots en su defecto
+          let channel = message.member.voiceChannel
+          if(channel == null){
+            channel = client.channels.get('336838964004651008');
+          }
+          channel.join().then(connection => {
+            listeningAudioPetitions = !listeningAudioPetitions;
+            const dispatcher = connection.playArbitraryInput("audio/"+message.content.slice(1,message.content.length)+".mp3")
+            dispatcher.on('end', () =>{
+              connection.channel.leave();
+            });
+          }).catch(console.log)
+        })
+      }
+
+      /*Bloque que espera a que acabe la cancion para escuchar comandos de voz
       if (listeningAudioPetitions && ("!bling" == message.content || "!panda" == message.content)) {
         //Conexion al canal del user o de bots en su defecto
         let channel = message.member.voiceChannel
@@ -107,7 +135,12 @@ client.on('message', message => {
           });
         }).catch(console.log)
       }
+      */
 
+      // Desactivar audio
+      if (regexStaph.test(message.content) || "!stop" == message.content) {
+        disconectVoiceThenExecute(function(){message.reply('JOOOOOOBAAAAAAA')});
+      }
       // Listener para walker
       if (cumpleBolas && message.author.username === 'DarkWalker') {
         message.reply("¡¡¡¡¡¡¡¡¡FELIZ CUMPLEAÑOS WALKER!!!1!UNO!");
