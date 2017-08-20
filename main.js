@@ -87,19 +87,22 @@ client.on('message', message => {
     // Si el mensaje no lo escribe el bot
     if( message.author.username != 'EstrellaZorro'){
       // Listener para reproduccion
-      if ("!bling" == message.content) {
+      if ("!bling" == message.content || "!panda" == message.content) {
         //Conexion al canal del user o de bots en su defecto
         let channel = message.member.voiceChannel
         if(channel == null){
           channel = client.channels.get('336838964004651008');
         }
         channel.join().then(connection => {
-          const dispatcher = connection.playArbitraryInput("audio.mp3")
+          console.log("audio/"+message.content+".mp3");
+          const dispatcher = connection.playArbitraryInput("audio/"+message.content.slice(1,message.content.length)+".mp3")
           dispatcher.on('end', () =>{
             connection.channel.leave();
           });
         }).catch(console.log)
-      } 
+      }
+
+      /*
       // Prueba !panda
       if ("!panda" == message.content) {
         //Conexion al canal del user o de bots en su defecto
@@ -114,6 +117,8 @@ client.on('message', message => {
           });
         }).catch(console.log)
       } //prueba !panda
+      */
+
       // Listener para walker
       if (message.author.username === 'DarkWalker') {
         message.reply("¡¡¡¡¡¡¡¡¡FELIZ CUMPLEAÑOS WALKER!!!1!UNO!");
