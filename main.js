@@ -4,8 +4,8 @@ const Discord = require('discord.js');
 const ApplyChecker = require('./checker.js');
 // Import covfefify
 const covfefify = require('./covfefify.js');
-
-
+// Import configuracion
+var CONFIG = require('./config.json');
 
 // Import twitter
 var Twitter = require('twitter-node-client').Twitter;
@@ -18,19 +18,20 @@ var success = function (data) {
     //console.log('Data [%s]', data);
 };
 
+//Tokens para twitter
 var twitter = new Twitter({
-  "consumerKey": "s6x1QoVOR2PKrn0HFsr4hKllt",
-  "consumerSecret": "qvfsAB0gE2sNzlVTw4ognp5kA9e1d4XXS9qZELkt2t913NpOSF",
-  "accessToken": "897807876684738560-gbyDorOQ4noTVDKKr9FvZoefbVvgfqS",
-  "accessTokenSecret": "1fK2ng8vQJPoJGDfsz3BfMHxoqsojKwqA4bRsNKEjFEj1",
-  "callBackUrl": "http://eszobot.herokuapp.com/"
+  "consumerKey": CONFIG.twitterConsumerKey,
+  "consumerSecret": CONFIG.twitterConsumerSecret,
+  "accessToken": CONFIG.twitterAccessToken,
+  "accessTokenSecret": CONFIG.twitterAccessTokenSecret,
+  "callBackUrl": CONFIG.twitterCallBackUrl
 });
 
 // Instancia de cliente Discord
 const client = new Discord.Client();
 
 // Token para la conexion y asociacion al bot
-const token = 'MzE3NDIxMTMzMTMxNjc3Njk2.DA4cng.u4j9D0jeCgVf5y3G9M4xF3YQqyg';
+const token = CONFIG.discordToken;
 
 // Declaro constantes para las regex de interpretación de mensajes
 // La i final implica case insensitiveness
@@ -54,6 +55,9 @@ const regexJiros = /jiro+u*s+/i
 const regexCallMe = /(c[ao]ll)|(cell)|(selfon)|(avis)/i
 const regexBorja = /(borj)|(Hagrov)/i
 const regexQuejaBot = /((c[aá]llate)|(que te calles)|(ktkys)|(puto)).*bot/i
+
+//LOCAL PERSISTENCE
+var listeningAudioPetitions = true;
 
 var http = require("http");
 
@@ -87,37 +91,21 @@ client.on('message', message => {
     // Si el mensaje no lo escribe el bot
     if( message.author.username != 'EstrellaZorro'){
       // Listener para reproduccion
-      if ("!bling" == message.content || "!panda" == message.content) {
+      if (listeningAudioPetitions && ("!bling" == message.content || "!panda" == message.content)) {
         //Conexion al canal del user o de bots en su defecto
         let channel = message.member.voiceChannel
         if(channel == null){
           channel = client.channels.get('336838964004651008');
         }
         channel.join().then(connection => {
-          console.log("audio/"+message.content+".mp3");
+          listeningAudioPetitions = !listeningAudioPetitions;
           const dispatcher = connection.playArbitraryInput("audio/"+message.content.slice(1,message.content.length)+".mp3")
           dispatcher.on('end', () =>{
             connection.channel.leave();
+            listeningAudioPetitions = !listeningAudioPetitions;
           });
         }).catch(console.log)
       }
-
-      /*
-      // Prueba !panda
-      if ("!panda" == message.content) {
-        //Conexion al canal del user o de bots en su defecto
-        let channel = message.member.voiceChannel
-        if(channel == null){
-          channel = client.channels.get('336838964004651008');
-        }
-        channel.join().then(connection => {
-          const dispatcher = connection.playArbitraryInput("panda.mp3")
-          dispatcher.on('end', () =>{
-            connection.channel.leave();
-          });
-        }).catch(console.log)
-      } //prueba !panda
-      */
 
       // Listener para walker
       if (message.author.username === 'DarkWalker') {
