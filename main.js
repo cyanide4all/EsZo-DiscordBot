@@ -102,7 +102,7 @@ client.on('message', message => {
     // Si el mensaje no lo escribe el bot
     if( message.author.username != 'EstrellaZorro'){
       // Listener para reproduccion
-      if ("!bling" == message.content || "!panda" == message.content) {
+      if ("!bling" == message.content || "!panda" == message.content || "!airhorn" == message.content) {
         disconectVoiceThenExecute(function(){
           //Conexion al canal del user o de bots en su defecto
           let channel = message.member.voiceChannel
