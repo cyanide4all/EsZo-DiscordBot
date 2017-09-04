@@ -11,7 +11,7 @@ var CONFIG = require('./config.json');
 var Twitter = require('twitter-node-client').Twitter;
 //Callback functions para twitter
 var error = function (err, response, body) {
-  	console.log('ERROR [%s]', err);
+  	console.log('\nERROR: ' + err + "\nResponse: " + response + "\nBody: " + body);
 };
 var success = function (data) {
     //Nada
@@ -91,13 +91,23 @@ var disconectVoiceThenExecute = function(callback){
 // Listeners para mensajes
 client.on('message', message => {
   ApplyChecker(message)
+
   if(message.channel.id == 346796946393923584){
     var adjuntos = message.attachments.array()
-    var adjuntoUrl = ''
-    if(array.length > 0){
-      adjuntoUrl = adjuntos[0].url
+    if(adjuntos.length > 0){
+      var adjunto = adjuntos[0] //TODO ponerse a hacer esto en multiples archivos algun día
+      console.log("URL: " + adjunto.url);
+      /*
+      twitter.postMedia({'media' : adjunto.attachment}, error, function(response){
+        console.log("LLEGUE HASTA AQUI");
+        twitter.postTweet({'status': message.content, 'media_ids': [response.media_id_string] }, error, success);
+      })
+      */
+    }else {
+      twitter.postTweet({'status': message.content}, error, success);
     }
-    twitter.postTweet({'status': message.content + adjuntoUrl}, error, success);
+
+
   }else{
     // Si el mensaje no lo escribe el bot
     if( message.author.username != 'EstrellaZorro'){
@@ -118,25 +128,6 @@ client.on('message', message => {
           }).catch(console.log)
         })
       }
-
-      /*Bloque que espera a que acabe la cancion para escuchar comandos de voz
-      if (listeningAudioPetitions && ("!bling" == message.content || "!panda" == message.content)) {
-        //Conexion al canal del user o de bots en su defecto
-        let channel = message.member.voiceChannel
-        if(channel == null){
-          channel = client.channels.get('336838964004651008');
-        }
-        channel.join().then(connection => {
-          listeningAudioPetitions = !listeningAudioPetitions;
-          const dispatcher = connection.playArbitraryInput("audio/"+message.content.slice(1,message.content.length)+".mp3")
-          dispatcher.on('end', () =>{
-            connection.channel.leave();
-            listeningAudioPetitions = !listeningAudioPetitions;
-          });
-        }).catch(console.log)
-      }
-      */
-
       // Desactivar audio
       if (regexStaph.test(message.content) || "!stop" == message.content) {
         disconectVoiceThenExecute(function(){message.reply('JOOOOOOBAAAAAAA')});
@@ -207,11 +198,6 @@ client.on('message', message => {
       }
       if (regexBamboo.test(message.content) && message.author.username == 'Sr Panda'){
         message.reply('DALES CON EL BAMBÚ, ACABA CON ELLOS PAPÁ')
-      }
-      //Respuesta al KEK
-      if (regexKek.test(message.content) && message.author.username == 'Shoorema'){
-        //Esto me lo cargo porque se hace pesao'
-        //message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/319091887304605697/325810913686978561/kek.jpeg'})
       }
       // Puto tonto
       if (regexPuton.test(message.content)){
