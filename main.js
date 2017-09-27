@@ -56,6 +56,7 @@ const regexCallMe = /(c[ao]ll)|(cell)|(selfon)|(avis)/i
 const regexBorja = /(borj)|(Hagrov)/i
 const regexQuejaBot = /((c[aá]llate)|(que te calles)|(ktkys)|(puto)).*bot/i
 const regexStaph = /(bot staph)|(para bot)/i
+const regexNoLink = /^(?!http).*/
 
 //LOCAL PERSISTENCE
 var listeningAudioPetitions = true;
@@ -223,15 +224,16 @@ client.on('message', message => {
       }
 
 
-    // nueva sintaxis proporcionada por el checker y el ApplyChecker
-    message.command('/covfefe', (message) => {
-      message.reply(covfefify(message.content))
-    })
+      // nueva sintaxis proporcionada por el checker y el ApplyChecker
+      message.command('/covfefe', (message) => {
+        message.reply(covfefify(message.content))
+      })
 
-    message.checks(message.content.length > 140, (message)=>{
-      message.reply('muy largo; no leo')
-    })
-
+      message.checks(message.content.length > 140, (message)=>{
+        if(regexNoLink.test(message.content)){
+           message.reply('muy largo; no leo')
+        }
+      })
     }
   }
 
