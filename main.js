@@ -229,7 +229,7 @@ client.on('message', message => {
         message.reply(covfefify(message.content))
       })
 
-      message.checks(message.content.length > 140, (message)=>{
+      message.checks(message.content.length > 280, (message)=>{
         if(regexNoLink.test(message.content)){
            message.reply('muy largo; no leo')
         }
