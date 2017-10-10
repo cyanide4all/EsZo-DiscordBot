@@ -62,6 +62,7 @@ const regexTTSMal = /^(\/TTS).*/
 //LOCAL PERSISTENCE
 var listeningAudioPetitions = true;
 var cumpleBolas = true;
+var hablarDelJuego = true;
 
 var http = require("http");
 
@@ -75,6 +76,12 @@ setInterval(function() {
     http.get("http://eszobot.herokuapp.com");
     console.log("Sent keepalive request");
 }, 200000); // every 5 minutes (300000)
+
+setInterval(function() {
+    hablarDelJuego = true;
+}, 86400000); // every day (86400000)
+
+
 
 //Cuando el bot hace sus cosas pasa esto:
 client.on('ready', () => {
@@ -145,6 +152,10 @@ client.on('message', message => {
         }else {
           message.reply('Ya no es el cumple de walker...');
         }
+      }
+      if(hablarDelJuego){
+        hablarDelJuego = false;
+        message.reply("HE PERDIDO");
       }
       // Respuesta a la palabra support
       if (regexSupp.test(message.content)) {
