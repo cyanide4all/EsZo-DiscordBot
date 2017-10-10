@@ -57,6 +57,7 @@ const regexBorja = /(borj)|(Hagrov)/i
 const regexQuejaBot = /((c[aá]llate)|(que te calles)|(ktkys)|(puto)).*bot/i
 const regexStaph = /(bot staph)|(para bot)/i
 const regexNoLink = /^(?!http).*/
+const regexTTSMal = /^(\/TTS).*/
 
 //LOCAL PERSISTENCE
 var listeningAudioPetitions = true;
@@ -222,8 +223,9 @@ client.on('message', message => {
       if (regexBorja.test(message.content)) {
         message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/330319777694220288/kek.jpg'})
       }
-
-
+      if (regexTTSMal.test(message.content)) {
+        message.reply('QUE NO SE ESCRIBE ASÍ SUBNORMAL. ESCRIBE "!halpmepls" PARA MÁS AYUDA SALU3')
+      }
       // nueva sintaxis proporcionada por el checker y el ApplyChecker
       message.command('/covfefe', (message) => {
         message.reply(covfefify(message.content))
