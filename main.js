@@ -20,7 +20,7 @@ var success = function (data) {
 
 // Token para la conexion y asociacion al bot
 var temporalToken = CONFIG.discordToken;
-if(token == ""){
+if(temporalToken == ""){
   temporalToken = process.env.discordToken;
 }
 const token = temporalToken;
