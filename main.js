@@ -18,6 +18,14 @@ var success = function (data) {
     //console.log('Data [%s]', data);
 };
 
+// Token para la conexion y asociacion al bot
+var temporalToken = CONFIG.discordToken;
+if(token == ""){
+  temporalToken = process.env.discordToken;
+}
+const token = temporalToken;
+
+
 //Tokens para twitter
 var twitter = new Twitter({
   "consumerKey": CONFIG.twitterConsumerKey,
@@ -29,9 +37,6 @@ var twitter = new Twitter({
 
 // Instancia de cliente Discord
 const client = new Discord.Client();
-
-// Token para la conexion y asociacion al bot
-const token = CONFIG.discordToken;
 
 // Declaro constantes para las regex de interpretación de mensajes
 // La i final implica case insensitiveness
