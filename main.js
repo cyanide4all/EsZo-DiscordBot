@@ -217,6 +217,9 @@ client.on('message', message => {
       if (regexBamboo.test(message.content) && message.author.username == 'Sr Panda'){
         message.reply('DALES CON EL BAMBÚ, ACABA CON ELLOS PAPÁ')
       }
+      if (message.content == :sad:){
+        message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/382006568553676812/Sin_titulo.png'})
+      }
       // Puto tonto
       if (regexPuton.test(message.content)){
         message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/322009184637812736/unknown.png'})
