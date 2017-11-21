@@ -128,7 +128,7 @@ client.on('message', message => {
       // Listener para reproduccion
       if ("!bling" == message.content || "!panda" == message.content 
           || "!airhorn" == message.content || "!joeputa" == message.content
-          || "!fgilipollas" == message.content) {
+          || "!fgilipollas" == message.content || "!laloli" == message.content ) {
         disconectVoiceThenExecute(function(){
           //Conexion al canal del user o de bots en su defecto
           let channel = message.member.voiceChannel
