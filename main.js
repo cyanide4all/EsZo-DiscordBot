@@ -66,7 +66,7 @@ const regexTTSMal = /^(\/TTS).*/
 
 //LOCAL PERSISTENCE
 var listeningAudioPetitions = true;
-var cumpleBolas = true;
+var cumpleBolas = false;
 var hablarDelJuego = true;
 
 var http = require("http");
