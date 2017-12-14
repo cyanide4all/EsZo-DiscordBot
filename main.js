@@ -67,7 +67,7 @@ const regexTTSMal = /^(\/TTS).*/
 //LOCAL PERSISTENCE
 var listeningAudioPetitions = true;
 var cumpleBolas = false;
-var hablarDelJuego = true;
+var hablarDelJuego = false;
 
 var http = require("http");
 
@@ -104,15 +104,18 @@ var disconectVoiceThenExecute = function(callback){
 
 // Listeners para pabla
 client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
-  if(/*newMemberState.id == "161138305189150720" &&*/ newMemberState.voiceChannel != null){
-    let channel = newMemberState.voiceChannel
+  if(newMemberState.id == "161138305189150720" && listeningAudioPetitions && newMemberState.voiceChannel != null){
+    listeningAudioPetitions = false;
     disconectVoiceThenExecute(function(){
-      channel.join().then(connection => {
-        listeningAudioPetitions = !listeningAudioPetitions;
-        const dispatcher = connection.playArbitraryInput("audio/mniac.mp3")
-        dispatcher.on('end', () =>{
-          connection.channel.leave();
-        });
+      //Conexion al canal del user o de bots en su defecto
+      let channel = newMemberState.voiceChannel;
+      channel.join().then(
+        conexion => {
+          const dispatcheru = conexion.playArbitraryInput("audio/mniac.mp3");
+          dispatcheru.on('end', () =>{
+            conexion.channel.leave();
+            listeningAudioPetitions = true;
+          });
       }).catch(console.log)
     })
   }
@@ -142,10 +145,12 @@ client.on('message', message => {
     // Si el mensaje no lo escribe el bot
     if( message.author.username != 'EstrellaZorro'){
       // Listener para reproduccion
-      if ("!bling" == message.content || "!panda" == message.content 
+      if ("!bling" == message.content || "!panda" == message.content
           || "!airhorn" == message.content || "!joeputa" == message.content
-          || "!fgilipollas" == message.content || "!laloli" == message.content 
+          || "!fgilipollas" == message.content || "!laloli" == message.content
           || "!salchichonio" == message.content) {
+
+        listeningAudioPetitions = false;
         disconectVoiceThenExecute(function(){
           //Conexion al canal del user o de bots en su defecto
           let channel = message.member.voiceChannel
@@ -153,17 +158,18 @@ client.on('message', message => {
             channel = client.channels.get('336838964004651008');
           }
           channel.join().then(connection => {
-            listeningAudioPetitions = !listeningAudioPetitions;
             const dispatcher = connection.playArbitraryInput("audio/"+message.content.slice(1,message.content.length)+".mp3")
             dispatcher.on('end', () =>{
               connection.channel.leave();
+              listeningAudioPetitions = true;
             });
           }).catch(console.log)
         })
       }
       // Desactivar audio
       if (regexStaph.test(message.content) || "!stop" == message.content) {
-        disconectVoiceThenExecute(function(){message.reply('JOOOOOOBAAAAAAA')});
+        disconectVoiceThenExecute(function(){message.reply('JOOOOOOBAAAAAAA');
+          listeningAudioPetitions = true;});
       }
       // Listener para walker
       if (cumpleBolas && message.author.username === 'DarkWalker') {
