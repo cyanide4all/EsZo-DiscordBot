@@ -102,6 +102,24 @@ var disconectVoiceThenExecute = function(callback){
   callback()
 }
 
+// Listeners para pabla
+client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
+  if(/*newMemberState.id == "161138305189150720" &&*/ oldMemberState==null && newMemberState.voiceChannel != null){
+    let channel = newMemberState.voiceChannel
+    disconectVoiceThenExecute(function(){
+      channel.join().then(connection => {
+        listeningAudioPetitions = !listeningAudioPetitions;
+        const dispatcher = connection.playArbitraryInput("audio/mniac.mp3")
+        dispatcher.on('end', () =>{
+          connection.channel.leave();
+        });
+      }).catch(console.log)
+    })
+  }
+});
+
+
+
 // Listeners para mensajes
 client.on('message', message => {
   ApplyChecker(message)
