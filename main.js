@@ -104,7 +104,7 @@ var disconectVoiceThenExecute = function(callback){
 
 // Listeners para pabla
 client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
-  if(newMemberState.id == "161138305189150720" && listeningAudioPetitions && newMemberState.voiceChannel != null){
+  if(newMemberState.id == 161138305189150720 && listeningAudioPetitions && newMemberState.voiceChannel != null){
     listeningAudioPetitions = false;
     disconectVoiceThenExecute(function(){
       //Conexion al canal del user o de bots en su defecto
