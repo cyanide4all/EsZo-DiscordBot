@@ -104,7 +104,7 @@ var disconectVoiceThenExecute = function(callback){
 
 // Listeners para pabla
 client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
-  if(/*newMemberState.id == "161138305189150720" &&*/ oldMemberState==null && newMemberState.voiceChannel != null){
+  if(/*newMemberState.id == "161138305189150720" &&*/ oldMemberState.voiceChannel==null && newMemberState.voiceChannel != null){
     let channel = newMemberState.voiceChannel
     disconectVoiceThenExecute(function(){
       channel.join().then(connection => {
@@ -117,8 +117,6 @@ client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
     })
   }
 });
-
-
 
 // Listeners para mensajes
 client.on('message', message => {
