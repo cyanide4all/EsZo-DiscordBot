@@ -104,7 +104,7 @@ var disconectVoiceThenExecute = function(callback){
 
 // Listeners para pabla
 client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
-  if(/*newMemberState.id == "161138305189150720" &&*/ oldMemberState.voiceChannel != newMemberState.voiceChannel && newMemberState.voiceChannel != null){
+  if(/*newMemberState.id == "161138305189150720" &&*/ newMemberState.voiceChannel != null){
     let channel = newMemberState.voiceChannel
     disconectVoiceThenExecute(function(){
       channel.join().then(connection => {
