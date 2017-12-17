@@ -63,6 +63,7 @@ const regexQuejaBot = /((c[aá]llate)|(que te calles)|(ktkys)|(puto)).*bot/i
 const regexStaph = /(bot staph)|(para bot)/i
 const regexNoLink = /^(?!http).*/
 const regexTTSMal = /^(\/TTS).*/
+const regexTorb = /torb/i
 
 //LOCAL PERSISTENCE
 var listeningAudioPetitions = true;
@@ -171,6 +172,26 @@ client.on('message', message => {
         disconectVoiceThenExecute(function(){message.reply('JOOOOOOBAAAAAAA');
           listeningAudioPetitions = true;});
       }
+      
+      //TORBJORN
+      if (regexTorb.test(message.content) ) {
+        listeningAudioPetitions = false;
+        disconectVoiceThenExecute(function(){
+          //Conexion al canal del user o de bots en su defecto
+          let channel = message.member.voiceChannel
+          if(channel == null){
+            channel = client.channels.get('336838964004651008');
+          }
+          channel.join().then(connection => {
+            const dispatcher = connection.playArbitraryInput("audio/torb.mp3")
+            dispatcher.on('end', () =>{
+              connection.channel.leave();
+              listeningAudioPetitions = true;
+            });
+          }).catch(console.log)
+        })
+      }
+      
       // Listener para walker
       if (cumpleBolas && message.author.username === 'DarkWalker') {
         message.reply("¡¡¡¡¡¡¡¡¡FELIZ CUMPLEAÑOS WALKER!!!1!UNO!");
