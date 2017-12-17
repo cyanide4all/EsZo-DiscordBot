@@ -64,6 +64,7 @@ const regexStaph = /(bot staph)|(para bot)/i
 const regexNoLink = /^(?!http).*/
 const regexTTSMal = /^(\/TTS).*/
 const regexTorb = /torb/i
+const regexRekt = /retk/i
 
 //LOCAL PERSISTENCE
 var listeningAudioPetitions = true;
@@ -103,22 +104,31 @@ var disconectVoiceThenExecute = function(callback){
   callback()
 }
 
-// Listeners para pabla
-client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
-  if(newMemberState.id == 161138305189150720 && listeningAudioPetitions && newMemberState.voiceChannel != null){
+//Refactorizacion de reproduccion de audio
+var playAudioFile = function(uri){
+  if(listeningAudioPetitions){
     listeningAudioPetitions = false;
     disconectVoiceThenExecute(function(){
       //Conexion al canal del user o de bots en su defecto
       let channel = newMemberState.voiceChannel;
       channel.join().then(
         conexion => {
-          const dispatcheru = conexion.playArbitraryInput("audio/mniac.mp3");
+          const dispatcheru = conexion.playArbitraryInput(uri);
           dispatcheru.on('end', () =>{
             conexion.channel.leave();
             listeningAudioPetitions = true;
           });
-      }).catch(console.log)
-    })
+        }).catch(console.log)
+      })
+    }
+}
+
+
+
+// Listeners para pabla
+client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
+  if(newMemberState.id == 161138305189150720 && newMemberState.voiceChannel != null){
+    playAudioFile("audio/mniac.mp3")
   }
 });
 
@@ -150,48 +160,23 @@ client.on('message', message => {
           || "!airhorn" == message.content || "!joeputa" == message.content
           || "!fgilipollas" == message.content || "!laloli" == message.content
           || "!salchichonio" == message.content) {
-
-        listeningAudioPetitions = false;
-        disconectVoiceThenExecute(function(){
-          //Conexion al canal del user o de bots en su defecto
-          let channel = message.member.voiceChannel
-          if(channel == null){
-            channel = client.channels.get('336838964004651008');
-          }
-          channel.join().then(connection => {
-            const dispatcher = connection.playArbitraryInput("audio/"+message.content.slice(1,message.content.length)+".mp3")
-            dispatcher.on('end', () =>{
-              connection.channel.leave();
-              listeningAudioPetitions = true;
-            });
-          }).catch(console.log)
-        })
+        playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3")
       }
       // Desactivar audio
       if (regexStaph.test(message.content) || "!stop" == message.content) {
         disconectVoiceThenExecute(function(){message.reply('JOOOOOOBAAAAAAA');
           listeningAudioPetitions = true;});
       }
-      
+
       //TORBJORN
       if (regexTorb.test(message.content) ) {
-        listeningAudioPetitions = false;
-        disconectVoiceThenExecute(function(){
-          //Conexion al canal del user o de bots en su defecto
-          let channel = message.member.voiceChannel
-          if(channel == null){
-            channel = client.channels.get('336838964004651008');
-          }
-          channel.join().then(connection => {
-            const dispatcher = connection.playArbitraryInput("audio/torb.mp3")
-            dispatcher.on('end', () =>{
-              connection.channel.leave();
-              listeningAudioPetitions = true;
-            });
-          }).catch(console.log)
-        })
+        playAudioFile("audio/torb.mp3")
       }
-      
+
+      if (regexRekt.test(message.content) ) {
+        playAudioFile("audio/rekt.mp3")
+      }
+
       // Listener para walker
       if (cumpleBolas && message.author.username === 'DarkWalker') {
         message.reply("¡¡¡¡¡¡¡¡¡FELIZ CUMPLEAÑOS WALKER!!!1!UNO!");
