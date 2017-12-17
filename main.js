@@ -105,12 +105,15 @@ var disconectVoiceThenExecute = function(callback){
 }
 
 //Refactorizacion de reproduccion de audio
-var playAudioFile = function(uri){
+var playAudioFile = function(uri, user){
   if(listeningAudioPetitions){
     listeningAudioPetitions = false;
     disconectVoiceThenExecute(function(){
       //Conexion al canal del user o de bots en su defecto
-      let channel = newMemberState.voiceChannel;
+      let channel = user.voiceChannel
+      if(channel == null){
+        channel = client.channels.get('336838964004651008');
+      }
       channel.join().then(
         conexion => {
           const dispatcheru = conexion.playArbitraryInput(uri);
@@ -128,7 +131,7 @@ var playAudioFile = function(uri){
 // Listeners para pabla
 client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
   if(newMemberState.id == 161138305189150720 && newMemberState.voiceChannel != null){
-    playAudioFile("audio/mniac.mp3")
+    playAudioFile("audio/mniac.mp3", newMemberState)
   }
 });
 
@@ -160,7 +163,7 @@ client.on('message', message => {
           || "!airhorn" == message.content || "!joeputa" == message.content
           || "!fgilipollas" == message.content || "!laloli" == message.content
           || "!salchichonio" == message.content) {
-        playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3")
+        playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
       }
       // Desactivar audio
       if (regexStaph.test(message.content) || "!stop" == message.content) {
@@ -170,11 +173,11 @@ client.on('message', message => {
 
       //TORBJORN
       if (regexTorb.test(message.content) ) {
-        playAudioFile("audio/torb.mp3")
+        playAudioFile("audio/torb.mp3", message.member)
       }
 
       if (regexRekt.test(message.content) ) {
-        playAudioFile("audio/rekt.mp3")
+        playAudioFile("audio/rekt.mp3", message.member)
       }
 
       // Listener para walker
