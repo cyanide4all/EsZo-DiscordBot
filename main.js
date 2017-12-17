@@ -64,7 +64,7 @@ const regexStaph = /(bot staph)|(para bot)/i
 const regexNoLink = /^(?!http).*/
 const regexTTSMal = /^(\/TTS).*/
 const regexTorb = /torb/i
-const regexRekt = /retk/i
+const regexRekt = /rekt/i
 
 //LOCAL PERSISTENCE
 var listeningAudioPetitions = true;
