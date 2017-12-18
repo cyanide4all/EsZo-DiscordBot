@@ -63,7 +63,7 @@ const regexQuejaBot = /((c[aá]llate)|(que te calles)|(ktkys)|(puto)).*bot/i
 const regexStaph = /(bot staph)|(para bot)/i
 const regexNoLink = /^(?!http).*/
 const regexTTSMal = /^(\/TTS).*/
-const regexTorb = /torb/i
+const regexTorb = /(torb)|(enano)|(upgrade)/i
 const regexRekt = /rekt/i
 
 //LOCAL PERSISTENCE
