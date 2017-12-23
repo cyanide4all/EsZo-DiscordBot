@@ -135,6 +135,14 @@ client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
   }
 });
 
+//  Listener para Daviz
+client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
+  if(newMemberState.id == 328906982675185664 && newMemberState.voiceChannel != null){
+    playAudioFile("audio/daviz.mp3", newMemberState)
+  }
+});
+
+
 // Listeners para mensajes
 client.on('message', message => {
   ApplyChecker(message)
@@ -162,7 +170,7 @@ client.on('message', message => {
       if ("!bling" == message.content || "!panda" == message.content
           || "!airhorn" == message.content || "!joeputa" == message.content
           || "!fgilipollas" == message.content || "!laloli" == message.content
-          || "!salchichonio" == message.content) {
+          || "!salchichonio" == message.content || "!daviz" == message.content ) {
         playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
       }
       // Desactivar audio
