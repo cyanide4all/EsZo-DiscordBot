@@ -174,6 +174,7 @@ client.on('message', message => {
           || "!subnormal" == message.content || "!janso" == message.content
           || "!yaves" == message.content ) {
         playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
+        message.delete()
       }
       // Desactivar audio
       if (regexStaph.test(message.content) || "!stop" == message.content) {
