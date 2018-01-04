@@ -172,7 +172,8 @@ client.on('message', message => {
           || "!fgilipollas" == message.content || "!laloli" == message.content
           || "!salchichonio" == message.content || "!daviz" == message.content
           || "!subnormal" == message.content || "!janso" == message.content
-          || "!yaves" == message.content ) {
+          || "!yaves" == message.content || "!elagua" == message.content 
+          || "!augale" == message.content ) {
         playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
       }
       // Desactivar audio
