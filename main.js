@@ -65,6 +65,7 @@ const regexNoLink = /^(?!http).*/
 const regexTTSMal = /^(\/TTS).*/
 const regexTorb = /(torb)|(enano)|(upgrade)/i
 const regexRekt = /rekt/i
+const regexEmpiezaPorExclamacion = /^!.*/
 
 //LOCAL PERSISTENCE
 var listeningAudioPetitions = true;
@@ -177,6 +178,11 @@ client.on('message', message => {
           || "!mishon" == message.content ) {
         playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
         message.delete()
+      }else{ 
+        if(regexEmpiezaPorExclamacion.test(message.content){
+           message.reply('ESO NO ES UN COMANDO! QUÉ ERES? TONTO O ALGO?')
+        }
+      
       }
       // Desactivar audio
       if (regexStaph.test(message.content) || "!stop" == message.content) {
