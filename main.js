@@ -179,7 +179,7 @@ client.on('message', message => {
         playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
         message.delete()
       }else{ 
-        if(regexEmpiezaPorExclamacion.test(message.content){
+        if(regexEmpiezaPorExclamacion.test(message.content)){
            message.reply('ESO NO ES UN COMANDO! QUÉ ERES? TONTO O ALGO?')
         }
       
