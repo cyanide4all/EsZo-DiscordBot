@@ -136,13 +136,19 @@ client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
   }
 });
 
+//  Listener para Castromiles
+client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
+  if(newMemberState.id == 229206562697117696 && newMemberState.voiceChannel != null){
+    playAudioFile("audio/cosas.mp3", newMemberState)
+  }
+});
+
 //  Listener para Daviz
 client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
   if(newMemberState.id == 328906982675185664 && newMemberState.voiceChannel != null){
     playAudioFile("audio/daviz.mp3", newMemberState)
   }
 });
-
 
 // Listeners para mensajes
 client.on('message', message => {
@@ -173,16 +179,18 @@ client.on('message', message => {
           || "!fgilipollas" == message.content || "!laloli" == message.content
           || "!salchichonio" == message.content || "!daviz" == message.content
           || "!subnormal" == message.content || "!janso" == message.content
-          || "!yaves" == message.content || "!elagua" == message.content 
-          || "!augale" == message.content || "!duah" == message.content 
-          || "!mishon" == message.content ) {
+          || "!yaves" == message.content || "!elagua" == message.content
+          || "!augale" == message.content || "!duah" == message.content
+          || "!mishon" == message.content || "!goodjob" == message.content
+          || "!notcool" == message.content || "!showme" == message.content
+          || "!thebird" == message.content) {
         playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
         message.delete()
-      }else{ 
+      }else{
         if(regexEmpiezaPorExclamacion.test(message.content)){
            message.reply('ESO NO ES UN COMANDO! QUÉ ERES? TONTO O ALGO?')
         }
-      
+
       }
       // Desactivar audio
       if (regexStaph.test(message.content) || "!stop" == message.content) {
