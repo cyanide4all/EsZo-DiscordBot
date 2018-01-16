@@ -173,7 +173,8 @@ client.on('message', message => {
           || "!salchichonio" == message.content || "!daviz" == message.content
           || "!subnormal" == message.content || "!janso" == message.content
           || "!yaves" == message.content || "!elagua" == message.content 
-          || "!augale" == message.content ) {
+          || "!augale" == message.content || "!duah" == message.content 
+          || "!mishon" == message.content ) {
         playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
         message.delete()
       }
