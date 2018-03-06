@@ -65,11 +65,15 @@ const regexNoLink = /^(?!http).*/
 const regexTTSMal = /^(\/TTS).*/
 const regexTorb = /(torb)|(enano)|(upgrade)/i
 const regexRekt = /rekt/i
+const regexSiono = /^(bot,).*(?)$/i
+const regexLottery = /^(bot,).*(entre)[0-9]+(y)[0-9]+/
 
 //LOCAL PERSISTENCE
 var listeningAudioPetitions = true;
 var cumpleBolas = false;
 var hablarDelJuego = false;
+var r = /\d+/g;
+var m;
 
 var http = require("http");
 
@@ -289,6 +293,19 @@ client.on('message', message => {
       }
       if (regexTTSMal.test(message.content)) {
         message.reply('QUE NO SE ESCRIBE ASÍ SUBNORMAL. ESCRIBE "!halpmepls" PARA MÁS AYUDA SALU3')
+      }
+      if (regexSiono.test(message.content)) {
+        if (Math.random() > 0.5){
+          message.reply('SIP')
+        }else{
+          message.reply('NOPE')
+        }
+      }
+      if (regexLottery.test(message.content)) {
+        while ((m = r.exec(regexLottery)) != null) {
+          alert(m[0]);
+        }
+        message.reply(Math.floor(Math.random() * m[1]) + m[0] )
       }
       // nueva sintaxis proporcionada por el checker y el ApplyChecker
       message.command('/covfefe', (message) => {
