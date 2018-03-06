@@ -66,8 +66,8 @@ const regexTTSMal = /^(\/TTS).*/
 const regexTorb = /(torb)|(enano)|(upgrade)/i
 const regexRekt = /rekt/i
 const regexEmpiezaPorExclamacion = /^!.*/
-const regexSiono = /^(bot,).*(?)$/i
-const regexLottery = /^(bot,).*(entre)[0-9]+(y)[0-9]+/
+const regexSiono = /^(bot,).*(?)/i
+const regexLottery = /^(bot,).* entre [0-9]+ y [0-9]+/
 
 //LOCAL PERSISTENCE
 var listeningAudioPetitions = true;
