@@ -1,5 +1,8 @@
 var regex = require("./regexp");
 
+var supportedCommands = require("./comandos");
+
+listeningAudioPetitions = true;
 module.exports = (client) => {
 
     //Desconecta del canal de voz si lo hay, luego ejecuta el callback
@@ -7,10 +10,11 @@ module.exports = (client) => {
         var conexiones = client.voiceConnections.array();
         if(conexiones.length > 0){
             conexiones[0].channel.leave();
+            console.log("left the channel")
         }
         callback()
     }
-    
+
     //Refactorizacion de reproduccion de audio
     var playAudioFile = function(uri, user){
         if(listeningAudioPetitions){
@@ -56,16 +60,7 @@ module.exports = (client) => {
         
         client.on('message', message => {
             // Listener para reproduccion
-            if ("!bling" == message.content || "!panda" == message.content
-            || "!airhorn" == message.content || "!joeputa" == message.content
-            || "!fgilipollas" == message.content || "!laloli" == message.content
-            || "!salchichonio" == message.content || "!daviz" == message.content
-            || "!subnormal" == message.content || "!janso" == message.content
-            || "!yaves" == message.content || "!elagua" == message.content
-            || "!augale" == message.content || "!duah" == message.content
-            || "!mishon" == message.content || "!goodjob" == message.content
-            || "!notcool" == message.content || "!showme" == message.content
-            || "!thebird" == message.content || "!pitorro" == message.content) {
+            if (supportedCommands.findIndex(cmd => message.content == cmd) !== -1) {
                 playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
                 message.delete()
             } else {
@@ -81,10 +76,6 @@ module.exports = (client) => {
             //TORBJORN
             if (regex.regexTorb.test(message.content) ) {
                 playAudioFile("audio/torb.mp3", message.member)
-            }
-            
-            if (regex.regexRekt.test(message.content) ) {
-                playAudioFile("audio/rekt.mp3", message.member)
             }
         })
     }

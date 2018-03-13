@@ -1,11 +1,9 @@
-// Import bot
-var client = require("./core").bot;
-// Import de las regex
-var regex = require("./regexp");
-
-client.on('message', message => {
-    ApplyChecker(message)
-  
+module.exports = (client) => {
+  // Import bot
+  var client = require("./core").bot;
+  // Import de las regex
+  var regex = require("./regexp");
+  client.on('message', message => {   
     if(message.channel.id == 346796946393923584){
       var adjuntos = message.attachments.array()
       if(adjuntos.length > 0){
@@ -13,20 +11,16 @@ client.on('message', message => {
         console.log("URL: " + adjunto.url);
         /*
         twitter.postMedia({'media' : adjunto.attachment}, error, function(response){
-          console.log("LLEGUE HASTA AQUI");
-          twitter.postTweet({'status': message.content, 'media_ids': [response.media_id_string] }, error, success);
-        })
-        */
-      }else {
-        twitter.postTweet({'status': message.content}, error, success);
-      }
+            console.log("LLEGUE HASTA AQUI");
+            twitter.postTweet({'status': message.content, 'media_ids': [response.media_id_string] }, error, success);
+          })
+          */
+        }else {
+          twitter.postTweet({'status': message.content}, error, success);
+        }
     }else{
       // Si el mensaje no lo escribe el bot
       if( message.author.username != 'EstrellaZorro'){
-        // Respuesta a la palabra support
-        if (regex.regexSupp.test(message.content)) {
-          message.channel.send('PROTEGED AL SUPPORT JODER')
-        }
         // Respuesta a un saludo al servidor
         if (regex.regexSaludos.test(message.content)) {
           message.reply('HOLA MAMÁ')
@@ -36,10 +30,10 @@ client.on('message', message => {
           message.reply('QUE TOQUES LA PUTA CARGA AZA JODER')
         }
         if (/hola bot/i.test(message.content)){
-            message.reply('HOLAS, PERO SOY UN BOT. DEBERÍAS HABLAR CON SERES HUMANOS')
+          message.reply('HOLAS, PERO SOY UN BOT. DEBERÍAS HABLAR CON SERES HUMANOS')
         }
         if (regex.regexQuejaBot.test(message.content)){
-            message.reply('LO SIENTO LO HAGO SIN QUERER')
+          message.reply('LO SIENTO LO HAGO SIN QUERER')
         }
         // Respuesta a peplo y las orisas
         if (regex.regexPeplo.test(message.content) && message.author.username == 'Peplo'){
@@ -59,10 +53,6 @@ client.on('message', message => {
         if (message.content == ':sad:' || message.content == '!sad'){
           message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/382006568553676812/Sin_titulo.png'})
         }
-        //Respuesta al jirous
-        if (regex.regexJiros.test(message.content)) {
-          message.reply('ES TIEMPO DE JIROS DE LOS CASUALS')
-        }
         if (regex.regexCallMe.test(message.content)) {
           message.channel.send('https://68.media.tumblr.com/f67ea264b93b8df0e558b61f019a2240/tumblr_o4rc1yh5ql1uulaizo1_500.gif')
         }
@@ -72,13 +62,7 @@ client.on('message', message => {
         if (regex.regexTTSMal.test(message.content)) {
           message.reply('QUE NO SE ESCRIBE ASÍ SUBNORMAL. ESCRIBE "!halpmepls" PARA MÁS AYUDA SALU3')
         }
-        if (regex.regexSiono.test(message.content)) {
-          if (Math.random() > 0.5){
-            message.reply('SIP')
-          }else{
-            message.reply('NOPE')
-          }
-        }
       }
     }
-});
+  });
+}
