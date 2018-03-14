@@ -1,4 +1,4 @@
-module.exports = (client) => {
+module.exports = (client, twitter) => {
   // Import bot
   var client = require("./core").bot;
   // Import de las regex
@@ -16,7 +16,7 @@ module.exports = (client) => {
           })
           */
         }else {
-          twitter.postTweet({'status': message.content}, error, success);
+          twitter.postTweet({'status': message.content}, () => {}, () => {});
         }
     }else{
       // Si el mensaje no lo escribe el bot

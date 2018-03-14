@@ -44,5 +44,6 @@ var twitter = new Twitter({
 // Instancia de cliente Discord
 module.exports = {
     bot: client,
-    run: () => client.login(token)
+    run: () => client.login(token),
+    twitter: twitter
 };
