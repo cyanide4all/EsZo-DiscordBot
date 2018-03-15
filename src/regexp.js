@@ -16,6 +16,7 @@ const regexNoLink = /^(?!http).*/
 const regexTTSMal = /^(\/TTS).*/
 const regexTorb = /(torb)|(enano)|(upgrade)/i
 const regexEmpiezaPorExclamacion = /^!.*/
+const regexSiNo = /s[ií] o no,? bot/i
 
 
 module.exports = {
@@ -33,4 +34,5 @@ module.exports = {
     regexTTSMal,
     regexTorb,
     regexEmpiezaPorExclamacion,
+    regexSiNo,
 }

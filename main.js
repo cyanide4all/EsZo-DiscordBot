@@ -7,6 +7,9 @@ var twitter = require("./src/core").twitter;
 // Import funciones de servidor
 require("./src/server")(bot);
 
+// Import modulo de peticiones interactivas
+require("./src/peticiones")(bot);
+
 // Import modulo de texto
 require("./src/texto")(bot, twitter);
 

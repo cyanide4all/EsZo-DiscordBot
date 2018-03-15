@@ -1,8 +1,8 @@
 module.exports = (client, twitter) => {
-  // Import bot
-  var client = require("./core").bot;
+  
   // Import de las regex
   var regex = require("./regexp");
+  
   client.on('message', message => {   
     if(message.channel.id == 346796946393923584){
       var adjuntos = message.attachments.array()
