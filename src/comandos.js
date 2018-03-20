@@ -20,6 +20,6 @@ module.exports = [
   "!thebird",
   "!pitorro",
   "!rekt",
-  "!omaewa"
-  "!jeff"
+  "!omaewa",
+  "!jeff",
 ]
