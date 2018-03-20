@@ -21,4 +21,5 @@ module.exports = [
   "!pitorro",
   "!rekt",
   "!omaewa"
+  "!jeff"
 ]
