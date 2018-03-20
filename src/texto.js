@@ -3,6 +3,8 @@ module.exports = (client, twitter) => {
   // Import de las regex
   var regex = require("./regexp");
   
+  var comandosDeAudio = require("./comandos");
+
   client.on('message', message => {   
     if(message.channel.id == 346796946393923584){
       var adjuntos = message.attachments.array()
@@ -31,6 +33,9 @@ module.exports = (client, twitter) => {
         }
         if (/hola bot/i.test(message.content)){
           message.reply('HOLAS, PERO SOY UN BOT. DEBERÍAS HABLAR CON SERES HUMANOS')
+        }
+        if (/gracias bot/i.test(message.content)){
+          message.reply('DE NADA, PERO SOY UN BOT. DEBERÍAS HABLAR CON SERES HUMANOS')
         }
         if (regex.regexQuejaBot.test(message.content)){
           message.reply('LO SIENTO LO HAGO SIN QUERER')
@@ -61,6 +66,9 @@ module.exports = (client, twitter) => {
         }
         if (regex.regexTTSMal.test(message.content)) {
           message.reply('QUE NO SE ESCRIBE ASÍ SUBNORMAL. ESCRIBE "!halpmepls" PARA MÁS AYUDA SALU3')
+        }
+        if (message.content === '!halluda') {
+          message.channel.send(`SE DECIR ESTO: ${comandosDeAudio.join(", ")}`)
         }
       }
     }

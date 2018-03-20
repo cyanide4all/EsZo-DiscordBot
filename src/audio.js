@@ -2,6 +2,8 @@ var regex = require("./regexp");
 
 var supportedCommands = require("./comandos");
 
+var excludedCommands = require("./comandosExcluidos");
+
 listeningAudioPetitions = true;
 module.exports = (client) => {
 
@@ -64,7 +66,7 @@ module.exports = (client) => {
                 playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
                 message.delete()
             } else {
-                if(regex.regexEmpiezaPorExclamacion.test(message.content) && !("!stop" == message.content) && !("!cumple" == message.content) && !("!halpmepls" == message.content)){
+                if(regex.regexEmpiezaPorExclamacion.test(message.content) && excludedCommands.findIndex(cmd => message.content == cmd) === -1){
                     message.reply('ESO NO ES UN COMANDO! QUÉ ERES? TONTO O ALGO?')
                 }
             }
