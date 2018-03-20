@@ -22,4 +22,5 @@ module.exports = [
   "!rekt",
   "!omaewa",
   "!jeff",
+  "!okay",
 ]
