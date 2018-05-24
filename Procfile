@@ -1,1 +1,1 @@
-web: node main.js
+BOT: node main.js
