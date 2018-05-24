@@ -9,6 +9,7 @@ var http = require("http");
 //Inicializacion del cliente de discord
 const client = new Discord.Client();
 
+/* KEEPALIVE
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
@@ -19,7 +20,7 @@ setInterval(function() {
     http.get("http://eszobot.herokuapp.com");
     console.log("Sent keepalive request");
 }, 200000); // every 5 minutes (300000)
-
+*/
 //Cuando el bot hace sus cosas pasa esto:
 client.on('ready', () => {
   console.log("Doing some gud' ol' barrel rolls...");
