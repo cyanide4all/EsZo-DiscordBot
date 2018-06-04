@@ -11,5 +11,9 @@ module.exports = (client) => {
       }
       message.reply(`PUES OBVIAMENTE, ${response}`).catch(console.log)
     }
+    if (regex.regexCuantos.test(message.content)) {
+      let response = `${message.guild.memberCount - 1} Y YO, EL BOT, SOY EL BOT, YO ESTUVE, SÍ.`
+      message.reply(response)
+    }
   })
 }

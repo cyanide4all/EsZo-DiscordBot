@@ -17,6 +17,7 @@ const regexTTSMal = /^(\/TTS).*/
 const regexTorb = /(torb)|(enano)|(upgrade)/i
 const regexEmpiezaPorExclamacion = /^!.*/
 const regexSiNo = /(s[ií] o no,? bot)|(bot.* s[ií] o no)/i
+const regexCuantos = /(Cu[aá]ntos somos\??)/i
 
 
 module.exports = {
@@ -35,4 +36,5 @@ module.exports = {
     regexTorb,
     regexEmpiezaPorExclamacion,
     regexSiNo,
+    regexCuantos,
 }
