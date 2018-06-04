@@ -9,7 +9,7 @@ module.exports = (client) => {
       } else {
         response = "NO"
       }
-      message.reply(`PUES OBVIAMENTE, ${response}`)
+      message.reply(`PUES OBVIAMENTE, ${response}`).catch(console.log)
     }
   })
 }
