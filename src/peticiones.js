@@ -13,7 +13,7 @@ module.exports = (client) => {
     }
     if (regex.regexCuantos.test(message.content)) {
       let response = `${message.guild.memberCount - 1} Y YO, EL BOT, SOY EL BOT, YO ESTUVE, SÍ.`
-      message.reply(response)
+      message.reply(response).catch(console.log)
     }
   })
 }
