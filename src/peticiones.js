@@ -12,8 +12,8 @@ module.exports = (client) => {
       message.reply(`PUES OBVIAMENTE, ${response}`).catch(console.log)
     }
     if (regex.regexCuantos.test(message.content)) {
-      if (message.guild.members.array().filter(each => regex.regexGale(each.nickname)).length > 0) {
-          galeguinhos = message.guild.members.array().filter(each => regex.regexGale(each.nickname)).length
+      if (message.guild.members.array().filter(each => regex.regexGale.test(each.nickname)).length > 0) {
+          galeguinhos = message.guild.members.array().filter(each => regex.regexGale.test(each.nickname)).length
       }
       let response = message.guild.memberCount - 1 + " DE LOS CUALES " + galeguinhos + " SON GALEGUINHO95 PORQUE ES PUTO TONTO. AH! Y YO, EL BOT, SOY EL BOT, YO ESTUVE, SÍ."
       message.reply(response).then(() => galeguinhos = 0).catch(console.log)
