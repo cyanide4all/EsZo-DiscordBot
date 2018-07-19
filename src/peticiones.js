@@ -12,7 +12,7 @@ module.exports = (client) => {
       message.reply(`PUES OBVIAMENTE, ${response}`)
     }
     if (regex.regexCuantos.test(message.content)) {
-      if(message.guild.members.array().filter(each => regex.gale.test(each.nickname))){
+      if(message.guild.members.array().filter(each => regex.regexGale.test(each.nickname))){
         galeguinhos ++;
       }
       let response = message.guild.memberCount - 1 + " DE LOS CUALES " + galeguinhos + " SON GALEGUINHO95 PORQUE ES PUTO TONTO. AH! Y YO, EL BOT, SOY EL BOT, YO ESTUVE, SÍ."
