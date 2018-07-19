@@ -12,7 +12,6 @@ module.exports = (client) => {
       message.reply(`PUES OBVIAMENTE, ${response}`)
     }
     if (regex.regexCuantos.test(message.content)) {
-      while(message.guild.members.array().length > 0)
 if (message.guild.members.array().filter(each => regex.test(each.nickname)).length > 0) {
     galeguinhos = message.guild.members.array().filter(each => regex.test(each.nickname))
 }
