@@ -2,7 +2,7 @@ module.exports = (client) => {
     // Listener para cuando se viene alguien nuevo
     client.on('guildMemberAdd', member => {
         // El mensaje se manda al canal por defecto (boop)
-        member.guild.defaultChannel.send(`Bienvenido a nuestro servidor, ${member}.\nEs un lugar bonito y lleno de personas amables.\nQuédate si no maineas ni Bastion, ni Yasuo ni Symetra.\nSi necesitas ayuda escribe '!halpmepls'`).catch(console.log);
+        member.guild.defaultChannel.send(`Bienvenido a nuestro servidor, ${member}.\nEs un lugar bonito y lleno de personas amables.\nQuédate si no maineas ni Bastion, ni Yasuo ni Symmetra.\nSi necesitas ayuda escribe '!halpmepls'`).catch(console.log);
     })
     
     // Listener para cuando alguien se pira o lo echamos (Aunque eso es poco probable)
