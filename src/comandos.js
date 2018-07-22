@@ -26,5 +26,6 @@ module.exports = [
   "!wry",
   "!ezmoney",
   "!rapper",
-  "!nanimo"
+  "!nanimo",
+  "!noesbien"
 ]
