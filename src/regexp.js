@@ -19,6 +19,7 @@ const regexEmpiezaPorExclamacion = /^!.*/
 const regexSiNo = /(s[ií] o no,? bot)|(bot.* s[ií] o no)/i
 const regexCuantos = /(Cu[aá]ntos somos\??)/i
 const regexGale = /[gG]aleguinho.*/i
+const regexHum = /hu*m+/i
 
 
 module.exports = {
@@ -38,5 +39,6 @@ module.exports = {
     regexEmpiezaPorExclamacion,
     regexSiNo,
     regexCuantos,
-    regexGale
+    regexGale,
+    regexHum,
 }
