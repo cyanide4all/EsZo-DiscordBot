@@ -5,6 +5,8 @@ module.exports = (client, twitter) => {
   
   var comandosDeAudio = require("./comandos");
 
+  var estoySilenciado = false;
+  
   client.on('message', message => {   
     if(message.channel.id == 346796946393923584){
       var adjuntos = message.attachments.array()
@@ -21,8 +23,8 @@ module.exports = (client, twitter) => {
           twitter.postTweet({'status': message.content}, () => {}, () => {});
         }
     }else{
-      // Si el mensaje no lo escribe el bot
-      if( message.author.username != 'EstrellaZorro'){
+      // Si el mensaje no lo escribe el bot ni está silenciado
+      if( message.author.username != 'EstrellaZorro' && !estoySilenciado){
         // Respuesta a un saludo al servidor
         if (regex.regexSaludos.test(message.content)) {
           message.reply('HOLA MAMÁ').catch(console.log)
@@ -39,6 +41,12 @@ module.exports = (client, twitter) => {
         }
         if (regex.regexQuejaBot.test(message.content)){
           message.reply('LO SIENTO LO HAGO SIN QUERER').catch(console.log)
+          estoySilenciado = true;
+          setTimeout(
+            () => {
+              estoySilenciado = false
+            }, 300000
+          )
         }
         // Respuesta a peplo y las orisas
         if (regex.regexPeplo.test(message.content) && message.author.username == 'Peplo'){
