@@ -20,6 +20,7 @@ const regexSiNo = /(s[ií] o no,? bot)|(bot.* s[ií] o no)|(a que (si|no),? bot)
 const regexCuantos = /(Cu[aá]ntos somos\??)/i
 const regexGale = /[gG]aleginho.*/i
 const regexHum = /hu*m+\b/i
+const regexWah = /(luigi)|([wg]u?a+h*)/i
 
 
 module.exports = {
@@ -41,4 +42,5 @@ module.exports = {
     regexCuantos,
     regexGale,
     regexHum,
+    regexWah
 }
