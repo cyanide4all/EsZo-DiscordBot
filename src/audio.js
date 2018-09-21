@@ -62,6 +62,13 @@ module.exports = (client) => {
             }
             message.reply('JOOOOOOBAAAAAAA');
         }
+        if (regex.regexWah.test(message.content)) {
+            if (Math.random() > 0.5) {
+                playAudioFile("audio/wah.mp3", message.member)
+            } else {
+                playAudioFile("audio/wahluigi.mp3", message.member)
+            }
+        }
         //TORBJORN
         if (regex.regexTorb.test(message.content) ) {
             playAudioFile("audio/torb.mp3", message.member)
