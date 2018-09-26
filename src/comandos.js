@@ -31,5 +31,6 @@ module.exports = [
   "!fornai",
   "!puesyose",
   "!incredibilis",
-  "!unaceptable"
+  "!unaceptable",
+  "!baka"
 ]
