@@ -34,6 +34,13 @@ module.exports = (client) => {
         if(newMemberState.id == 229206562697117696 && newMemberState.voiceChannel != null){
             playAudioFile("audio/cosas.mp3", newMemberState)
         }
+    });  
+    
+    //  Listener para DM
+    client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
+        if(newMemberState.id == 161139020871499776 && newMemberState.voiceChannel != null){
+            playAudioFile("audio/frens.mp3", newMemberState)
+        }
     });
     
     //  Listener para Daviz
