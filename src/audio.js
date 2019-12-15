@@ -25,35 +25,35 @@ module.exports = (client) => {
     // Listeners para pabla
     client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
         if(newMemberState.id == 161138305189150720 && newMemberState.voiceChannel != null){
-            play("audio/mniac.mp3", newMemberState)
+            playAudioFile("audio/mniac.mp3", newMemberState)
         }
     });
     
     //  Listener para Castromiles
     client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
         if(newMemberState.id == 229206562697117696 && newMemberState.voiceChannel != null){
-            play("audio/cosas.mp3", newMemberState)
+            playAudioFile("audio/cosas.mp3", newMemberState)
         }
     });  
     
     //  Listener para DM
     client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
         if(newMemberState.id == 161139020871499776 && newMemberState.voiceChannel != null){
-            play("audio/frens.mp3", newMemberState)
+            playAudioFile("audio/frens.mp3", newMemberState)
         }
     });
     
     //  Listener para Daviz
     client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
         if(newMemberState.id == 328906982675185664 && newMemberState.voiceChannel != null){
-            play("audio/daviz.mp3", newMemberState)
+            playAudioFile("audio/daviz.mp3", newMemberState)
         }
     });
     
     client.on('message', message => {
         // Listener para reproduccion
         if (supportedCommands.findIndex(cmd => message.content == cmd) !== -1) {
-            play("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
+            playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
             message.delete()
         } else {
             if(regex.regexEmpiezaPorExclamacion.test(message.content) && excludedCommands.findIndex(cmd => message.content == cmd) === -1){
@@ -71,14 +71,14 @@ module.exports = (client) => {
         }
         if (regex.regexWah.test(message.content)) {
             if (Math.random() > 0.5) {
-                play("audio/wah.mp3", message.member)
+                playAudioFile("audio/wah.mp3", message.member)
             } else {
-                play("audio/wahluigi.mp3", message.member)
+                playAudioFile("audio/wahluigi.mp3", message.member)
             }
         }
         //TORBJORN
         if (regex.regexTorb.test(message.content) ) {
-            play("audio/torb.mp3", message.member)
+            playAudioFile("audio/torb.mp3", message.member)
         }
     })
 }
