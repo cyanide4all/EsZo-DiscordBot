@@ -4,7 +4,7 @@
   "description": "nope this time",
   "main": "main.js",
   "dependencies": {
-    "discord.js": "^11.3.2",
+    "discord.js": "^11.5.1",
     "opusscript": "0.0.6",
     "twitter-node-client": "0.0.6"
   },
