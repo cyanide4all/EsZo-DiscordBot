@@ -9,11 +9,12 @@ module.exports = (client) => {
 
     //Refactorizacion de reproduccion de audio
     var playAudioFile = function(uri, member){
-        if (member.voiceChannel && client.voiceConnections.array().length === 0) {
-            member.voiceChannel.join().then(connection => {
+        if (member.voice && member.voice.channel && client.voice.connections.array().length === 0) {
+            const voiceChannel = member.voice.channel
+            voiceChannel.join().then(connection => {
                 const dispatcher = connection.play(uri);
-                dispatcher.on('end', () => {
-                    connection.channel.leave();
+                dispatcher.on('finish', () => {
+                    voiceChannel.leave();
                 });
                 dispatcher.on('error', e => {
                     console.log(e);
@@ -62,7 +63,7 @@ module.exports = (client) => {
         }
         // Desactivar audio
         if (regex.regexStaph.test(message.content) || "!stop" == message.content) {
-            var conexiones = client.voiceConnections.array();
+            var conexiones = client.voice.connections.array();
             if (conexiones.length > 0) {
                 conexiones[0].channel.leave()
                 console.log("left the channel")
