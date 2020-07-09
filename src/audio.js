@@ -52,34 +52,39 @@ module.exports = (client) => {
     });
     
     client.on('message', message => {
-        // Listener para reproduccion
-        if (supportedCommands.findIndex(cmd => message.content == cmd) !== -1) {
-            playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
-            message.delete()
-        } else {
-            if(regex.regexEmpiezaPorExclamacion.test(message.content) && excludedCommands.findIndex(cmd => message.content == cmd) === -1){
-                message.reply('ESO NO ES UN COMANDO! QUÉ ERES? TONTO O ALGO?')
-            }
-        }
-        // Desactivar audio
-        if (regex.regexStaph.test(message.content) || "!stop" == message.content) {
-            var conexiones = client.voice.connections.array();
-            if (conexiones.length > 0) {
-                conexiones[0].channel.leave()
-                console.log("left the channel")
-            }
-            message.reply('JOOOOOOBAAAAAAA');
-        }
-        if (regex.regexWah.test(message.content)) {
-            if (Math.random() > 0.5) {
-                playAudioFile("audio/wah.mp3", message.member)
+
+        if (message.channel.id == 730686599049773086 // EstrellaZorro -> BOTS/beep-beep-bop
+            || message.channel.id == 382239046790807562 // TESTOTESTOTEST -> GENERAL/texto
+        ) {
+            // Listener para reproduccion
+            if (supportedCommands.findIndex(cmd => message.content == cmd) !== -1) {
+                playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
+                message.delete()
             } else {
-                playAudioFile("audio/wahluigi.mp3", message.member)
+                if(regex.regexEmpiezaPorExclamacion.test(message.content) && excludedCommands.findIndex(cmd => message.content == cmd) === -1){
+                    message.reply('ESO NO ES UN COMANDO! QUÉ ERES? TONTO O ALGO?')
+                }
             }
-        }
-        //TORBJORN
-        if (regex.regexTorb.test(message.content) ) {
-            playAudioFile("audio/torb.mp3", message.member)
+            // Desactivar audio
+            if (regex.regexStaph.test(message.content) || "!stop" == message.content) {
+                var conexiones = client.voice.connections.array();
+                if (conexiones.length > 0) {
+                    conexiones[0].channel.leave()
+                    console.log("left the channel")
+                }
+                message.reply('JOOOOOOBAAAAAAA');
+            }
+            if (regex.regexWah.test(message.content)) {
+                if (Math.random() > 0.5) {
+                    playAudioFile("audio/wah.mp3", message.member)
+                } else {
+                    playAudioFile("audio/wahluigi.mp3", message.member)
+                }
+            }
+            //TORBJORN
+            if (regex.regexTorb.test(message.content) ) {
+                playAudioFile("audio/torb.mp3", message.member)
+            }
         }
     })
 }
