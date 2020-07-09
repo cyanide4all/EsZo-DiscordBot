@@ -23,8 +23,12 @@ module.exports = (client, twitter) => {
           twitter.postTweet({'status': message.content}, () => {}, () => {});
         }
     }else{
-      // Si el mensaje no lo escribe el bot ni está silenciado
-      if( message.author.username != 'EstrellaZorro' && !estoySilenciado){
+      // Si el mensaje no lo escribe el bot ni está silenciado, y si el mensaje viene de un canal válido
+      if( message.author.username != 'EstrellaZorro' 
+          && !estoySilenciado 
+          && (message.channel.id == 730686599049773086 // EstrellaZorro -> BOTS/beep-beep-bop
+          || message.channel.id == 382239046790807562) // TESTOTESTOTEST -> GENERAL/texto
+          ){
         // Respuesta a un saludo al servidor
         if (regex.regexSaludos.test(message.content)) {
           message.reply('HOLA MAMÁ').catch(console.log)
