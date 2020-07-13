@@ -13,6 +13,6 @@ module.exports = (client) => {
 
     // Listener para cuando alguien cambia de nombre
     client.on('guildMemberUpdate', (anterior, nuevo) => {
-        member.guild.defaultChannel.send(`${anterior.displayName} ahora se llama ${nuevo.displayName}`);
+        nuevo.guild.defaultChannel.send(`${anterior.displayName} ahora se llama ${nuevo.displayName}`);
     })   
 }
