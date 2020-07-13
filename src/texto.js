@@ -59,28 +59,28 @@ module.exports = (client, twitter) => {
         }
         // Respuesta al asco
         if (regex.regexAsco.test(message.content)){
-          message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/321729711950528513/unknown.png'}).catch(console.log)
+          message.channel.send({ files: ['https://cdn.discordapp.com/attachments/268398719802540032/321729711950528513/unknown.png']}).catch(console.log)
         }
         if (regex.regexRate.test(message.content)){
-          message.channel.send('',{ file: 'http://i.imgur.com/TGGnTq1.jpg'}).catch(console.log)
+          message.channel.send({ files: ['http://i.imgur.com/TGGnTq1.jpg']}).catch(console.log)
         }
         if (message.content == ':sad:' || message.content == '!sad'){
-          message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/382006568553676812/Sin_titulo.png'}).catch(console.log)
+          message.channel.send({ files: ['https://cdn.discordapp.com/attachments/268398719802540032/382006568553676812/Sin_titulo.png']}).catch(console.log)
         }
         if (regex.regexCallMe.test(message.content)) {
-          message.channel.send('https://68.media.tumblr.com/f67ea264b93b8df0e558b61f019a2240/tumblr_o4rc1yh5ql1uulaizo1_500.gif').catch(console.log)
+          message.channel.send({ files: ['https://68.media.tumblr.com/f67ea264b93b8df0e558b61f019a2240/tumblr_o4rc1yh5ql1uulaizo1_500.gif']}).catch(console.log)
         }
         if (regex.regexHum.test(message.content)) {
           message.channel.send('https://media.giphy.com/media/CaiVJuZGvR8HK/giphy.gif').catch(console.log)
         }
         if (regex.regexBorja.test(message.content)) {
-          message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/268398719802540032/330319777694220288/kek.jpg'}).catch(console.log)
+          message.channel.send({ files: ['https://cdn.discordapp.com/attachments/268398719802540032/330319777694220288/kek.jpg']}).catch(console.log)
         }
         if (regex.regexTTSMal.test(message.content)) {
           message.reply('QUE NO SE ESCRIBE ASÍ SUBNORMAL. ESCRIBE "!halpmepls" PARA MÁS AYUDA SALU3').catch(console.log)
         }
         if (message.content === '!pien'){
-          message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/347123923001016320/732145091031990312/unknown.png'}).catch(console.log)
+          message.channel.send({ files: ['https://cdn.discordapp.com/attachments/347123923001016320/732145091031990312/unknown.png']}).catch(console.log)
         }
         if (message.content === '!halluda') {
           message.channel.send(`Sé decir esto: ${comandosDeAudio.join(", ")}`).catch(console.log)
