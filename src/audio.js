@@ -62,7 +62,7 @@ module.exports = (client) => {
                 message.delete()
             } else {
                 if(regex.regexEmpiezaPorExclamacion.test(message.content) && excludedCommands.findIndex(cmd => message.content == cmd) === -1){
-                    message.reply('ESO NO ES UN COMANDO! QUÉ ERES? TONTO O ALGO?')
+                    message.reply('ESO NO ES UN COMANDO. NO TE DA VERGÜENZA ESCRIBIR MAL A TUS AÑOS?')
                 }
             }
             // Desactivar audio
@@ -70,7 +70,6 @@ module.exports = (client) => {
                 var conexiones = client.voice.connections.array();
                 if (conexiones.length > 0) {
                     conexiones[0].channel.leave()
-                    console.log("left the channel")
                 }
                 message.reply('JOOOOOOBAAAAAAA');
             }

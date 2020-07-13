@@ -27,21 +27,18 @@ module.exports = (client, twitter) => {
       if( message.author.username != 'EstrellaZorro' 
           && !estoySilenciado 
           && (message.channel.id == 730686599049773086 // EstrellaZorro -> BOTS/beep-beep-bop
+          || message.channel.id == 268398719802540032 // EstrellaZorro -> boop
           || message.channel.id == 382239046790807562) // TESTOTESTOTEST -> GENERAL/texto
           ){
         // Respuesta a un saludo al servidor
         if (regex.regexSaludos.test(message.content)) {
           message.reply('HOLA MAMÁ').catch(console.log)
         }
-        // Respuesta a aza y las cargas
-        if (regex.regexCarga.test(message.content) && message.author.username == 'blackjack15926811'){
-          message.reply('QUE TOQUES LA PUTA CARGA AZA JODER').catch(console.log)
-        }
         if (/hola bot/i.test(message.content)){
-          message.reply('HOLAS, PERO SOY UN BOT. DEBERÍAS HABLAR CON SERES HUMANOS').catch(console.log)
+          message.reply('Holas, pero soy un bot. deberías hablar con seres humanos').catch(console.log)
         }
         if (/gracias bot/i.test(message.content)){
-          message.reply('DE NADA, PERO SOY UN BOT. DEBERÍAS HABLAR CON SERES HUMANOS').catch(console.log)
+          message.reply('De nada, pero soy un bot. deberías hablar con seres humanos').catch(console.log)
         }
         if (regex.regexQuejaBot.test(message.content)){
           message.reply('LO SIENTO LO HAGO SIN QUERER').catch(console.log)
@@ -58,7 +55,7 @@ module.exports = (client, twitter) => {
         }
         // Respuesta a halpmepls
         if (message.content === '!halpmepls'){
-          message.channel.send('ESTE TÍO DICE QUE NECESITA AYUDA PUTO PRINGAO\'. \nSEGURO QUE ES UN LELPLAYER. \nEH TÍOS, QUE NECESITA AYUDA!!!!1!uno!. PERO MIRA QUÉ PRINGAO\'...').catch(console.log)
+          message.channel.send('ESTE TÍO DICE QUE NECESITA AYUDA PUTO PRINGAO\'.HASTA YO ME DOY CUENTA Y ESO QUE NO TENGO AMIGOS.\nEH TÍOS, QUE NECESITA AYUDA!!!!1!uno!. PERO MIRA QUÉ PRINGAO\'...').catch(console.log)
         }
         // Respuesta al asco
         if (regex.regexAsco.test(message.content)){
@@ -82,8 +79,11 @@ module.exports = (client, twitter) => {
         if (regex.regexTTSMal.test(message.content)) {
           message.reply('QUE NO SE ESCRIBE ASÍ SUBNORMAL. ESCRIBE "!halpmepls" PARA MÁS AYUDA SALU3').catch(console.log)
         }
+        if (message.content === '!pien'){
+          message.channel.send('',{ file: 'https://cdn.discordapp.com/attachments/347123923001016320/732145091031990312/unknown.png'}).catch(console.log)
+        }
         if (message.content === '!halluda') {
-          message.channel.send(`SE DECIR ESTO: ${comandosDeAudio.join(", ")}`).catch(console.log)
+          message.channel.send(`Sé decir esto: ${comandosDeAudio.join(", ")}`).catch(console.log)
         }
       }
     }
