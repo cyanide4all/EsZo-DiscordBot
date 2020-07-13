@@ -35,5 +35,6 @@ module.exports = [
   "!baka",
   "!nohayclase",
   "!uitheme",
-  "!yourway"
+  "!yourway",
+  "!complete"
 ]
