@@ -33,5 +33,9 @@ module.exports = [
   "!nohayclase",
   "!uitheme",
   "!yourway",
-  "!complete"
+  "!complete",
+  "!sacala",
+  "!lablanca",
+  "!porquesacala",
+  "!quemando"
 ]
