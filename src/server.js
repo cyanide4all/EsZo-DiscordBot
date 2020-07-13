@@ -14,6 +14,8 @@ module.exports = (client) => {
 
     // Listener para cuando alguien cambia de nombre
     client.on('guildMemberUpdate', (anterior, nuevo) => {
-        nuevo.guild.systemChannel && nuevo.guild.systemChannel.send(`${anterior.displayName} ahora se llama ${nuevo.displayName}`);
+        if (nuevo.guild.systemChannel && anterior.displayName !== nuevo.displayName) {
+            nuevo.guild.systemChannel.send(`${anterior.displayName} ahora se llama ${nuevo.displayName}`);
+        }
     })   
 }
