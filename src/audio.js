@@ -13,10 +13,10 @@ module.exports = (client) => {
             const voiceChannel = member.voice.channel
             voiceChannel.join().then(connection => {
                 const dispatcher = connection.play(uri);
-                dispatcher.on('finish', () => {
+                dispatcher.once('finish', () => {
                     voiceChannel.leave();
                 });
-                dispatcher.on('error', e => {
+                dispatcher.once('error', e => {
                     console.log(e);
                 });
             }).catch(console.log);
