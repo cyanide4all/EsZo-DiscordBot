@@ -39,5 +39,6 @@ module.exports = [
   "!porquesacala",
   "!quemando",
   "!yosha",
-  "!wide"
+  "!wide",
+  "!nonono"
 ]
