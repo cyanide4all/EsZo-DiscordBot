@@ -57,7 +57,7 @@ module.exports = (client) => {
             || message.channel.id == 382239046790807562 // TESTOTESTOTEST -> GENERAL/texto
         ) {
             // Listener para reproduccion
-            if (supportedCommands.findIndex(cmd => message.content == cmd) !== -1) {
+            if (supportedCommands.findIndex(cmd => message.content && message.content.toLowerCase() == cmd) !== -1) {
                 playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
                 message.delete()
             } else {
