@@ -58,7 +58,7 @@ module.exports = (client) => {
         ) {
             // Listener para reproduccion
             if (supportedCommands.findIndex(cmd => message.content && message.content.toLowerCase() == cmd) !== -1) {
-                playAudioFile("audio/"+message.content.slice(1,message.content.length)+".mp3", message.member)
+                playAudioFile("audio/"+message.content.toLowerCase().slice(1,message.content.length)+".mp3", message.member)
                 message.delete()
             } else {
                 if(regex.regexEmpiezaPorExclamacion.test(message.content) && excludedCommands.findIndex(cmd => message.content == cmd) === -1){
