@@ -43,5 +43,6 @@ module.exports = [
   "!nonono",
   "!yoo",
   "!desgraciatis",
-  "!mmm"
+  "!mmm",
+  "!mipan"
 ]
