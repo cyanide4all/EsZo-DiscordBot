@@ -45,5 +45,6 @@ module.exports = [
   "!desgraciatis",
   "!mmm",
   "!mipan",
-  "!martes"
+  "!martes",
+  "!miercoles"
 ]
