@@ -47,5 +47,6 @@ module.exports = [
   "!mipan",
   "!martes",
   "!miercoles",
-  "!jueves"
+  "!jueves",
+  "!viernes"
 ]
