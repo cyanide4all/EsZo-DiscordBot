@@ -14,7 +14,11 @@ module.exports = (client) => {
             voiceChannel.join().then(connection => {
                 const dispatcher = connection.play(uri);
                 dispatcher.once('finish', () => {
-                    voiceChannel.leave();
+                    if (voiceChannel) {
+                        voiceChannel.leave();
+                    } else if (client.voice && client.voice.connections) {
+                        client.voice.connections[0].disconect();                  
+                    }
                 });
                 dispatcher.once('error', e => {
                     console.log(e);
