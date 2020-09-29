@@ -58,15 +58,18 @@ module.exports = (client) => {
     client.on('message', message => {
 
         if (message.channel.id == 730686599049773086 // EstrellaZorro -> BOTS/beep-beep-bop
+            || message.channel.id == 268398719802540032 // EstrellaZorro -> /boop
             || message.channel.id == 382239046790807562 // TESTOTESTOTEST -> GENERAL/texto
         ) {
-            // Listener para reproduccion
-            if (supportedCommands.findIndex(cmd => message.content && message.content.toLowerCase() == cmd) !== -1) {
-                playAudioFile("audio/"+message.content.toLowerCase().slice(1,message.content.length)+".mp3", message.member)
-                message.delete()
-            } else {
-                if(regex.regexEmpiezaPorExclamacion.test(message.content) && excludedCommands.findIndex(cmd => message.content == cmd) === -1){
-                    message.reply('ESO NO ES UN COMANDO. NO TE DA VERGÜENZA ESCRIBIR MAL A TUS AÑOS?')
+            if (message.channel.id !== 268398719802540032) {
+                // Listener para reproduccion
+                if (supportedCommands.findIndex(cmd => message.content && message.content.toLowerCase() == cmd) !== -1) {
+                    playAudioFile("audio/"+message.content.toLowerCase().slice(1,message.content.length)+".mp3", message.member)
+                    message.delete()
+                } else {
+                    if(regex.regexEmpiezaPorExclamacion.test(message.content) && excludedCommands.findIndex(cmd => message.content == cmd) === -1){
+                        message.reply('ESO NO ES UN COMANDO. NO TE DA VERGÜENZA ESCRIBIR MAL A TUS AÑOS?')
+                    }
                 }
             }
             // Desactivar audio
@@ -78,7 +81,7 @@ module.exports = (client) => {
                 message.reply('JOOOOOOBAAAAAAA');
             }
             if (regex.regexWah.test(message.content)) {
-                if (Math.random() > 0.5) {
+                if (Math.random() > 0.9) {
                     playAudioFile("audio/wah.mp3", message.member)
                 } else {
                     playAudioFile("audio/wahluigi.mp3", message.member)
