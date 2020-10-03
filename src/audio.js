@@ -91,8 +91,7 @@ module.exports = (client) => {
             }
             if (message.content === "F") {
                 glob("*/F-*.mp3", null, function (er, files) {
-                    console.log()
-                    playAudioFile(`audio/F-${Math.floor(Math.random() * (files.length)).toString()}.mp3`, message.member)
+                    playAudioFile(`audio/F-${Math.floor(Math.random() * (files.length))}.mp3`, message.member)
                 })
             }
             //TORBJORN
