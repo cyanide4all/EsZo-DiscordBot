@@ -49,5 +49,6 @@ module.exports = [
   "!miercoles",
   "!jueves",
   "!viernes",
-  "!marica"
+  "!marica",
+  "!mikoboat"
 ]

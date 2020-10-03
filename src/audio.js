@@ -81,7 +81,7 @@ module.exports = (client) => {
                 message.reply('JOOOOOOBAAAAAAA');
             }
             if (regex.regexWah.test(message.content)) {
-                if (Math.random() > 0.9) {
+                if (Math.random() < 0.9) {
                     playAudioFile("audio/wah.mp3", message.member)
                 } else {
                     playAudioFile("audio/wahluigi.mp3", message.member)
