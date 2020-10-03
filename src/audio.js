@@ -4,6 +4,8 @@ var supportedCommands = require("./comandos");
 
 var excludedCommands = require("./comandosExcluidos");
 
+var glob = require("glob")
+
 listeningAudioPetitions = true;
 module.exports = (client) => {
 
@@ -86,6 +88,12 @@ module.exports = (client) => {
                 } else {
                     playAudioFile("audio/wahluigi.mp3", message.member)
                 }
+            }
+            if (message.content === "F") {
+                glob("*/F-*.mp3", null, function (er, files) {
+                    console.log()
+                    playAudioFile(`audio/F-${Math.floor(Math.random() * (files.length)).toString()}.mp3`, message.member)
+                })
             }
             //TORBJORN
             if (regex.regexTorb.test(message.content) ) {
