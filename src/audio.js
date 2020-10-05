@@ -80,8 +80,7 @@ module.exports = (client) => {
                         playAudioFile("audio/wahluigi.mp3", message.member)
                     }
                 } else if(regex.regexEmpiezaPorExclamacion.test(message.content) && excludedCommands.findIndex(cmd => message.content == cmd) === -1){
-                        message.reply('ESO NO ES UN COMANDO. NO TE DA VERGÜENZA ESCRIBIR MAL A TUS AÑOS?')
-                    }
+                    message.reply('ESO NO ES UN COMANDO. NO TE DA VERGÜENZA ESCRIBIR MAL A TUS AÑOS?')
                 }
             }
             // Desactivar audio
