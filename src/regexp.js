@@ -21,6 +21,7 @@ const regexCuantos = /(Cu[aá]ntos somos\??)/i
 const regexGale = /[gG]aleginho.*/i
 const regexHum = /hu*m+\b/i
 const regexWah = /(luigi)|((w|gu)a+h*)/i
+const regexYT = /^!yt /
 
 
 module.exports = {
@@ -42,5 +43,6 @@ module.exports = {
     regexCuantos,
     regexGale,
     regexHum,
-    regexWah
+    regexWah,
+    regexYT
 }

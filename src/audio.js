@@ -6,6 +6,9 @@ var excludedCommands = require("./comandosExcluidos");
 
 var glob = require("glob")
 
+var ytdl = require('ytdl-core');
+
+
 listeningAudioPetitions = true;
 module.exports = (client) => {
 
@@ -68,8 +71,9 @@ module.exports = (client) => {
                 if (supportedCommands.findIndex(cmd => message.content && message.content.toLowerCase() == cmd) !== -1) {
                     playAudioFile("audio/"+message.content.toLowerCase().slice(1,message.content.length)+".mp3", message.member)
                     message.delete()
-                } else {
-                    if(regex.regexEmpiezaPorExclamacion.test(message.content) && excludedCommands.findIndex(cmd => message.content == cmd) === -1){
+                } else if (regex.regexYT.test(message.content)) {
+                    playAudioFile(message.content.split(" ")[1], message.member)
+                } else if(regex.regexEmpiezaPorExclamacion.test(message.content) && excludedCommands.findIndex(cmd => message.content == cmd) === -1){
                         message.reply('ESO NO ES UN COMANDO. NO TE DA VERGÜENZA ESCRIBIR MAL A TUS AÑOS?')
                     }
                 }
