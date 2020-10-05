@@ -72,7 +72,7 @@ module.exports = (client) => {
                     playAudioFile("audio/"+message.content.toLowerCase().slice(1,message.content.length)+".mp3", message.member)
                     message.delete()
                 } else if (regex.regexYT.test(message.content)) {
-                    playAudioFile(message.content.split(" ")[1], message.member)
+                    playAudioFile(ytdl(message.content.split(" ")[1], { filter: 'audioonly' }), message.member)
                 } else if (regex.regexWah.test(message.content)) {
                     if (Math.random() < 0.9) {
                         playAudioFile("audio/wah.mp3", message.member)
