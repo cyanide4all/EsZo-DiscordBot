@@ -73,6 +73,12 @@ module.exports = (client) => {
                     message.delete()
                 } else if (regex.regexYT.test(message.content)) {
                     playAudioFile(message.content.split(" ")[1], message.member)
+                } else if (regex.regexWah.test(message.content)) {
+                    if (Math.random() < 0.9) {
+                        playAudioFile("audio/wah.mp3", message.member)
+                    } else {
+                        playAudioFile("audio/wahluigi.mp3", message.member)
+                    }
                 } else if(regex.regexEmpiezaPorExclamacion.test(message.content) && excludedCommands.findIndex(cmd => message.content == cmd) === -1){
                         message.reply('ESO NO ES UN COMANDO. NO TE DA VERGÜENZA ESCRIBIR MAL A TUS AÑOS?')
                     }
@@ -85,13 +91,6 @@ module.exports = (client) => {
                     conexiones[0].channel.leave()
                 }
                 message.reply('JOOOOOOBAAAAAAA');
-            }
-            if (regex.regexWah.test(message.content)) {
-                if (Math.random() < 0.9) {
-                    playAudioFile("audio/wah.mp3", message.member)
-                } else {
-                    playAudioFile("audio/wahluigi.mp3", message.member)
-                }
             }
             if (message.content === "F") {
                 glob("*/F-*.mp3", null, function (er, files) {
