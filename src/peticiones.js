@@ -10,5 +10,9 @@ module.exports = (client) => {
       }
       message.reply(`PUES OBVIAMENTE, ${response}`).catch(console.log)
     }
+    if (message.content == "!bolalan") {
+      message.member.roles.add("763334745294766091");
+      message.reply(`VAS A LA LAN (${Math.random() < 0.5 ? "a nadie le gusta la idea, a nadie le importas" : "VIEEEEEEEEENNNN!!!!UNO"})`)
+    }
   })
 }
