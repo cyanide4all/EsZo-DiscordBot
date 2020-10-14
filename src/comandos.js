@@ -54,5 +54,6 @@ module.exports = [
   "!nigga",
   "!eekumbokum",
   "!xana",
-  "!odd"
+  "!odd",
+  "!orale"
 ]
