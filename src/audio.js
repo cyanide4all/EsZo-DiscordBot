@@ -72,11 +72,14 @@ module.exports = (client) => {
                     playAudioFile("audio/"+message.content.toLowerCase().slice(1,message.content.length)+".mp3", message.member)
                     message.delete()
                 } else if (regex.regexYT.test(message.content)) {
-                    if (ytdl.validateURL(message.content.split(" ")[1]).catch(console.log)) {
-                        playAudioFile(ytdl(message.content.split(" ")[1], { filter: 'audioonly' }), message.member)
-                    } else {
-                        message.reply('HAY COSAS PATÉTICAS, Y LUEGO ESTÁ NO SABER COPIAR LA URL DE UN VÍDEO EN YOUTUBE')
-                    }
+                    ytdl.validateURL(message.content.split(" ")[1]).then((isValid) =>{
+                        console.log(isValid);
+                        if (isValid) {
+                            playAudioFile(ytdl(message.content.split(" ")[1], { filter: 'audioonly' }), message.member)
+                        } else {
+                            message.reply('HAY COSAS PATÉTICAS, Y LUEGO ESTÁ NO SABER COPIAR LA URL DE UN VÍDEO EN YOUTUBE')
+                        }
+                    }).catch(console.log)
                 } else if (regex.regexWah.test(message.content)) {
                     if (Math.random() < 0.9) {
                         playAudioFile("audio/wah.mp3", message.member)
