@@ -17,7 +17,7 @@ module.exports = (client) => {
         if (member.voice && member.voice.channel && client.voice.connections.array().length === 0) {
             const voiceChannel = member.voice.channel
             voiceChannel.join().then(connection => {
-                const dispatcher = connection.play(uri).catch(console.log);
+                const dispatcher = connection.play(uri)
                 dispatcher.once('finish', () => {
                     if (voiceChannel) {
                         voiceChannel.leave();
