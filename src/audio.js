@@ -73,7 +73,7 @@ module.exports = (client) => {
                     message.delete()
                 } else if (regex.regexYT.test(message.content)) {
                     if (ytdl.validateURL(message.content.split(" ")[1])) {
-                        playAudioFile(ytdl(message.content.split(" ")[1], { filter: 'audioonly' }), message.member)
+                        playAudioFile(ytdl(message.content.split(" ")[1], { filter: 'audioonly' }).catch(console.log), message.member)
                     } else {
                         message.reply('HAY COSAS PATÉTICAS, Y LUEGO ESTÁ NO SABER COPIAR LA URL DE UN VÍDEO EN YOUTUBE')
                     }
