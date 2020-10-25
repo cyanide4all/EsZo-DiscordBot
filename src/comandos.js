@@ -59,5 +59,6 @@ module.exports = [
   "!hahahaha",
   "!beti",
   "!panpanpan",
-  "!noentiendo"
+  "!noentiendo",
+  "!toque"
 ]
