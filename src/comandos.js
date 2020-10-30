@@ -60,5 +60,6 @@ module.exports = [
   "!beti",
   "!panpanpan",
   "!noentiendo",
-  "!toque"
+  "!toque",
+  "!imin"
 ]
