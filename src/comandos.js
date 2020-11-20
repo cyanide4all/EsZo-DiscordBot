@@ -62,5 +62,6 @@ module.exports = [
   "!noentiendo",
   "!toque",
   "!imin",
-  "!eo"
+  "!eo",
+  "!3pingos"
 ]
