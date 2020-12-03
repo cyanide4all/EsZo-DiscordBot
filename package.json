@@ -9,7 +9,7 @@
     "ffmpeg-static": "^4.0.1",
     "glob": "^7.1.6",
     "twitter-node-client": "0.0.6",
-    "ytdl-core": "^4.0.0"
+    "ytdl-core": "4.1.2"
   },
   "devDependencies": {},
   "scripts": {
