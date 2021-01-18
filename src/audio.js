@@ -13,7 +13,7 @@ listeningAudioPetitions = true;
 module.exports = (client) => {
 
     //Refactorizacion de reproduccion de audio
-    var playAudioFile = function(uri, member){
+    var playAudioFile = function(uri, member, cb){
         if (member.voice && member.voice.channel && client.voice.connections.array().length === 0) {
             const voiceChannel = member.voice.channel
             voiceChannel.join().then(connection => {
@@ -22,7 +22,10 @@ module.exports = (client) => {
                     if (voiceChannel) {
                         voiceChannel.leave();
                     } else if (client.voice && client.voice.connections) {
-                        client.voice.connections[0].disconect();                  
+                        client.voice.connections[0].disconect();
+                        if(cb) {
+                            cb();
+                        }
                     }
                 });
                 dispatcher.once('error', e => {
@@ -69,8 +72,7 @@ module.exports = (client) => {
             if (message.channel.id !== 268398719802540032) {
                 // Listener para reproduccion
                 if (supportedCommands.findIndex(cmd => message.content && message.content.toLowerCase() == cmd) !== -1) {
-                    playAudioFile("audio/"+message.content.toLowerCase().slice(1,message.content.length)+".mp3", message.member)
-                    message.delete()
+                    playAudioFile("audio/"+message.content.toLowerCase().slice(1,message.content.length)+".mp3", message.member, () => message.delete().catch(console.log))
                 } else if (regex.regexYT.test(message.content)) {
                     if (ytdl.validateURL(message.content.split(" ")[1])) {
                         playAudioFile(ytdl(message.content.split(" ")[1], { filter: 'audioonly' }), message.member)
