@@ -36,11 +36,11 @@ module.exports = (client, riotApiClient, firebaseDatabase) => {
             });
         }
         if (message.content === "dame punto") {
-            addPoints(
-                message.author.id, 
-                10, 
-                (newPoints) => message.reply(`Ahora tienes ${newPoints}`)),
-                () => message.reply("Algo ha salido mal")
+            // addPoints(
+            //     message.author.id, 
+            //     10, 
+            //     (newPoints) => message.reply(`Ahora tienes ${newPoints}`)),
+            //     () => message.reply("Algo ha salido mal")
         }
     })    
 }
