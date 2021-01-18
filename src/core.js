@@ -4,47 +4,51 @@ var CONFIG = require('../config/config.json');
 const Discord = require('discord.js');
 // Import twitter
 var Twitter = require('twitter-node-client').Twitter;
-//httpclient
-var http = require("http");
+// Import riot api
+var RiotRequest = require('riot-lol-api');
 //Inicializacion del cliente de discord
 const client = new Discord.Client();
+// Inicialización de firebase
+var firebase = require('firebase');
 
-/* KEEPALIVE
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Get response\n');
-}).listen(process.env.PORT || 5000)
-
-setInterval(function() {
-    http.get("http://eszobot.herokuapp.com");
-    console.log("Sent keepalive request");
-}, 200000); // every 5 minutes (300000)
-*/
 //Cuando el bot hace sus cosas pasa esto:
 client.on('ready', () => {
   console.log("Doing some gud' ol' barrel rolls...");
 });
 
 // Token para la conexion y asociacion al bot
-var temporalToken = CONFIG.discordToken;
-if(temporalToken == ""){
-  temporalToken = process.env.discordToken;
-}
-const token = temporalToken;
+const token = process.env.discordToken || CONFIG.discordToken;
 
-//Tokens para twitter
+//CONFIG twitter
 var twitter = new Twitter({
-    "consumerKey": CONFIG.twitterConsumerKey,
-    "consumerSecret": CONFIG.twitterConsumerSecret,
-    "accessToken": CONFIG.twitterAccessToken,
-    "accessTokenSecret": CONFIG.twitterAccessTokenSecret,
-    "callBackUrl": CONFIG.twitterCallBackUrl
+    "consumerKey": process.env.twitterConsumerKey || CONFIG.twitterConsumerKey,
+    "consumerSecret": process.env.twitterConsumerSecret || CONFIG.twitterConsumerSecret,
+    "accessToken": process.env.twitterAccessToken || CONFIG.twitterAccessToken,
+    "accessTokenSecret": process.env.twitterAccessTokenSecret || CONFIG.twitterAccessTokenSecret,
+    "callBackUrl": process.env.twitterCallBackUrl || CONFIG.twitterCallBackUrl
 });
+
+// CONFIG firebase
+var config = {
+  apiKey: process.env.firebaseApiKey || CONFIG.firebaseApiKey,
+  authDomain: process.env.firebaseAuthDomain || CONFIG.firebaseAuthDomain,
+  databaseURL: process.env.firebaseDatabaseURL || CONFIG.firebaseDatabaseURL,
+  storageBucket: process.env.firebaseStorageBucket || CONFIG.firebaseStorageBucket
+};
+firebase.initializeApp(config);
+
+// Get a reference to the database service
+var firebaseDatabase = firebase.database();
+
+
+
+var riot = new RiotRequest(process.env.riotToken || CONFIG.riotToken);
 
 // Instancia de cliente Discord
 module.exports = {
     bot: client,
     run: () => client.login(token),
-    twitter: twitter
+    twitter: twitter,
+    riot: riot,
+    firebaseDatabase: firebaseDatabase
 };

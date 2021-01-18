@@ -3,5 +3,7 @@ module.exports = [
   "!cumple",
   "!halpmepls",
   "!halluda",
-  "!bolalan"
+  "!bolalan",
+  "!capitalismo",
+  "!coins"
 ]
