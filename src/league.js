@@ -86,7 +86,7 @@ module.exports = (client, riotApiClient, firebaseDatabase) => {
             // Mis colacoins
             if (message.content === "!coins") {
                 firebaseDatabase.ref(`/users/${message.author.id}`).once('value').then((snapshot) => {
-                    const data = (snapshot.val());
+                    const data = snapshot.val() ? snapshot.val : defaultUserObj;
                     if (!data) {
                         firebaseDatabase.ref(`/users/${message.author.id}`).set({ points: 0 }, (err) => {
                             if (err) {
@@ -111,16 +111,16 @@ module.exports = (client, riotApiClient, firebaseDatabase) => {
                 const destinatario = split[2].slice(3, split[2].length-1);
                 if (destinatario != message.author.id) {
                     firebaseDatabase.ref(`/users/${message.author.id}`).once('value').then((snapshot) => {
-                        const data = (snapshot.val());
-                        const newData = { ...data, points: data.points - cantidad }
+                        const data = snapshot.val() ? snapshot.val() : defaultUserObj;
                         if (data.points >= cantidad) {
                             firebaseDatabase.ref(`/users/${destinatario}`).once('value').then((snapshot2) => {
-                                const data2 = (snapshot2.val() ? snapshot2.val() : defaultUserObj);
+                                const data2 = snapshot2.val() ? snapshot2.val() : defaultUserObj;
                                 newData2 = { ...data2, points: data2.points + cantidad }
                                 firebaseDatabase.ref(`/users/${destinatario}`).set(newData2, (err) => {
                                     if (err) {
                                         console.log(err)
                                     } else {
+                                        const newData = { ...data, points: data.points - cantidad }
                                         firebaseDatabase.ref(`/users/${message.author.id}`).set(newData, (err) => {
                                             if (err) {
                                                 console.log(err)
