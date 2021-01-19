@@ -5,5 +5,6 @@ module.exports = [
   "!halluda",
   "!bolalan",
   "!capitalismo",
-  "!coins"
+  "!coins",
+  "!pagar"
 ]

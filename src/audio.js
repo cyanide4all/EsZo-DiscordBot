@@ -34,37 +34,8 @@ module.exports = (client) => {
             }).catch(console.log);
         }
     }
-        
-    // Listeners para pabla
-    client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
-        if(newMemberState.id == 161138305189150720 && newMemberState.voiceChannel != null){
-            playAudioFile("audio/mniac.mp3", newMemberState)
-        }
-    });
-    
-    //  Listener para Castromiles
-    client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
-        if(newMemberState.id == 229206562697117696 && newMemberState.voiceChannel != null){
-            playAudioFile("audio/cosas.mp3", newMemberState)
-        }
-    });  
-    
-    //  Listener para DM
-    client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
-        if(newMemberState.id == 161139020871499776 && newMemberState.voiceChannel != null){
-            playAudioFile("audio/frens.mp3", newMemberState)
-        }
-    });
-    
-    //  Listener para Daviz
-    client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
-        if(newMemberState.id == 328906982675185664 && newMemberState.voiceChannel != null){
-            playAudioFile("audio/daviz.mp3", newMemberState)
-        }
-    });
     
     client.on('message', message => {
-
         if (message.channel.id == 730686599049773086 // EstrellaZorro -> BOTS/beep-beep-bop
             || message.channel.id == 268398719802540032 // EstrellaZorro -> /boop
             || message.channel.id == 382239046790807562 // TESTOTESTOTEST -> GENERAL/texto

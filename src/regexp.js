@@ -15,13 +15,14 @@ const regexStaph = /(bot staph)|(para bot)/i
 const regexNoLink = /^(?!http).*/
 const regexTTSMal = /^(\/TTS).*/
 const regexTorb = /(torb)|(enano)|(upgrade)/i
-const regexEmpiezaPorExclamacion = /^!.*/
+const regexEmpiezaPorExclamacion = /^![^ ]*$/
 const regexSiNo = /(s[ií] o no,? bot)|(bot.* s[ií] o no)|(a que (s[ií]|no),? bot)/i
 const regexCuantos = /(Cu[aá]ntos somos\??)/i
 const regexGale = /[gG]aleginho.*/i
 const regexHum = /hu*m+\b/i
 const regexWah = /(luigi)|((w|gu)a+h*)/i
 const regexYT = /^!yt /
+const regexPagar = /!pagar [0-9]+ <@![0-9]+>$/i
 
 
 module.exports = {
@@ -44,5 +45,6 @@ module.exports = {
     regexGale,
     regexHum,
     regexWah,
-    regexYT
+    regexYT,
+    regexPagar
 }

@@ -40,8 +40,6 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 var firebaseDatabase = firebase.database();
 
-
-
 var riot = new RiotRequest(process.env.riotToken || CONFIG.riotToken);
 
 // Instancia de cliente Discord
