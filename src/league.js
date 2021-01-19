@@ -1,15 +1,15 @@
 var regex = require("./regexp");
 
+const dailyPoints = 24
+const points5min = 1
+
+const defaultUserObj = {
+    points: 0,
+    dailyConnect: 0,
+    lastConnect: null,
+}
 module.exports = (client, riotApiClient, firebaseDatabase) => {
 
-    const dailyPoints = 24
-    const points5min = 1
-
-    const defaultUserObj = {
-        points: 0,
-        dailyConnect: 0,
-        lastConnect: null,
-    }
 
     function cobrarPuntos(userId, cb) {
         firebaseDatabase.ref(`/users/${userId}`).once('value').then((snapshot) => {
@@ -86,7 +86,7 @@ module.exports = (client, riotApiClient, firebaseDatabase) => {
             // Mis colacoins
             if (message.content === "!coins") {
                 firebaseDatabase.ref(`/users/${message.author.id}`).once('value').then((snapshot) => {
-                    const data = snapshot.val() ? snapshot.val : defaultUserObj;
+                    const data = snapshot.val() ? snapshot.val() : defaultUserObj;
                     if (!data) {
                         firebaseDatabase.ref(`/users/${message.author.id}`).set({ points: 0 }, (err) => {
                             if (err) {
