@@ -11,13 +11,13 @@ const defaultUserObj = {
 module.exports = (client, riotApiClient, firebaseDatabase) => {
 
 
-    function cobrarPuntos(userId, cb) {
+    function cobrarPuntos(userId, isDisconect, cb) {
         firebaseDatabase.ref(`/users/${userId}`).once('value').then((snapshot) => {
             const userObj = snapshot.val() ? snapshot.val() : defaultUserObj;
             const now = new Date().getTime();
             const newUser = {
                 ...userObj, 
-                lastConnect: now,
+                lastConnect: isDisconect ? null : now,
             }
             if (userObj.lastConnect && userObj.lastConnect < (now - 300000)) { // 300000 = ms en 5 min 
                 newUser.points = userObj.points + Math.round(points5min * ((now - userObj.lastConnect)/300000))
@@ -57,7 +57,7 @@ module.exports = (client, riotApiClient, firebaseDatabase) => {
         }
         // Al desconectarse, comprobar cuánto ha pasado conectado
         if (newState.channel == null && prevState.channel != null) {
-            cobrarPuntos(newState.member.id);
+            cobrarPuntos(newState.member.id, true);
         }
     });
 
@@ -101,8 +101,8 @@ module.exports = (client, riotApiClient, firebaseDatabase) => {
                 });
             }
             // Pedir puntos sin desconectarse
-            if (message.content === "dame punto") {
-                cobrarPuntos(message.author.id, (newPoints) => message.reply(`Ahora tienes ${newPoints}`))
+            if (message.content === "dame punto") { 
+                cobrarPuntos(message.author.id, !(message.member && message.member.voice.channelID), (newPoints) => message.reply(`Ahora tienes ${newPoints}`))
             }
             // Enviar punto
             if (regex.regexPagar.test(message.content)) {
