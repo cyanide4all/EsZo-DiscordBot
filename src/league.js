@@ -1,7 +1,9 @@
+const { MessageReaction } = require("discord.js");
 var regex = require("./regexp");
 
 const dailyPoints = 24
 const points5min = 1
+const reactionPoints = 5
 
 const defaultUserObj = {
     points: 0,
@@ -60,6 +62,42 @@ module.exports = (client, riotApiClient, firebaseDatabase) => {
             cobrarPuntos(newState.member.id, true);
         }
     });
+
+    // REACCION :dogo:
+    client.on('messageReactionAdd', (reaction, author) => {
+        if (reaction.emoji.id == 318132608057868309 && reaction.message.author.id != author.id) {
+            firebaseDatabase.ref(`/users/${reaction.message.author.id}`).once('value').then((snapshot) => {
+                const userObj = snapshot.val() ? snapshot.val() : defaultUserObj;
+                const newUser = {
+                    ...userObj,
+                    points: userObj.points + reactionPoints
+                }                
+                firebaseDatabase.ref(`/users/${reaction.message.author.id}`).set(newUser, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                })
+            })
+        }
+    });
+
+    client.on('messageReactionRemove', (reaction, author) => {
+        if (reaction.emoji.id == 318132608057868309 && reaction.message.author.id != author.id) {
+            firebaseDatabase.ref(`/users/${reaction.message.author.id}`).once('value').then((snapshot) => {
+                const userObj = snapshot.val() ? snapshot.val() : defaultUserObj;
+                const newUser = {
+                    ...userObj,
+                    points: userObj.points >= reactionPoints ? userObj.points - reactionPoints : 0
+                }                
+                firebaseDatabase.ref(`/users/${reaction.message.author.id}`).set(newUser, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                })
+            })
+        }
+    });
+
 
     // TEXTO
     client.on('message', message => {
