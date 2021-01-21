@@ -22,6 +22,9 @@ require("./src/texto")(bot, twitter);
 // Import modulo de audio
 require("./src/audio")(bot);
 
+// Import modulo de monedos
+require("./src/money")(bot, firebaseDatabase);
+
 // Import modulo de lel
 require("./src/league")(bot, riot, firebaseDatabase);
 

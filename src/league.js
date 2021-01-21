@@ -1,180 +1,151 @@
-const { MessageReaction } = require("discord.js");
 var regex = require("./regexp");
 
-const dailyPoints = 24
-const points5min = 1
-const reactionPoints = 5
+module.exports = (client, riotRequest, firebaseDatabase) => {
+  
+  function requestSummonerByName(name) {
+    return new Promise((resolve, reject) => {
+      riotRequest.request(
+      "euw1",
+      "summoner",
+      `/lol/summoner/v4/summoners/by-name/${name}`,
+      function (err, data) {
+        if(err) {
+          return reject(err);
+        } resolve(data);
+      }
+    )});
+  }
 
-const defaultUserObj = {
-    points: 0,
-    dailyConnect: 0,
-    lastConnect: null,
-}
-module.exports = (client, riotApiClient, firebaseDatabase) => {
-
-
-    function cobrarPuntos(userId, isDisconect, cb) {
-        firebaseDatabase.ref(`/users/${userId}`).once('value').then((snapshot) => {
-            const userObj = snapshot.val() ? snapshot.val() : defaultUserObj;
-            const now = new Date().getTime();
-            const newUser = {
-                ...userObj, 
-                lastConnect: isDisconect ? null : now,
+  client.on('message', (message) => {
+    // Riot Register
+    if (regex.regexRiotRegister.test(message.content)) {
+      const userNameArr = message.content.split(" ")
+      const userName = userNameArr.splice(1,userNameArr.length-1).join(" ")
+      requestSummonerByName(encodeURIComponent(userName)).then(riotUser => {
+        firebaseDatabase.ref(`/users/${message.author.id}`).once('value').then((snapshot) => {
+          const userObj = snapshot.val() ? snapshot.val() : defaultUserObj;
+          const newUser = {
+              ...userObj, 
+              riotAccountId: riotUser.accountId
+          }
+          firebaseDatabase.ref(`/users/${message.author.id}`).set(newUser, (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+              if (userObj.riotAccountId) {
+                message.reply("Actualizado").catch(console.log)
+              } else {
+                message.reply("Registrado").catch(console.log);
+              }
             }
-            if (userObj.lastConnect && userObj.lastConnect < (now - 300000)) { // 300000 = ms en 5 min 
-                newUser.points = userObj.points + Math.round(points5min * ((now - userObj.lastConnect)/300000))
-            } 
-            firebaseDatabase.ref(`/users/${userId}`).set(newUser, (err) => {
-                if (err) {
-                    console.log(err);
-                }
-            })
-            if (cb) {
-                cb(newUser.points)
-            }
+          })
         })
+      }).catch(() => {
+        message.reply("Ese ~~puto virgen~~ invocador no existe").catch(console.log);
+      })
+    }
+    
+    // Ver apuestas
+    if (message.content === "!bets") {
+      firebaseDatabase.ref(`/bets/`).once('value').then((snapshot) => {
+        const apuestas = snapshot.val() ? Object.values(snapshot.val()) : [];
+        if (apuestas.length > 0) {
+          const msg =apuestas.reduce((acc, current) => {
+            return acc.concat(`\n\t<@!${current.author}> ha apostado ${current.amount} colacoins a que <@!${current.target}> ${current.type}`)
+          }, 'Apuestas vigentes: ')
+          message.channel.send(msg).catch(console.log)
+        } else {
+          message.channel.send('No hay apuestas ahora mismo').catch(console.log)
+        }
+      })
     }
 
-    // CONEXION
-    client.on('voiceStateUpdate', (prevState, newState) => {
-        // Al conectarse, comprobar si es la primera del día
-        if (prevState.channel == null && newState.channel != null) {
-            firebaseDatabase.ref(`/users/${newState.member.id}`).once('value').then((snapshot) => {
-                const userObj = snapshot.val() ? snapshot.val() : defaultUserObj;
-                const now = new Date().getTime();
-                const newUser = {
-                    ...userObj,
-                    lastConnect: now
-                }                
-                if (userObj.dailyConnect < (now - 86400000)) { // 86400000 = ms en 1 día
-                    newUser.points = userObj.points + dailyPoints
-                    newUser.dailyConnect = now
-                }
-                firebaseDatabase.ref(`/users/${newState.member.id}`).set(newUser, (err) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                })
-            })
+    // Apostar
+    if (regex.regexApuesta.test(message.content)) {
+      const split = message.content.split(" ");
+      const amount = Number(split[1]);
+      const target = split[2].slice(3, split[2].length-1);
+      const type = split[3]
+      const newBet = {
+        author: message.author.id,
+        amount,
+        target,
+        type
+      }
+      // TODO todo el sistema de apuestas contra la api de riot
+      var newKey = firebaseDatabase.ref().child('bets').push().key;
+      firebaseDatabase.ref(`/bets/${newKey}`).set(newBet, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          message.reply("Apuesta registrada").catch(console.log)
         }
-        // Al desconectarse, comprobar cuánto ha pasado conectado
-        if (newState.channel == null && prevState.channel != null) {
-            cobrarPuntos(newState.member.id, true);
-        }
-    });
-
-    // REACCION :dogo:
-    client.on('messageReactionAdd', (reaction, author) => {
-        if (reaction.emoji.id == 318132608057868309 && reaction.message.author.id != author.id) {
-            firebaseDatabase.ref(`/users/${reaction.message.author.id}`).once('value').then((snapshot) => {
-                const userObj = snapshot.val() ? snapshot.val() : defaultUserObj;
-                const newUser = {
-                    ...userObj,
-                    points: userObj.points + reactionPoints
-                }                
-                firebaseDatabase.ref(`/users/${reaction.message.author.id}`).set(newUser, (err) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                })
-            })
-        }
-    });
-
-    client.on('messageReactionRemove', (reaction, author) => {
-        if (reaction.emoji.id == 318132608057868309 && reaction.message.author.id != author.id) {
-            firebaseDatabase.ref(`/users/${reaction.message.author.id}`).once('value').then((snapshot) => {
-                const userObj = snapshot.val() ? snapshot.val() : defaultUserObj;
-                const newUser = {
-                    ...userObj,
-                    points: userObj.points >= reactionPoints ? userObj.points - reactionPoints : 0
-                }                
-                firebaseDatabase.ref(`/users/${reaction.message.author.id}`).set(newUser, (err) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                })
-            })
-        }
-    });
-
-
-    // TEXTO
-    client.on('message', message => {
-        if (message.channel.id != 268398719802540032) {
-            // TOP de colacoins
-            if (message.content === "!capitalismo") {
-                firebaseDatabase.ref('/users/').once('value').then((snapshot) => {
-                    const data = (snapshot.val());
-                    let dataAsArray = Object.keys(data).map(each => ({
-                        userId: each,
-                        points: data[each].points ? data[each].points : 0
-                    })).sort((a,b)=> b.points - a.points)
-                    if (dataAsArray.length >= 3) {
-                        message.channel.send(`
-                        TOP 3 CAPITALISTAS DE ESZO:
-                            <@!${dataAsArray[0].userId}> - ${dataAsArray[0].points} colacoins
-                            <@!${dataAsArray[1].userId}> - ${dataAsArray[1].points} colacoins
-                            <@!${dataAsArray[2].userId}> - ${dataAsArray[2].points} colacoins`)
-                    } else {
-                        message.channel.send(`Muy poco capitalista hoy por aquí...`)
-                    }
-                });
-            }
-            // Mis colacoins
-            if (message.content === "!coins") {
-                firebaseDatabase.ref(`/users/${message.author.id}`).once('value').then((snapshot) => {
-                    const data = snapshot.val() ? snapshot.val() : defaultUserObj;
-                    if (!data) {
-                        firebaseDatabase.ref(`/users/${message.author.id}`).set({ points: 0 }, (err) => {
-                            if (err) {
-                                console.log(err)
-                            } else {
-                                message.reply(`Tienes 0 colacoins`)
-                            }
-                        });
-                    } else {
-                        message.reply(`Tienes ${data.points} colacoins`)
-                    }
-                });
-            }
-            // Pedir puntos sin desconectarse
-            if (message.content === "dame punto") { 
-                cobrarPuntos(message.author.id, !(message.member && message.member.voice.channelID), (newPoints) => message.reply(`Ahora tienes ${newPoints}`))
-            }
-            // Enviar punto
-            if (regex.regexPagar.test(message.content)) {
-                const split = message.content.split(" ");
-                const cantidad = Number(split[1]);
-                const destinatario = split[2].slice(3, split[2].length-1);
-                if (destinatario != message.author.id) {
-                    firebaseDatabase.ref(`/users/${message.author.id}`).once('value').then((snapshot) => {
-                        const data = snapshot.val() ? snapshot.val() : defaultUserObj;
-                        if (data.points >= cantidad) {
-                            firebaseDatabase.ref(`/users/${destinatario}`).once('value').then((snapshot2) => {
-                                const data2 = snapshot2.val() ? snapshot2.val() : defaultUserObj;
-                                newData2 = { ...data2, points: data2.points + cantidad }
-                                firebaseDatabase.ref(`/users/${destinatario}`).set(newData2, (err) => {
-                                    if (err) {
-                                        console.log(err)
-                                    } else {
-                                        const newData = { ...data, points: data.points - cantidad }
-                                        firebaseDatabase.ref(`/users/${message.author.id}`).set(newData, (err) => {
-                                            if (err) {
-                                                console.log(err)
-                                            } else {
-                                                message.reply(`Has pagado ${cantidad} colacoins a <@!${destinatario}>`)
-                                            }
-                                        });
-                                    }
-                                });
-                            })
-                        } else {
-                            message.reply("No haber nacido pobre.")
-                        }
-                    })
-                }
-            }
-        }
-    })    
+      })
+    }
+  })
 }
+
+
+/*
+const summonerName = "obiwancanabis";
+const accountId = "6wPxRUbeIi73BGVoOmVJm8GtQtxatBJsYk8cvbtBsgOzvQ";
+const matchId = "5042873983";
+// discordId -> summorname -> accountId
+function requestSummonerByName(name, cb) {
+  riotRequest.request(
+    "euw1",
+    "summoner",
+    `/lol/summoner/v4/summoners/by-name/${name}`,
+    function (err, data) {
+      if (!err) {
+        cb(data);
+      } else {
+        console.error(err);
+      }
+    }
+  );
+}
+
+function getLatestMatchFromAccountId(encryptedAccountId, cb) {
+  riotRequest.request(
+    "euw1",
+    "match",
+    `/lol/match/v4/matchlists/by-account/${encryptedAccountId}`,
+    function (err, data) {
+      if (!err) {
+        cb(data.matches[0]);
+      } else {
+        console.error(err);
+      }
+    }
+  );
+}
+
+function getMatchDatafromMatchId(matchID, accountId, cb) {
+  riotRequest.request(
+    "euw1",
+    "match",
+    `/lol/match/v4/matches/${matchId}`,
+    function (err, data) {
+      if (!err) {
+        cb(handleDtoMatchData(data))
+      } else {
+        console.error(err);
+      }
+    }
+  );
+}
+
+function handleDtoMatchData(data) {
+    const participantId  = data.participantIdentities.find(e => e.player.currentAccountId === accountId).participantId // 1 to 10
+    const firstTeamWon= data.teams[0].win;
+    const firstTeamId = data.teams[0].teamId;
+    const Userteam = data.participants.find(e => e.participantId === participantId).teamId;
+    return firstTeamWon === 'Win' ? firstTeamId === Userteam : firstTeamId !== Userteam;
+}
+
+// just to test
+// requestSummonerByName(summonerName, console.log)
+// getLatestMatchFromAccountId(accountId, console.log);
+getMatchDatafromMatchId(matchId, accountId, console.log);
+*/
