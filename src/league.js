@@ -278,8 +278,8 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
             setTimeout(pollingFunc, pollingTime);
           } else {
             console.log(" Step 8 - Pagar la coca");
+            await deleteBet(betId) // delete previous bet
             if (type === playerWon) {
-              await deleteBet(betId) // delete previous bet
               const winnersnap = await getUserById(message.author.id);
               const winner = {
                 ...winnersnap,
