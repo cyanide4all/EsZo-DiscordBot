@@ -211,35 +211,33 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
         const targetId = split[2].slice(3, split[2].length - 1);
         const type = split[3] === "gana";
 
-        console.log(" Step 1a - Comprobar que tenemos pasta suficiente");
+        // Step 1a - Comprobar que tenemos pasta suficiente
         const author = await getUserById(message.author.id);
         if (author.points < amount) {
           throw Error("no haber nacido pobre");
         }
 
-        console.log(
-          " Step 1b - Comprobar que tenemos los datos del jugador en firebase"
-        );
+        // Step 1b - Comprobar que tenemos los datos del jugador en firebase
         const target = await getUserById(targetId);
         if (!(target && target.riotSummonerId && target.riotAccountId)) {
           throw Error(`dile a <!@${targetId}> que haga !riotRegister anda`);
         }
 
-        console.log(" Step 2 - Comprobar que el jugador está en una partida");
+        // Step 2 - Comprobar que el jugador está en una partida
         const currentGame = await getActiveGameBySummonerId(
           target.riotSummonerId
         );
 
-        console.log(" Step 3a - Que la partida no pase de 7 min (420 seg)");
+        // Step 3a - Que la partida no pase de 7 min (420 seg)
         if (currentGame.gameLength >= 420) {
           throw Error("has apostado demasiado tarde, no leo");
         }
-        console.log(" Step 3b - Que la partida no sea custom");
-        // TODO
+        // Step 3b - Que la partida no sea custom
+        if (currentGame.gameType === "CUSTOM_GAME") {
+          throw Error("No se puede apostar en partidas personalizadas");
+        }
 
-        console.log(
-          " Step 4 - Ver si esta persona ya ha apostado en la partida"
-        );
+        // Step 4 - Ver si esta persona ya ha apostado en la partida"
         const prevBet = await getPreviousBet(
           message.author.id,
           currentGame.gameId
@@ -248,16 +246,14 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
           throw Error("Ya has apostado https://twitter.com/stopludopatia ");
         }
 
-        console.log(
-          " Step 5 - Le quitamos la cantidad de la apuesta al apostador"
-        );
+        // Step 5 - Le quitamos la cantidad de la apuesta al apostador"
         const newUser = {
           ...author,
           points: author.points - amount,
         };
         await setUserById(message.author.id, newUser);
 
-        console.log(" Step 6 - Registrar la apuesta");
+        // Step 6 - Registrar la apuesta
         const newBet = {
           author: message.author.id,
           amount,
@@ -268,7 +264,7 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
         const betId = await createBet(newBet);
         message.reply("Apuesta registrada");
 
-        console.log(" Step 7 - Empezar polling por si acaba la partida");
+        // Step 7 - Empezar polling por si acaba la partida
         const pollingFunc = async () => {
           const playerWon = await getMatchDatafromMatchId(
             currentGame.gameId,
@@ -277,7 +273,7 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
           if (playerWon === null) {
             setTimeout(pollingFunc, pollingTime);
           } else {
-            console.log(" Step 8 - Pagar la coca");
+            // Step 8 - Pagar la coca
             await deleteBet(betId) // delete previous bet
             if (type === playerWon) {
               const winnersnap = await getUserById(message.author.id);
@@ -300,10 +296,7 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
         };
         setTimeout(pollingFunc, pollingTime);
       } catch (e) {
-        console.log(`Catch final: ${e}`);
-        if (e) {
-          message.reply(e.message).catch(console.log);
-        }
+        e && message.reply(e.message).catch(console.log);
       }
     }
   });
