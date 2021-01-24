@@ -29,7 +29,7 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
           if (err) {
             return reject(
               Error(
-                `Esta """persona""" que juega al lel no esta jugando bien por el yokese.`
+                `Esta """persona""" que juega al lel no esta jugando, bien por él yokese.`
               )
             );
           }
@@ -70,9 +70,8 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
         "euw1",
         "match",
         `/lol/match/v4/matches/${matchID}`,
-        // todo hacer esto de una forma mas inteligente
-        // los errores no pueden hacer parte de la logica :)
         function (err, data) {
+          console.log(`Ciclo: --------------------------------------err = ${JSON.stringify(err)}, -----------------------------------------data=${JSON.stringify(data)}`)
           if (!err) {
             resolve(handleDtoMatchData(data, accountId));
           } else if (err.status === 404) {
@@ -115,7 +114,7 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
       firebaseDatabase
         .ref(`/users/${id}`)
         .once("value")
-        .then((snap) => resolve(snap.val() ?? defaultUserObj))
+        .then((snap) => resolve(snap.val() ? snap.val() : defaultUserObj))
         .catch((e) => {
           console.error(e);
           reject();
@@ -133,6 +132,9 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
             (each) => each.gameId === gameId && each.author === authorId
           );
           resolve(prevBet);
+        }).catch((e) => {
+          console.error(e);
+          reject();
         });
     });
 
@@ -228,10 +230,12 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
           target.riotSummonerId
         );
 
-        console.log(" Step 3 - Que la partida no pase de 7 min (420 seg)");
+        console.log(" Step 3a - Que la partida no pase de 7 min (420 seg)");
         if (currentGame.gameLength >= 420) {
           throw Error("has apostado demasiado tarde, no leo");
         }
+        console.log(" Step 3b - Que la partida no sea custom");
+        // TODO
 
         console.log(
           " Step 4 - Ver si esta persona ya ha apostado en la partida"
@@ -270,7 +274,6 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
             currentGame.gameId,
             target.riotAccountId
           );
-
           if (playerWon === null) {
             setTimeout(pollingFunc, pollingTime);
           } else {
@@ -290,14 +293,14 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
               );
             } else {
               message.channel.send(
-                `<@!${message.author.id} ha perdido la apuesta de ${amount} colacoins`
+                `<@!${message.author.id}> ha perdido la apuesta de ${amount} colacoins`
               );
             }
           }
         };
         setTimeout(pollingFunc, pollingTime);
       } catch (e) {
-        console.log(e);
+        console.log(`Catch final: ${e}`);
         if (e) {
           message.reply(e.message).catch(console.log);
         }
