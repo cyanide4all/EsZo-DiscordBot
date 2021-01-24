@@ -99,7 +99,7 @@ module.exports = (client, firebaseDatabase) => {
     client.on('message', message => {
         if (message.channel.id != 268398719802540032) {
             // TOP de colacoins
-            if (message.content === "!capitalismo") {
+            if (message.content === "!stonks") {
                 firebaseDatabase.ref('/users/').once('value').then((snapshot) => {
                     const data = (snapshot.val());
                     let dataAsArray = Object.keys(data).map(each => ({

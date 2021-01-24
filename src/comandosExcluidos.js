@@ -4,7 +4,7 @@ module.exports = [
   "!halpmepls",
   "!halluda",
   "!bolalan",
-  "!capitalismo",
+  "!stonks",
   "!coins",
   "!bets"
 ]

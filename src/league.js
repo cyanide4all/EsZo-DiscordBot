@@ -283,7 +283,7 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
               };
               await setUserById(message.author.id, winner);
               message.channel.send(
-                `<@!${message.author.id} ha ganado la apuesta y ${
+                `<@!${message.author.id}> ha ganado la apuesta y ${
                   amount * 2
                 } colacoins`
               );
