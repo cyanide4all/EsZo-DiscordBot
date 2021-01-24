@@ -23,7 +23,7 @@ const regexHum = /hu*m+\b/i
 const regexWah = /(luigi)|((w|gu)a+h*)/i
 const regexYT = /^!yt /
 const regexPagar = /!pagar [0-9]+ <@![0-9]+>$/i
-const regexRiotRegister = /!riotRegister .+$/i
+const regexRiotRegister = /^!riotRegister .+$/i
 const regexApuesta = /!bet [0-9]+ <@![0-9]+> (gana|pierde)$/
 
 module.exports = {

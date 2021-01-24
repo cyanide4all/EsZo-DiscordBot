@@ -220,7 +220,7 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
         // Step 1b - Comprobar que tenemos los datos del jugador en firebase
         const target = await getUserById(targetId);
         if (!(target && target.riotSummonerId && target.riotAccountId)) {
-          throw Error(`dile a <!@${targetId}> que haga !riotRegister anda`);
+          throw Error(`dile a <@!${targetId}> que haga !riotRegister anda`);
         }
 
         // Step 2 - Comprobar que el jugador está en una partida
