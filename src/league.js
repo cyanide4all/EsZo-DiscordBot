@@ -296,7 +296,9 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
         };
         setTimeout(pollingFunc, pollingTime);
       } catch (e) {
-        e && message.reply(e.message).catch(console.log);
+        if(e) {
+          message.reply(e.message).catch(console.log);
+        }
       }
     }
   });
