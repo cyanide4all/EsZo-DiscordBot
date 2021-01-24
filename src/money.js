@@ -1,14 +1,11 @@
 var regex = require("./regexp");
+const { 
+    defaultUserObj, 
+    dailyPoints, 
+    points5min, 
+    reactionPoints 
+} = require("./struct")
 
-const dailyPoints = 24
-const points5min = 1
-const reactionPoints = 5
-
-const defaultUserObj = {
-    points: 0,
-    dailyConnect: 0,
-    lastConnect: null,
-}
 module.exports = (client, firebaseDatabase) => {
 
 
