@@ -136,7 +136,7 @@ module.exports = (client, firebaseDatabase) => {
             }
             // Pedir puntos sin desconectarse
             if (message.content === "dame punto") { 
-                cobrarPuntos(message.author.id, !(message.member && message.member.voice.channelID), (newPoints) => message.reply(`Ahora tienes ${newPoints}`).catch(console.log))
+                cobrarPuntos(message.author.id, !(message.member && message.member.voice.channelID), (newPoints) => message.reply(`Ahora tienes ${newPoints} colacoins`).catch(console.log))
             }
             // Enviar punto
             if (regex.regexPagar.test(message.content)) {
