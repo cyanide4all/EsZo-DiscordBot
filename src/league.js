@@ -71,7 +71,6 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
         "match",
         `/lol/match/v4/matches/${matchID}`,
         function (err, data) {
-          console.log(`Ciclo: --------------------------------------err = ${JSON.stringify(err)}, -----------------------------------------data=${JSON.stringify(data)}`)
           if (!err) {
             resolve(handleDtoMatchData(data, accountId));
           } else if (err.status === 404) {
