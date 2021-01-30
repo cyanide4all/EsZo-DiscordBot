@@ -64,5 +64,6 @@ module.exports = [
   "!imin",
   "!eo",
   "!3pingos",
-  "!buendia"
+  "!buendia",
+  "!palos"
 ]
