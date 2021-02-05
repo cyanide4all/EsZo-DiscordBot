@@ -16,24 +16,37 @@ module.exports = (client) => {
     var playAudioFile = function(uri, member, cb){
         if (member.voice && member.voice.channel && client.voice.connections.array().length === 0) {
             const voiceChannel = member.voice.channel
-            voiceChannel.join().then(connection => {
-                const dispatcher = connection.play(uri)
-                dispatcher.once('finish', () => {
-                    if (voiceChannel) {
-                        voiceChannel.leave();
-                    } else if (client.voice && client.voice.connections) {
-                        client.voice.connections[0].disconect();
-                        if(cb) {
-                            cb();
-                        }
-                    }
-                });
-                dispatcher.once('error', e => {
-                    console.log(e);
-                });
-            }).catch(console.log);
+            playAudioFileInChannel(uri, voiceChannel, cb)
         }
     }
+
+    const playAudioFileInChannel = function(uri, voiceChannel, cb) {
+        voiceChannel.join().then(connection => {
+            const dispatcher = connection.play(uri)
+            dispatcher.once('finish', () => {
+                if (voiceChannel) {
+                    voiceChannel.leave();
+                } else if (client.voice && client.voice.connections) {
+                    client.voice.connections[0].disconect();
+                    if(cb) {
+                        cb();
+                    }
+                }
+            });
+            dispatcher.once('error', e => {
+                console.log(e);
+            });
+        }).catch(console.log);
+    }
+
+    client.on('voiceStateUpdate', (prevState, newState) => {
+        // Al desconectarse, tiramos un dado
+        if (newState.channel == null && prevState.channel != null) {
+            if (Math.random() > 0.9) {
+                playAudioFileInChannel("audio/casa.mp3", prevState.channel);
+            }
+        }
+    });
     
     client.on('message', message => {
         if (message.channel.id == 730686599049773086 // EstrellaZorro -> BOTS/beep-beep-bop
