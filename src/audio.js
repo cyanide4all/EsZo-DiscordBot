@@ -41,7 +41,7 @@ module.exports = (client) => {
 
     client.on('voiceStateUpdate', (prevState, newState) => {
         // Al desconectarse, tiramos un dado
-        if (prevState.member.id != 317421133131677696 newState.channel == null && prevState.channel != null) {
+        if (prevState.member.id != 317421133131677696 && newState.channel == null && prevState.channel != null) {
             if (Math.random() > 0.9) {
                 playAudioFileInChannel("audio/casa.mp3", prevState.channel);
             }
