@@ -3,6 +3,7 @@ const { defaultUserObj } = require("./struct");
 const pollingTime = 30000;
 
 module.exports = (client, riotRequest, firebaseDatabase) => {
+
   const requestSummonerByName = (name) => {
     return new Promise((resolve, reject) => {
       riotRequest.request(
@@ -82,6 +83,57 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
       );
     });
   };
+
+  const cobrarApuestas = async (sendMessage, userRequested) => {
+    firebaseDatabase
+    .ref(`/bets/`)
+    .once("value")
+    .then(async (betsSnapshot) => {
+      const snap = betsSnapshot.val()
+      const apuestas = (snap ? Object.values(snap) : []);
+      if (apuestas.length > 0) {
+        firebaseDatabase
+          .ref(`/users/`)
+          .once("value")
+          .then(async (usersSnapshot) => {
+            const users = usersSnapshot.val()
+            const response = [];
+            apuestas.forEach(async (apuesta, idx) => {
+              const playerWon = await getMatchDatafromMatchId(
+                apuesta.gameId,
+                users[apuesta.target].riotAccountId
+              );
+              if (playerWon != null) {
+                if (apuesta.type === playerWon) {
+                  const winnersnap = users[apuesta.author];
+                  const winner = {
+                    ...winnersnap,
+                    points: winnersnap.points + apuesta.amount * 2,
+                  };
+                  await setUserById(apuesta.author, winner);
+                  response.push(
+                    `<@!${apuesta.author}> ha ganado la apuesta y ${
+                      apuesta.amount * 2
+                    } colacoins`
+                  )
+                } else {
+                  response.push(
+                    `<@!${apuesta.author}> ha perdido la apuesta de ${apuesta.amount} colacoins`
+                  )
+                }
+                await deleteBet(Object.keys(betsSnapshot)[idx])
+              }
+            })
+            sendMessage(response.length > 0 ? response.join("\n") : "No hay apuestas que cobrar").catch(console.log)
+        })
+      } else {
+        if (userRequested) {
+          sendMessage("No hay apuestas que cobrar").catch(console.log)
+        }
+      }
+    });
+  }
+
 
   const handleDtoMatchData = (data, accountId) => {
     const participantId = data.participantIdentities.find(
@@ -202,6 +254,11 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
         });
     }
 
+    // Ver apuestas
+    if (message.content === "!diaDePago") {
+      cobrarApuestas((msg) => message.channel.send(msg), true)
+    }
+
     // Apostar
     if (regex.regexApuesta.test(message.content)) {
       try {
@@ -285,11 +342,11 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
                 `<@!${message.author.id}> ha ganado la apuesta y ${
                   amount * 2
                 } colacoins`
-              );
+              ).catch(console.log);
             } else {
               message.channel.send(
                 `<@!${message.author.id}> ha perdido la apuesta de ${amount} colacoins`
-              );
+              ).catch(console.log);
             }
           }
         };
