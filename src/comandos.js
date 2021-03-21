@@ -69,5 +69,6 @@ module.exports = [
   "!casa",
   "!xokas",
   "!uegh",
-  "!30monkeys"
+  "!30monkeys",
+  "!yooo"
 ]
