@@ -76,5 +76,6 @@ module.exports = [
   "!discriminando",
   "!israel",
   "!letsgo",
-  "!topesperando"
+  "!topesperando",
+  "!jamas"
 ]
