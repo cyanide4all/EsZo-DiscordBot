@@ -80,5 +80,6 @@ module.exports = [
   "!jamas",
   "!mondarina",
   "!3mondarinas",
-  "!uno"
+  "!uno",
+  "!tabien"
 ]
