@@ -28,6 +28,9 @@ require("./src/money")(bot, firebaseDatabase);
 // Import modulo de lel
 require("./src/league")(bot, riot, firebaseDatabase);
 
+// Import modulo de mensajes programados
+require("./src/programmedMsgs")(bot);
+
 // Import método que arranca el bot
 var start = require("./src/core").run;
 

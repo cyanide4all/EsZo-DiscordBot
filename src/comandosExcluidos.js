@@ -7,5 +7,6 @@ module.exports = [
   "!stonks",
   "!coins",
   "!bets",
-  "!diaDePago"
+  "!diaDePago",
+  "!progMsg"
 ]

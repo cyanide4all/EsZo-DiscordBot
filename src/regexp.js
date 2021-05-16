@@ -25,6 +25,7 @@ const regexYT = /^!yt /
 const regexPagar = /!pagar [0-9]+ <@![0-9]+>$/i
 const regexRiotRegister = /^!riotRegister .+$/i
 const regexApuesta = /!bet [0-9]+ <@![0-9]+> (gana|pierde)$/
+const regexProgrammedMsg = /!progMsg [0-9]{18} [0-9]+[mMhHsS] .+/i
 
 module.exports = {
     regexSaludos,
@@ -50,4 +51,5 @@ module.exports = {
     regexPagar,
     regexRiotRegister,
     regexApuesta,
+    regexProgrammedMsg,
 }
