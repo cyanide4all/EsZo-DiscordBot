@@ -81,5 +81,6 @@ module.exports = [
   "!mondarina",
   "!3mondarinas",
   "!uno",
-  "!tabien"
-]
+  "!tabien",
+  "!topenemigo",
+];
