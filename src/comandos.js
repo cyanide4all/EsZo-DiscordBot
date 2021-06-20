@@ -83,4 +83,5 @@ module.exports = [
   "!uno",
   "!tabien",
   "!topenemigo",
+  "!sabado",
 ];
