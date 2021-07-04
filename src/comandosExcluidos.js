@@ -8,5 +8,6 @@ module.exports = [
   "!coins",
   "!bets",
   "!diaDePago",
-  "!progMsg"
-]
+  "!progMsg",
+  "!putoPlatino",
+];
