@@ -85,4 +85,6 @@ module.exports = [
   "!topenemigo",
   "!sabado",
   "!sisuka",
+  "!hando",
+  "!platinada",
 ];
