@@ -87,4 +87,5 @@ module.exports = [
   "!sisuka",
   "!hando",
   "!platinada",
+  "!esigual",
 ];
