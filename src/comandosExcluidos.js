@@ -10,4 +10,5 @@ module.exports = [
   "!diaDePago",
   "!progMsg",
   "!putoPlatino",
+  "!cumples",
 ];
