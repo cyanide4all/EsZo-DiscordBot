@@ -31,6 +31,9 @@ require("./src/league")(bot, riot, firebaseDatabase);
 // Import modulo de mensajes programados
 require("./src/programmedMsgs")(bot);
 
+// Import modulo de cumples
+require("./src/cumples")(bot);
+
 // Import método que arranca el bot
 var start = require("./src/core").run;
 
