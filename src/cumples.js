@@ -3,16 +3,18 @@ const cumples = require("./cumples.json");
 module.exports = (client) => {
   let ultimoCumFelicitado = new Date(0);
 
+  function getCumplesHoy(diaMesHoy) {
+    let cumpleString = cumples.filter((each) => {
+      const diaMesCum = new Date(each.date + 43200000);
 
-    function getCumplesHoy(diaMesHoy){
-        let cumpleString = cumples.filter((each) => {
-            const diaMesCum = new Date(each.date+43200);
-
-            return ((diaMesHoy.getDate()===diaMesCum.getDate() && diaMesHoy.getMonth()===diaMesCum.getMonth()))
-        })
-        ultimoCumFelicitado = new Date();
-        return cumpleString;
-    }
+      return (
+        diaMesHoy.getDate() === diaMesCum.getDate() &&
+        diaMesHoy.getMonth() === diaMesCum.getMonth()
+      );
+    });
+    ultimoCumFelicitado = new Date();
+    return cumpleString;
+  }
 
   function createCumMessage() {
     return `
