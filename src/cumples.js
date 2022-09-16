@@ -5,7 +5,7 @@ module.exports = (client) => {
 
   function getCumplesHoy(diaMesHoy) {
     let cumpleString = cumples.filter((each) => {
-      const diaMesCum = new Date(each.date + 43200000);
+      const diaMesCum = new Date(each.date);
 
       return (
         diaMesHoy.getDate() === diaMesCum.getDate() &&
@@ -52,7 +52,10 @@ module.exports = (client) => {
             (a, b) => new Date(a.date).getDate() - new Date(b.date).getDate()
           )
           .map(
-            (each) => `${each.cummer} el día ${new Date(each.date).getDate()}`
+            (each) =>
+              `${each.cummer} el día ${new Date(
+                each.date + 43200000
+              ).getDate()}`
           )
           .join(",\n\t\t")}
         `);
