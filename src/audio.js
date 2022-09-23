@@ -46,13 +46,16 @@ module.exports = (client) => {
 
   client.on("voiceStateUpdate", (prevState, newState) => {
     // Al desconectarse, tiramos un dado
-    if (
-      prevState.member.id != 317421133131677696 &&
-      newState.channel == null &&
-      prevState.channel != null
-    ) {
-      if (Math.random() > 0.95) {
-        playAudioFileInChannel("audio/casa.mp3", prevState.channel);
+    if (prevState.member.id != 317421133131677696) {
+      if (newState.channel == null && prevState.channel != null) {
+        if (Math.random() > 0.95) {
+          playAudioFileInChannel("audio/casa.mp3", prevState.channel);
+        }
+      }
+      if (newState.channel != null && prevState.channel == null) {
+        if (Math.random() > 0.95) {
+          playAudioFileInChannel("audio/hellomonkey.mp3", newState.channel);
+        }
       }
     }
   });
