@@ -2,11 +2,11 @@
   "name": "eszo-discordbot",
   "version": "2.0.0",
   "description": "More autism, more memes, more bullying",
-  "main": "main.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node main.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
