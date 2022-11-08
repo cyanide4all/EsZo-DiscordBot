@@ -1,40 +1,38 @@
-// Import bot
-var bot = require("./src/core").bot;
+import { Client, GatewayIntentBits } from "discord.js";
+import Config from "./config/config.js";
 
-// Import twitter
-var twitter = require("./src/core").twitter;
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildBans,
+    GatewayIntentBits.GuildEmojisAndStickers,
+    GatewayIntentBits.GuildIntegrations,
+    GatewayIntentBits.GuildWebhooks,
+    GatewayIntentBits.GuildInvites,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildPresences,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.GuildMessageTyping,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.DirectMessageReactions,
+    GatewayIntentBits.DirectMessageTyping,
+    GatewayIntentBits.GuildScheduledEvents,
+    GatewayIntentBits.AutoModerationConfiguration,
+    GatewayIntentBits.AutoModerationExecution,
+  ],
+});
 
-// Import riot
-var riot = require("./src/core").riot;
+client.on("ready", () => {
+  console.log("Doing some gud' ol' barrel rolls...");
+});
 
-// Import firebase
-var firebaseDatabase = require("./src/core").firebaseDatabase
+client.on("messageCreate", (message) => {
+  if (message.author.id !== "317421133131677696") {
+    message.reply("test");
+  }
+});
 
-// Import funciones de servidor
-require("./src/server")(bot);
-
-// Import modulo de peticiones interactivas
-require("./src/peticiones")(bot);
-
-// Import modulo de texto
-require("./src/texto")(bot, twitter);
-
-// Import modulo de audio
-require("./src/audio")(bot);
-
-// Import modulo de monedos
-require("./src/money")(bot, firebaseDatabase);
-
-// Import modulo de lel
-require("./src/league")(bot, riot, firebaseDatabase);
-
-// Import modulo de mensajes programados
-require("./src/programmedMsgs")(bot);
-
-// Import modulo de cumples
-require("./src/cumples")(bot);
-
-// Import método que arranca el bot
-var start = require("./src/core").run;
-
-start();
+client.login(process.env.discordToken || Config.discordToken);
