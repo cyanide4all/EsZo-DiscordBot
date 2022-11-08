@@ -17,6 +17,7 @@
     "ytdl-core": "^4.11.0"
   },
   "scripts": {
+    "install": "npm install --legacy-peer-deps",
     "start": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
