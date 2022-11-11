@@ -29,10 +29,10 @@ const client = new Client({
 client.on("ready", () => {
   console.log("Doing some gud' ol' barrel rolls...");
 });
-
 const app = createExpressApp();
 app.get("/", (_, res) => {
   res.sendStatus(200);
 });
+app.listen(10000);
 
 client.login(process.env.discordToken || Config.discordToken);
