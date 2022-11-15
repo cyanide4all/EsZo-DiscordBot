@@ -91,6 +91,7 @@ export const SUPPORTED_COMMANDS = [
   "!hando",
   "!platinada",
   "!esigual",
+  "!pimiento",
 ];
 
 export const REGEX = {
