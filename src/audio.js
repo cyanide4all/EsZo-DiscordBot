@@ -7,6 +7,8 @@ import { createRequire } from "module";
 const { joinVoiceChannel, createAudioPlayer, createAudioResource } =
   createRequire(import.meta.url)("@discordjs/voice"); // Workaround for ES6 modules
 
+let connection = null;
+
 const getConnection = (channel) => {
   if (!channel) return null;
   return joinVoiceChannel({
@@ -16,34 +18,32 @@ const getConnection = (channel) => {
   });
 };
 
-export default (client) => {
-  let connection = null;
+const getAudioPlayer = () => {
+  const player = createAudioPlayer();
 
-  const getAudioPlayer = () => {
-    const player = createAudioPlayer();
+  player.on("error", console.error);
 
-    player.on("error", console.error);
-
-    player.on("stateChange", (_, newState) => {
-      if (newState.status === "idle") {
-        connection.destroy();
-      }
-    });
-
-    return player;
-  };
-
-  const player = getAudioPlayer();
-
-  const playAudioInChannel = function (source, channel) {
-    connection = getConnection(channel);
-    if (connection) {
-      const resource = createAudioResource(source);
-      connection.subscribe(player);
-      player.play(resource);
+  player.on("stateChange", (_, newState) => {
+    if (newState.status === "idle") {
+      connection.destroy();
     }
-  };
+  });
 
+  return player;
+};
+
+const player = getAudioPlayer();
+
+const playAudioInChannel = function (source, channel) {
+  connection = getConnection(channel);
+  if (connection) {
+    const resource = createAudioResource(source);
+    connection.subscribe(player);
+    player.play(resource);
+  }
+};
+
+export default (client) => {
   client.on("voiceStateUpdate", (prevState, newState) => {
     if (prevState.member.id != USER_ID_ESZOBOT) {
       if (newState.channel == null && prevState.channel != null) {
