@@ -1,4 +1,7 @@
-module.exports = [
+export const USER_ID_ESZOBOT = "317421133131677696";
+export const CHANNEL_ID_BEEP_BEEP_BOP = "730686599049773086";
+
+export const SUPPORTED_COMMANDS = [
   "!bling",
   "!airhorn",
   "!joeputa",
