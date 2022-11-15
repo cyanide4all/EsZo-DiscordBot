@@ -38,7 +38,7 @@ export default () => {
   app.listen(10000);
 
   setInterval(function() {
-    http.get("https://eszobot.onrender.com/");
+    http.get("http://eszobot.onrender.com/");
     console.log("Sent keepalive request");
   }, 200000);
   
