@@ -94,6 +94,14 @@ export const SUPPORTED_COMMANDS = [
   "!pimiento",
 ];
 
+export const DISCORD_EVENTS = {
+  MESSAGE: "messageCreate",
+  VOICE_UPDATE: "voiceStateUpdate",
+  NEW_MEMBER: "guildMemberAdd",
+  MEMBER_LEAVE: "guildMemberRemove",
+  MEMBER_UPDATE: "guildMemberUpdate",
+};
+
 export const REGEX = {
   YT: /^!yt /,
   TORB: /(torb)|(enano)|(upgrade)/i,

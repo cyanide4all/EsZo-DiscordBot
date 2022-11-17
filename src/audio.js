@@ -1,5 +1,10 @@
 import glob from "glob";
-import { USER_ID_ESZOBOT, SUPPORTED_COMMANDS, REGEX } from "../eszo.const.js";
+import {
+  USER_ID_ESZOBOT,
+  SUPPORTED_COMMANDS,
+  REGEX,
+  DISCORD_EVENTS,
+} from "../eszo.const.js";
 import { createReadStream } from "fs";
 import ytdl from "ytdl-core";
 
@@ -44,7 +49,7 @@ const playAudioInChannel = function (source, channel) {
 };
 
 export default (client) => {
-  client.on("voiceStateUpdate", (prevState, newState) => {
+  client.on(DISCORD_EVENTS.VOICE_UPDATE, (prevState, newState) => {
     if (prevState.member.id != USER_ID_ESZOBOT) {
       if (newState.channel == null && prevState.channel != null) {
         if (Math.random() > 0.95) {
@@ -65,8 +70,8 @@ export default (client) => {
     }
   });
 
-  client.on("messageCreate", (message) => {
-    // Comandos definidos
+  client.on(DISCORD_EVENTS.MESSAGE, (message) => {
+    // Defined commands
     if (
       SUPPORTED_COMMANDS.findIndex(
         (cmd) => message.content && message.content.toLowerCase() == cmd
