@@ -92,6 +92,7 @@ export const SUPPORTED_COMMANDS = [
   "!platinada",
   "!esigual",
   "!pimiento",
+  "!woop",
 ];
 
 export const DISCORD_EVENTS = {
