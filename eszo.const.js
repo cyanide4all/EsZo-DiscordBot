@@ -93,6 +93,7 @@ export const SUPPORTED_COMMANDS = [
   "!esigual",
   "!pimiento",
   "!woop",
+  "!bzz",
 ];
 
 export const DISCORD_EVENTS = {
