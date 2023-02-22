@@ -94,6 +94,7 @@ export const SUPPORTED_COMMANDS = [
   "!pimiento",
   "!woop",
   "!bzz",
+  "!motos",
 ];
 
 export const DISCORD_EVENTS = {
