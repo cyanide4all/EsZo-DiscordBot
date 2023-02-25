@@ -1,6 +1,5 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import createExpressApp from "express";
-import * as http from "http";
 
 export default () => {
   const client = new Client({
