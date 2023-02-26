@@ -37,7 +37,12 @@ export default (client) => {
 
   client.on(DISCORD_EVENTS.MESSAGE, (message) => {
     const currentDate = new Date();
-    if (lastBirthdayMesageTimestamp < currentDate.getDate()) {
+    console.log(
+      `------------------------ Current date is: ${currentDate.toString()}`
+    );
+    if (
+      new Date(lastBirthdayMesageTimestamp).getDate() < currentDate.getDate()
+    ) {
       const bdaysOfToday = birthdaysData.filter(
         (each) =>
           new Date(each.date).getMonth() === currentDate.getMonth() &&
