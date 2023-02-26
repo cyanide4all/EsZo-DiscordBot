@@ -37,9 +37,6 @@ export default (client) => {
 
   client.on(DISCORD_EVENTS.MESSAGE, (message) => {
     const currentDate = new Date();
-    console.log(
-      `------------------------ Current date is: ${currentDate.toString()}`
-    );
     if (
       new Date(lastBirthdayMesageTimestamp).getDate() < currentDate.getDate()
     ) {
