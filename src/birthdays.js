@@ -48,7 +48,7 @@ export default (client) => {
       lastBirthdayMesageTimestamp = currentDate.getTime();
       if (bdaysOfToday.length > 0) {
         bdaysOfToday.forEach((each) => {
-          message.guild.systemChannel.send(`HOY ES EL CUM DE <@!${each.id}>`);
+          // message.guild.systemChannel.send(`HOY ES EL CUM DE <@!${each.id}>`);
         });
       }
     }

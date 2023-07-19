@@ -6,9 +6,10 @@ import {
   DISCORD_EVENTS,
 } from "../eszo.const.js";
 import { createReadStream } from "fs";
-import ytdl from "ytdl-core";
+import playDl from "play-dl";
 
 import { createRequire } from "module";
+import { NoSubscriberBehavior, StreamType } from "@discordjs/voice";
 const { joinVoiceChannel, createAudioPlayer, createAudioResource } =
   createRequire(import.meta.url)("@discordjs/voice"); // Workaround for ES6 modules
 
@@ -24,7 +25,11 @@ const getConnection = (channel) => {
 };
 
 const getAudioPlayer = () => {
-  const player = createAudioPlayer();
+  const player = createAudioPlayer({
+    behaviors: {
+      noSubscriber: NoSubscriberBehavior.Play,
+    },
+  });
 
   player.on("error", console.error);
 
@@ -42,7 +47,9 @@ const player = getAudioPlayer();
 const playAudioInChannel = function (source, channel) {
   connection = getConnection(channel);
   if (connection) {
-    const resource = createAudioResource(source);
+    const resource = createAudioResource(source.stream, {
+      inputType: source.type,
+    });
     connection.subscribe(player);
     player.play(resource);
   }
@@ -70,7 +77,7 @@ export default (client) => {
     }
   });
 
-  client.on(DISCORD_EVENTS.MESSAGE, (message) => {
+  client.on(DISCORD_EVENTS.MESSAGE, async (message) => {
     // Defined commands
     if (
       SUPPORTED_COMMANDS.findIndex(
@@ -88,9 +95,9 @@ export default (client) => {
     }
     // Youtube
     else if (REGEX.YT.test(message.content)) {
-      if (ytdl.validateURL(message.content.split(" ")[1])) {
+      if (playDl.yt_validate(message.content.split(" ")[1])) {
         playAudioInChannel(
-          ytdl(message.content.split(" ")[1], { filter: "audioonly" }),
+          await playDl.stream(message.content.split(" ")[1]),
           message.member.voice?.channel
         );
       } else {
