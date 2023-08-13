@@ -47,7 +47,7 @@ const player = getAudioPlayer();
 const playAudioInChannel = function (source, channel) {
   connection = getConnection(channel);
   if (connection) {
-    const resource = createAudioResource(source.stream, {
+    const resource = createAudioResource(source.stream ?? source, {
       inputType: source.type,
     });
     connection.subscribe(player);
