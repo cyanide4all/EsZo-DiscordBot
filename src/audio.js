@@ -10,6 +10,9 @@ import playDl from "play-dl";
 
 import { createRequire } from "module";
 import { NoSubscriberBehavior, StreamType } from "@discordjs/voice";
+
+const discordTTS = createRequire(import.meta.url)("../cjs_modules/tts.cjs");
+
 const { joinVoiceChannel, createAudioPlayer, createAudioResource } =
   createRequire(import.meta.url)("@discordjs/voice"); // Workaround for ES6 modules
 
@@ -135,6 +138,31 @@ export default (client) => {
     else if (REGEX.TORB.test(message.content)) {
       playAudioInChannel(
         createReadStream("audio/torb.mp3"),
+        message.member.voice?.channel
+      );
+    }
+
+    if (REGEX.TTS.test(message.content)) {
+      const splitMsg = message.content.split(" ");
+      let language = "es";
+      let transformedStream = splitMsg.slice(1).join(" ");
+      if (splitMsg[1].length === 3 && splitMsg[1][0] === "!") {
+        language = splitMsg[1].slice(1);
+        transformedStream = splitMsg.slice(2).join(" ");
+      }
+      if (transformedStream.length >= 200) {
+        transformedStream = "Muy largo. No leo.";
+        language = "es";
+      }
+      const stream = discordTTS.getVoiceStream(transformedStream, {
+        lang: language,
+      });
+      const audioResource = createAudioResource(stream, {
+        inputType: StreamType.Arbitrary,
+        inlineVolume: true,
+      });
+      playAudioInChannel(
+        audioResource.playStream,
         message.member.voice?.channel
       );
     }
