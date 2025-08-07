@@ -43,19 +43,19 @@ module.exports = (client) => {
     if (message.content === "!cumples") {
       const mesCurrente = new Date().getMonth();
       const cumplesDelMes = cumples.filter(
-        (each) => new Date(each.date).getMonth() === mesCurrente
+        (each) => new Date(each.date).getMonth() === mesCurrente,
       );
       if (cumplesDelMes.length > 0) {
         message.reply(`ESTE MES CUMPLE${cumplesDelMes.length > 1 ? "N" : ""}:
         ${cumplesDelMes
           .sort(
-            (a, b) => new Date(a.date).getDate() - new Date(b.date).getDate()
+            (a, b) => new Date(a.date).getDate() - new Date(b.date).getDate(),
           )
           .map(
             (each) =>
               `${each.cummer} el día ${new Date(
-                each.date + 43200000
-              ).getDate()}`
+                each.date + 43200000,
+              ).getDate()}`,
           )
           .join(",\n\t\t")}
         `);

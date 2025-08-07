@@ -14,7 +14,7 @@ export default (client) => {
         .filter(
           (each) =>
             new Date(each.date).getMonth() === currentDate.getMonth() &&
-            new Date(each.date).getDate() >= currentDate.getDate()
+            new Date(each.date).getDate() >= currentDate.getDate(),
         )
         .sort((a, b) => {
           return new Date(a.date).getDate() < new Date(b.date).getDate()
@@ -27,7 +27,7 @@ export default (client) => {
         let response = `Cumples del mes: \n`;
         bdaysOfTheMonth.forEach((each) => {
           response = response.concat(
-            `${each.cummer} el día ${new Date(each.date).getDate()}\n`
+            `${each.cummer} el día ${new Date(each.date).getDate()}\n`,
           );
         });
         message.reply(response);
@@ -43,7 +43,7 @@ export default (client) => {
       const bdaysOfToday = birthdaysData.filter(
         (each) =>
           new Date(each.date).getMonth() === currentDate.getMonth() &&
-          new Date(each.date).getDate() === currentDate.getDate()
+          new Date(each.date).getDate() === currentDate.getDate(),
       );
       lastBirthdayMesageTimestamp = currentDate.getTime();
       if (bdaysOfToday.length > 0) {

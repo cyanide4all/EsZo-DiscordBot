@@ -5,7 +5,7 @@ export default (client) => {
     member.guild.systemChannel &&
       member.guild.systemChannel
         .send(
-          `Bienvenido a nuestro servidor, ${member}.\nContigo ya somos ${member.guild.memberCount}!\nEste es un lugar bonito y lleno de personas amables.\nQuédate si no eres cuadrado`
+          `Bienvenido a nuestro servidor, ${member}.\nContigo ya somos ${member.guild.memberCount}!\nEste es un lugar bonito y lleno de personas amables.\nQuédate si no eres cuadrado`,
         )
         .catch(console.log);
   });
@@ -13,7 +13,7 @@ export default (client) => {
   client.on(DISCORD_EVENTS.MEMBER_LEAVE, (member) => {
     member.guild.systemChannel &&
       member.guild.systemChannel.send(
-        `Nuestro querido miembro, ${member}, se ha ido para siempre.\nSe ruega una oración por su alma y la asistencia a la conducción`
+        `Nuestro querido miembro, ${member}, se ha ido para siempre.\nSe ruega una oración por su alma y la asistencia a la conducción`,
       );
   });
 
@@ -23,7 +23,7 @@ export default (client) => {
       oldMember.displayName !== newMember.displayName
     ) {
       newMember.guild.systemChannel.send(
-        `${oldMember.displayName} ahora se llama ${newMember.displayName}`
+        `${oldMember.displayName} ahora se llama ${newMember.displayName}`,
       );
     }
   });

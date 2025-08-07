@@ -16,7 +16,7 @@ module.exports = (client, twitter) => {
       twitter.postTweet(
         { status: `${message.content} ${adjunto ? adjunto.url : ""}` },
         () => {},
-        () => {}
+        () => {},
       );
     } else {
       // Si el mensaje no lo escribe el bot ni está silenciado, y si el mensaje viene de un canal válido
@@ -39,7 +39,7 @@ module.exports = (client, twitter) => {
         if (/gracias bot/i.test(message.content)) {
           message
             .reply(
-              "De nada, pero soy un bot. deberías hablar con seres humanos"
+              "De nada, pero soy un bot. deberías hablar con seres humanos",
             )
             .catch(console.log);
         }
@@ -61,7 +61,7 @@ module.exports = (client, twitter) => {
         if (message.content === "!halpmepls") {
           message.channel
             .send(
-              "ESTE TÍO DICE QUE NECESITA AYUDA PUTO PRINGAO'.HASTA YO ME DOY CUENTA Y ESO QUE NO TENGO AMIGOS.\nEH TÍOS, QUE NECESITA AYUDA!!!!1!uno!. PERO MIRA QUÉ PRINGAO'..."
+              "ESTE TÍO DICE QUE NECESITA AYUDA PUTO PRINGAO'.HASTA YO ME DOY CUENTA Y ESO QUE NO TENGO AMIGOS.\nEH TÍOS, QUE NECESITA AYUDA!!!!1!uno!. PERO MIRA QUÉ PRINGAO'...",
             )
             .catch(console.log);
         }
@@ -115,7 +115,7 @@ module.exports = (client, twitter) => {
         if (regex.regexTTSMal.test(message.content)) {
           message
             .reply(
-              'QUE NO SE ESCRIBE ASÍ SUBNORMAL. ESCRIBE "!halpmepls" PARA MÁS AYUDA SALU3'
+              'QUE NO SE ESCRIBE ASÍ SUBNORMAL. ESCRIBE "!halpmepls" PARA MÁS AYUDA SALU3',
             )
             .catch(console.log);
         }

@@ -3,7 +3,6 @@ const { defaultUserObj } = require("./struct");
 const pollingTime = 30000;
 
 module.exports = (client, riotRequest, firebaseDatabase) => {
-
   const requestSummonerByName = (name) => {
     return new Promise((resolve, reject) => {
       riotRequest.request(
@@ -15,7 +14,7 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
             return reject(Error(err));
           }
           resolve(data);
-        }
+        },
       );
     });
   };
@@ -30,12 +29,12 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
           if (err) {
             return reject(
               Error(
-                `Esta """persona""" que juega al lel no esta jugando, bien por él yokese.`
-              )
+                `Esta """persona""" que juega al lel no esta jugando, bien por él yokese.`,
+              ),
             );
           }
           resolve(data);
-        }
+        },
       );
     });
   };
@@ -79,70 +78,73 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
           } else {
             reject();
           }
-        }
+        },
       );
     });
   };
 
   const cobrarApuestas = async (sendMessage, userRequested) => {
     firebaseDatabase
-    .ref(`/bets/`)
-    .once("value")
-    .then(async (betsSnapshot) => {
-      const snap = betsSnapshot.val()
-      const apuestas = (snap ? Object.values(snap) : []);
-      if (apuestas.length > 0) {
-        firebaseDatabase
-          .ref(`/users/`)
-          .once("value")
-          .then(async (usersSnapshot) => {
-            const users = usersSnapshot.val()
-            const response = [];
-            apuestas.forEach(async (apuesta, idx) => {
-              const playerWon = await getMatchDatafromMatchId(
-                apuesta.gameId,
-                users[apuesta.target].riotAccountId
-              );
-              if (playerWon != null) {
-                if (apuesta.type === playerWon) {
-                  const winnersnap = users[apuesta.author];
-                  const winner = {
-                    ...winnersnap,
-                    points: winnersnap.points + apuesta.amount * 2,
-                  };
-                  await setUserById(apuesta.author, winner);
-                  response.push(
-                    `<@!${apuesta.author}> ha ganado la apuesta y ${
-                      apuesta.amount * 2
-                    } colacoins`
-                  )
-                } else {
-                  response.push(
-                    `<@!${apuesta.author}> ha perdido la apuesta de ${apuesta.amount} colacoins`
-                  )
+      .ref(`/bets/`)
+      .once("value")
+      .then(async (betsSnapshot) => {
+        const snap = betsSnapshot.val();
+        const apuestas = snap ? Object.values(snap) : [];
+        if (apuestas.length > 0) {
+          firebaseDatabase
+            .ref(`/users/`)
+            .once("value")
+            .then(async (usersSnapshot) => {
+              const users = usersSnapshot.val();
+              const response = [];
+              apuestas.forEach(async (apuesta, idx) => {
+                const playerWon = await getMatchDatafromMatchId(
+                  apuesta.gameId,
+                  users[apuesta.target].riotAccountId,
+                );
+                if (playerWon != null) {
+                  if (apuesta.type === playerWon) {
+                    const winnersnap = users[apuesta.author];
+                    const winner = {
+                      ...winnersnap,
+                      points: winnersnap.points + apuesta.amount * 2,
+                    };
+                    await setUserById(apuesta.author, winner);
+                    response.push(
+                      `<@!${apuesta.author}> ha ganado la apuesta y ${
+                        apuesta.amount * 2
+                      } colacoins`,
+                    );
+                  } else {
+                    response.push(
+                      `<@!${apuesta.author}> ha perdido la apuesta de ${apuesta.amount} colacoins`,
+                    );
+                  }
+                  await deleteBet(Object.keys(betsSnapshot)[idx]);
                 }
-                await deleteBet(Object.keys(betsSnapshot)[idx])
-              }
-            })
-            sendMessage(response.length > 0 ? response.join("\n") : "No hay apuestas que cobrar").catch(console.log)
-        })
-      } else {
-        if (userRequested) {
-          sendMessage("No hay apuestas que cobrar").catch(console.log)
+              });
+              sendMessage(
+                response.length > 0
+                  ? response.join("\n")
+                  : "No hay apuestas que cobrar",
+              ).catch(console.log);
+            });
+        } else {
+          if (userRequested) {
+            sendMessage("No hay apuestas que cobrar").catch(console.log);
+          }
         }
-      }
-    });
-  }
-
+      });
+  };
 
   const handleDtoMatchData = (data, accountId) => {
     const participantId = data.participantIdentities.find(
-      (e) => e.player.accountId === accountId // fails. ??
+      (e) => e.player.accountId === accountId, // fails. ??
     ).participantId; // 1 to 10
     const firstTeamWon = data.teams[0].win;
     const firstTeamId = data.teams[0].teamId;
     const Userteam = data.participants.find(
-      (e) => e.participantId === participantId
+      (e) => e.participantId === participantId,
     ).teamId;
     return firstTeamWon === "Win"
       ? firstTeamId === Userteam
@@ -180,10 +182,11 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
         .then((snapshot) => {
           const apuestas = snapshot.val() ? Object.values(snapshot.val()) : [];
           const prevBet = apuestas.find(
-            (each) => each.gameId === gameId && each.author === authorId
+            (each) => each.gameId === gameId && each.author === authorId,
           );
           resolve(prevBet);
-        }).catch((e) => {
+        })
+        .catch((e) => {
           console.error(e);
           reject();
         });
@@ -242,7 +245,7 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
                   current.amount
                 } colacoins a que <@!${current.target}> ${
                   current.type ? "gana" : "pierde"
-                }`
+                }`,
               );
             }, "Apuestas vigentes: ");
             message.channel.send(msg).catch(console.log);
@@ -256,7 +259,7 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
 
     // Ver apuestas
     if (message.content === "!diaDePago") {
-      cobrarApuestas((msg) => message.channel.send(msg), true)
+      cobrarApuestas((msg) => message.channel.send(msg), true);
     }
 
     // Apostar
@@ -281,7 +284,7 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
 
         // Step 2 - Comprobar que el jugador está en una partida
         const currentGame = await getActiveGameBySummonerId(
-          target.riotSummonerId
+          target.riotSummonerId,
         );
 
         // Step 3a - Que la partida no pase de 7 min (420 seg)
@@ -296,7 +299,7 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
         // Step 4 - Ver si esta persona ya ha apostado en la partida"
         const prevBet = await getPreviousBet(
           message.author.id,
-          currentGame.gameId
+          currentGame.gameId,
         );
         if (prevBet) {
           throw Error("Ya has apostado https://twitter.com/stopludopatia ");
@@ -324,13 +327,13 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
         const pollingFunc = async () => {
           const playerWon = await getMatchDatafromMatchId(
             currentGame.gameId,
-            target.riotAccountId
+            target.riotAccountId,
           );
           if (playerWon === null) {
             setTimeout(pollingFunc, pollingTime);
           } else {
             // Step 8 - Pagar la coca
-            await deleteBet(betId) // delete previous bet
+            await deleteBet(betId); // delete previous bet
             if (type === playerWon) {
               const winnersnap = await getUserById(message.author.id);
               const winner = {
@@ -338,21 +341,25 @@ module.exports = (client, riotRequest, firebaseDatabase) => {
                 points: winnersnap.points + amount * 2,
               };
               await setUserById(message.author.id, winner);
-              message.channel.send(
-                `<@!${message.author.id}> ha ganado la apuesta y ${
-                  amount * 2
-                } colacoins`
-              ).catch(console.log);
+              message.channel
+                .send(
+                  `<@!${message.author.id}> ha ganado la apuesta y ${
+                    amount * 2
+                  } colacoins`,
+                )
+                .catch(console.log);
             } else {
-              message.channel.send(
-                `<@!${message.author.id}> ha perdido la apuesta de ${amount} colacoins`
-              ).catch(console.log);
+              message.channel
+                .send(
+                  `<@!${message.author.id}> ha perdido la apuesta de ${amount} colacoins`,
+                )
+                .catch(console.log);
             }
           }
         };
         setTimeout(pollingFunc, pollingTime);
       } catch (e) {
-        if(e) {
+        if (e) {
           message.reply(e.message).catch(console.log);
         }
       }
