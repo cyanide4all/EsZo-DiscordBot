@@ -69,23 +69,4 @@ function getVoiceStream(
   return stream;
 }
 
-function saveToFile(
-  filePath,
-  text,
-  { lang = "en-GB", slow = false, host, timeout, splitPunct } = {}
-) {
-  const stream = new Stream.PassThrough();
-  const writeStream = fs.createWriteStream(filePath);
-  downloadFromInfoCallback(stream, text, {
-    lang,
-    slow,
-    host,
-    timeout,
-    splitPunct,
-  });
-  stream.pipe(writeStream);
-  stream.on("end", () => writeStream.close());
-}
-
 module.exports.getVoiceStream = getVoiceStream;
-module.exports.saveToFile = saveToFile;
