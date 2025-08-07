@@ -39,7 +39,7 @@ function base64toBinaryStream(base64Text) {
 function downloadFromInfoCallback(
   stream,
   text,
-  { lang, slow, host, timeout, splitPunct },
+  { lang, slow, host, timeout, splitPunct }
 ) {
   googleTTS
     .getAudioBase64(text, { lang, slow, host, timeout, splitPunct })
@@ -56,7 +56,7 @@ function getVoiceStream(
     host = "https://translate.google.com",
     timeout = 10000,
     splitPunct,
-  } = {},
+  } = {}
 ) {
   const stream = new Stream.PassThrough();
   downloadFromInfoCallback(stream, text, {

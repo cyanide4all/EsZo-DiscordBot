@@ -110,6 +110,7 @@ export const REGEX = {
   TORB: /(torb)|(enano)|(upgrade)/i,
   WAH: /(luigi)|((w|gu)a+h*)/i,
   TTS: /!tts( ![a-z]{2})? .*/i,
+  AI: /^!ai .+/i
   // SALUDOS: /(Hola a todos)|(buenas)|(señores?)/i,
   // CARGA: /(carga)|(punto)|(payload)|(proteg)/i,
   // PEPLO: /(pero)|(orisa)|(support)/i,

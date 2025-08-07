@@ -7,8 +7,6 @@ export default () => {
       GatewayIntentBits.Guilds,
       GatewayIntentBits.MessageContent,
       GatewayIntentBits.GuildMembers,
-      GatewayIntentBits.GuildBans,
-      GatewayIntentBits.GuildEmojisAndStickers,
       GatewayIntentBits.GuildIntegrations,
       GatewayIntentBits.GuildWebhooks,
       GatewayIntentBits.GuildInvites,

@@ -54,9 +54,28 @@ const playAudioInChannel = function (source, channel) {
       inputType: source.type,
     });
     connection.subscribe(player);
-    player.play(resource);
+
+    // Small delay to avoid talking over the joining sound
+    setTimeout(() => {
+      player.play(resource);
+    }, [500]);
   }
 };
+
+export function playTextInAudioChannel(
+  transformedStream,
+  channel,
+  language = "es"
+) {
+  const stream = discordTTS.getVoiceStream(transformedStream, {
+    lang: language,
+  });
+  const audioResource = createAudioResource(stream, {
+    inputType: StreamType.Arbitrary,
+    inlineVolume: true,
+  });
+  playAudioInChannel(audioResource.playStream, channel);
+}
 
 export default (client) => {
   client.on(DISCORD_EVENTS.VOICE_UPDATE, (prevState, newState) => {
@@ -65,7 +84,7 @@ export default (client) => {
         if (Math.random() > 0.95) {
           playAudioInChannel(
             createReadStream("audio/casa.mp3"),
-            prevState.channel,
+            prevState.channel
           );
         }
       }
@@ -73,7 +92,7 @@ export default (client) => {
         if (Math.random() > 0.95) {
           playAudioInChannel(
             createReadStream("audio/hellomonkey.mp3"),
-            newState.channel,
+            newState.channel
           );
         }
       }
@@ -84,16 +103,16 @@ export default (client) => {
     // Defined commands
     if (
       SUPPORTED_COMMANDS.findIndex(
-        (cmd) => message.content && message.content.toLowerCase() == cmd,
+        (cmd) => message.content && message.content.toLowerCase() == cmd
       ) !== -1
     ) {
       playAudioInChannel(
         createReadStream(
           "audio/" +
             message.content.toLowerCase().slice(1, message.content.length) +
-            ".mp3",
+            ".mp3"
         ),
-        message.member.voice?.channel,
+        message.member.voice?.channel
       );
     }
     // Youtube
@@ -101,11 +120,11 @@ export default (client) => {
       if (playDl.yt_validate(message.content.split(" ")[1])) {
         playAudioInChannel(
           await playDl.stream(message.content.split(" ")[1]),
-          message.member.voice?.channel,
+          message.member.voice?.channel
         );
       } else {
         message.reply(
-          "HAY COSAS PATÉTICAS, Y LUEGO ESTÁ NO SABER COPIAR LA URL DE UN VÍDEO EN YOUTUBE",
+          "HAY COSAS PATÉTICAS, Y LUEGO ESTÁ NO SABER COPIAR LA URL DE UN VÍDEO EN YOUTUBE"
         );
       }
     }
@@ -114,12 +133,12 @@ export default (client) => {
       if (Math.random() < 0.9) {
         playAudioInChannel(
           createReadStream("audio/wah.mp3"),
-          message.member.voice?.channel,
+          message.member.voice?.channel
         );
       } else {
         playAudioInChannel(
           createReadStream("audio/wahluigi.mp3"),
-          message.member.voice?.channel,
+          message.member.voice?.channel
         );
       }
     }
@@ -128,9 +147,9 @@ export default (client) => {
       glob("*/F-*.mp3", null, function (_, files) {
         playAudioInChannel(
           createReadStream(
-            `audio/F-${Math.floor(Math.random() * files.length)}.mp3`,
+            `audio/F-${Math.floor(Math.random() * files.length)}.mp3`
           ),
-          message.member.voice?.channel,
+          message.member.voice?.channel
         );
       });
     }
@@ -138,7 +157,7 @@ export default (client) => {
     else if (REGEX.TORB.test(message.content)) {
       playAudioInChannel(
         createReadStream("audio/torb.mp3"),
-        message.member.voice?.channel,
+        message.member.voice?.channel
       );
     }
 
@@ -154,16 +173,10 @@ export default (client) => {
         transformedStream = "Muy largo. No leo.";
         language = "es";
       }
-      const stream = discordTTS.getVoiceStream(transformedStream, {
-        lang: language,
-      });
-      const audioResource = createAudioResource(stream, {
-        inputType: StreamType.Arbitrary,
-        inlineVolume: true,
-      });
-      playAudioInChannel(
-        audioResource.playStream,
+      playTextInAudioChannel(
+        transformedStream,
         message.member.voice?.channel,
+        language
       );
     }
   });
