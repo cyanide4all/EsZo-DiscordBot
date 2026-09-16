@@ -56,3 +56,6 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# Estado generado por el módulo de cumpleaños
+config/birthdayRooms.state.json
