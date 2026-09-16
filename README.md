@@ -17,6 +17,7 @@ Useless
 - [@phermida](https://www.github.com/phermida) No touch only fix
 - [@achenriques](https://www.github.com/achenriques) Me, smol brain. No respond
 - [@DevelopingBamboo](https://www.github.com/DevelopingBamboo) Paaaaaaaaaaaanda
+- [@ansich](https://github.com/ansich) En un cumple
 
 ## Features
 
