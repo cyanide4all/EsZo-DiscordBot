@@ -1827,20 +1827,45 @@ export default function setupBirthdayRoomsModule(client, overrides = {}) {
 
     if (!message.content.startsWith("!cumple-test")) return;
 
+    console.log("[birthdayRooms] !cumple-test recibido", {
+      authorId: message.author.id,
+      guildId: message.guild?.id,
+      channelId: message.channel?.id,
+    });
+
     if (!config.participantRoleId) {
+      console.warn("[birthdayRooms] !cumple-test abortado: BIRTHDAY_ROLE_ID no definido.");
       await message.reply("Define BIRTHDAY_ROLE_ID antes de probar el módulo.");
       return;
     }
+
+    console.log("[birthdayRooms] !cumple-test configuracion", {
+      guildId: config.guildId,
+      participantRoleId: config.participantRoleId,
+      categoryId: config.categoryId,
+      managerRoleId: config.managerRoleId,
+      registrationChannelId: config.registrationChannelId,
+    });
+
     if (!canManage(message.member, config)) {
+      console.warn(`[birthdayRooms] !cumple-test abortado: ${message.author.id} no tiene permisos de gestor.`);
       await message.reply("Necesitas el rol gestor o permiso de Gestionar canales para usar esta prueba.");
       return;
     }
 
+    console.log("[birthdayRooms] !cumple-test gestor autorizado.");
+
     const target = message.mentions.members.first();
     if (!target) {
+      console.warn("[birthdayRooms] !cumple-test abortado: no se encontro usuario mencionado.");
       await message.reply("Uso: `!cumple-test @usuario`");
       return;
     }
+
+    console.log("[birthdayRooms] !cumple-test usuario objetivo", {
+      id: target.id,
+      displayName: target.displayName,
+    });
 
     const dateKey = `${todayKey(new Date(), config.timezone)}-test-${Date.now()}`;
     const birthday = {
@@ -1848,8 +1873,33 @@ export default function setupBirthdayRoomsModule(client, overrides = {}) {
       cummer: target.displayName,
       date: Date.now(),
     };
-    const room = await createBirthdayRoom(message.guild, birthday, config, state, dateKey);
-    if (room) await message.reply(`Canal de prueba creado: <#${room.channelId}>`);
+
+    console.log("[birthdayRooms] !cumple-test llamando a createBirthdayRoom", {
+      dateKey,
+      targetId: birthday.id,
+    });
+
+    try {
+      const room = await createBirthdayRoom(message.guild, birthday, config, state, dateKey);
+
+      if (!room) {
+        console.warn("[birthdayRooms] !cumple-test createBirthdayRoom termino sin crear canal.");
+        await message.reply("No se pudo crear el canal de prueba. Revisa los logs de birthdayRooms.");
+        return;
+      }
+
+      console.log("[birthdayRooms] !cumple-test canal creado", {
+        channelId: room.channelId,
+        targetId: target.id,
+      });
+
+      await message.reply(`Canal de prueba creado: <#${room.channelId}>`);
+    } catch (error) {
+      console.error("[birthdayRooms] !cumple-test error", error);
+      await message
+        .reply("Ha ocurrido un error creando el canal de prueba. Revisa los logs del bot.")
+        .catch(console.log);
+    }
   });
 
   client.on("guildMemberAdd", (member) => {
